@@ -63,6 +63,44 @@
                 color: white;
                 z-index: 1000;
             }
+            
+            #white-circle {
+                position: absolute;
+                left: 1412px;
+                margin-top: 72px;
+                
+                width: 300px;
+                height: 300px;
+            }
+            
+            #my-ranking-number {
+                position: absolute;
+                margin-top: 116px;
+                margin-left: 265px;
+                
+                font-size: 150px;
+                font-weight: 600;
+                color: #A4D6FA;
+            }
+            
+            #my-information {
+                display: flex;
+                flex-direction: row;
+                
+                margin-top: 374px;
+                height: 43.3%;
+                background-color: red;
+            }
+            
+            #highest-score-layout {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            #level-layout {
+                display: flex;
+                flex-direction: column;
+            }
         </style>
     </head>
     
@@ -80,6 +118,16 @@
             <div id="middle-blank-layout"></div>
             <div id="my-ranking-layout">
                 <div id="my-ranking-title">MY Ranking</div>
+                <img src="White_Circle.png" id="white-circle">
+                <div id="my-ranking-number">54</div>
+                <div id="my-information">
+                    <div id="highest-score-layout">
+                        <div id="highest-score-text">380</div>
+                    </div>
+                    <div id="level-layout">
+                        <div id="level-layout">3</div>
+                    </div>
+                </div>
             </div>
             <div id="right-blank-layout"></div>
         </div>
