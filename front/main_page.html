@@ -6,18 +6,36 @@
                 
                 margin: 0px;
                 background-color: #A4D6FA;
+                font-family: "Segoe UI", sans-serif;
+                color: white;
+            }
+            
+            #login {
+                margin-left: 32px;
+                margin-top: 24px;
+            }
+            
+            #ranking {
+                margin-left: 40px;
+                margin-top: 24px;
+                margin-right: auto;  
+            }
+            
+            login-ranking {
+                display: flex;
+                flex-direction: row;
+                
+                font-size: 50px;
+                font-weight: lighter;
             }
             
             #title {
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: 256px;
+                margin-top: 180px;
                 text-align: center;  
                 
-                width: 640px;
-                
-                font: 100px "Segoe UI", sans-serif;
-                color: white;
+                font-size: 100px;
             }
             
             #start {
@@ -26,10 +44,7 @@
                 margin-top: 160px;
                 text-align: center;
                 
-                width: 140px;
-                
-                font: 50px "Segoe UI", sans-serif;
-                color: white;
+                font-size: 50px;
             }
             
             #how-to-play {
@@ -38,11 +53,9 @@
                 margin-top: 48px;
                 text-align: center;
                 
-                width: 324px;
-                
-                font: 50px "Segoe UI", sans-serif;
-                color: white;
-            }
+                font-size: 50px;
+            }            
+            
         </style>
     </head>
     
@@ -50,6 +63,10 @@
         <img src="TileBack_LeftBottom.png" style="position:fixed; left:0; bottom:0; width:512px; height:512px;">
         <img src="TileBack_RightTop.png" style="position:fixed; right:0; top:0; width:512px; height:512px;">
         
+        <login-ranking>
+        <div id="login">Login</div>
+        <div id="ranking">Ranking</div>
+        </login-ranking>
         <div id="title">DISASTER TILE</div>
         <div id="start">START</div>
         <div id="how-to-play">HOW TO PLAY</div>
