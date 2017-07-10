@@ -1,0 +1,368 @@
+<!doctype>
+<html>
+    <head>
+        <style>
+            
+            body {
+                margin: 0px;
+                font-family: "Segoe UI", sans-serif;
+            }
+            
+            /* a 태그의 스타일을 하얀색에 밑줄이 없도록 변경 */
+            
+            a:link, a:visited, a:hover, a:active {
+                color: white;
+                text-decoration: none;
+            }
+            
+            /*
+            
+            flex의 구조
+            
+            flex {
+                left {
+                    select
+                }
+
+                right {
+                    turn-time {
+                        turn
+                        time
+                    }
+                }
+            }
+                
+            */
+            
+            /* 제일 큰 태그 flex, 좌우 방향의 flex */
+            
+            #flex {
+                display: flex;
+                flex-direction: row;
+                
+                height: 100%;
+            }
+            
+            /* game-play와 select 레이아웃을 포함한 left-layout, 상하 방향의 flex */
+            
+            #left-layout {
+                display: flex;
+                flex-direction: column;
+                width: 1440px;
+            }
+            
+            /* turn-text와 tips 레이아웃을 포함한 right-layout, 상하 방향의 flex */
+            
+            #right-layout {
+                display: flex;
+                flex-direction: column;
+                width: 400px;
+                /* width: 480px; */
+            }
+            
+             /* 실제 맵이 존재하고 게임 말이 움직이는 공간 */
+            
+            #game-play-layout {
+                position: relative;
+                width: 1440px;
+                height: 768px;
+            }
+            
+            table {
+                position: relative;
+                border-spacing: 10px;
+                margin-left: 92px;
+                margin-top: 28px;
+                z-index: 20;
+            }
+            
+            td {
+                background-color: white;
+                border: 1px solid black;
+                width: 90px;
+                height: 90px;
+            }
+            
+            /* menu, move, use terrain, item을 포함한 select-layout, 좌우 방항의 flex */
+            
+            #select-layout {
+                display: flex;
+                flex-direction: row;
+                background-color: #B4DDFB;
+                height: 200px;
+            }
+            
+            /* title, turn, time을 포함한 turn-time-layout, 상하 방향의 flex */
+            
+            #turn-time-layout {
+                display: flex;
+                flex-direction: column;
+                
+                background-color: #A4D6FA;
+                
+                height: 700px;
+            }
+            
+            /* current-turn과 max-turn을 포함한 turn-layout, 좌우 방향의 flex */
+            
+            #turn-layout {
+                display: flex;
+                flex-direction: row;
+            }
+            
+            /* remaining-time과 sec을 포함한 time-layout, 좌우 방향의 flex */
+            
+            #time-layout {
+                display: flex;
+                flex-direction: row;
+            }
+            
+            #tips-layout {
+                background-color: #87C9F9;
+                
+                height: 268px;
+            }
+            
+            /* text */
+            
+            /* left */
+            
+            #menu-text {
+                font-size: 80px;
+                color: white;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                margin-left: 50px;
+            }
+            
+            #move-text {
+                font-size: 80px;
+                color: white;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                margin-left: 60px;
+            }
+            
+            #use-terrain-text {
+                font-size: 50px;
+                font-weight: lighter;
+                text-align: center;
+                color: white;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                margin-left: 60px;
+                
+                padding-top: 20px;
+                padding-bottom: 20px;
+                padding-right: 60px;
+                border-right: 1px solid white;
+            }
+            
+            #item-text {
+                font-size: 50px;
+                font-weight: lighter;
+                color: white;
+                margin-top: 12px;
+                margin-left: 20px;
+            }
+            
+            /* right */
+            
+            #title-text {
+                font-size: 80px;
+                font-weight: lighter;
+                text-align: center;
+                color: #44282E;
+                margin-bottom: 20px;
+            }
+            
+            #turn-text {
+                font-size: 80px;
+                font-weight: lighter;
+                margin-left: 20px;
+                color: white;
+            }
+            
+            #current-turn-text {
+                font-size: 200px;
+                margin-left: 160px;
+                margin-top: -100px;
+                color: white;
+            }
+            
+            #max-turn-text {
+                font-size: 50px;
+                margin-left: -30px;
+                margin-top: 80px;
+                color: white;
+            }
+            
+            #time-text {
+                font-size: 80px;
+                font-weight: lighter;
+                margin-left: 20px;
+                color: white;
+            }
+            
+            #remaining-time-text {
+                font-size: 200px;
+                margin-left: 90px;
+                margin-top: -60px;
+                color: white;
+            }
+            
+            #sec-text {
+                font-size: 50px;
+                font-weight: lighter;
+                margin-top: 100px;
+                color: white;
+            }
+            
+            #tips-text {
+                font-size: 50px;
+                font-weight: lighter;
+                margin-left: 20px;
+                color: white;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="flex">
+            <div id="left-layout">
+                <div id="game-play-layout">
+                    <img src="TileBack_LeftBottom.png" style="position:absolute; left:0px; bottom:0; width:512px; height:512px; z-index:10;">
+                    <img src="TileBack_RightTop.png" style="position:absolute; right:0px; top:0; width:512px; height:512px; z-index:10;">
+                    
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div id="select-layout">
+                    <div id="menu-text">MENU</div>
+                    <div id="move-text">MOVE</div>
+                    <div id="use-terrain-text">USE<br>TERRAIN</div>
+                    <div id="item-text">Item</div>
+                    <img src="White_Circle.png" style="width:160px; height:160px; margin-top:20px; margin-left:60px;">
+                    <img src="White_Circle.png" style="width:160px; height:160px; margin-top:20px; margin-left:40px;">
+                </div>
+            </div>
+            <div id="right-layout">
+                <div id="turn-time-layout">
+                    <div id="title-text">DisasterTile</div>
+                    <div id="turn-text">Turn</div>
+                    <div id="turn-layout">
+                        <div id="current-turn-text">8/</div>
+                        <div id="max-turn-text">30</div>
+                    </div>
+                    <div id="time-text">Time</div>
+                    <div id="time-layout">
+                        <div id="remaining-time-text">30</div>
+                        <div id="sec-text">sec</div>
+                    </div>
+                </div>
+                <div id="tips-layout">
+                    <div id="tips-text">TIPS!</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
