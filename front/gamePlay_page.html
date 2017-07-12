@@ -1,8 +1,88 @@
-<!doctype>
+<!DOCTYPE html>
 <html>
     <head>
-        <style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            //current second variable
+            var currentSec = 30;
+            //current turn variable
+            var currentTurn = 1;
+            //array tips' index number
+            var tipsIndex = 1;
             
+            //for the test
+            var tips = new Array(10);
+            tips[0] = "So, to become an Avenger, are there like trials or an interview?";
+            tips[1] = "You just don't do anything I would do... and definitely don't do anything I wouldn't do. There's a little gray area in there and that's where you operate.";
+            tips[2] = "That's not a hug. I'm just grabbing the door for you.";
+            tips[3] = "But you are a kid. / Yeah. A kid who can stop a bus with his bare hands."
+            tips[4] = "If you're nothing without the suit, then you shouldn't have it.";
+            tips[5] = "Wait a minute... You guys aren't the real Avengers! I can tell Hulk gives it away.";
+            tips[6] = "Can't you just be a friendly neighborhood Spider-Man?";
+            tips[7] = "Can you summon an army of spiders? / No, man!";
+            tips[8] = "What are you hiding Peter? [laughs] I'm just kidding. I don't care. Bye.";
+            tips[9] = "Spider-Man is not a party trick!";
+            
+            //run every second
+            setInterval(function() {
+                if(currentSec > -2) currentSec--;
+//              if(currentSec > -2) currentSec--;
+                if(currentSec < 10) $("#remaining-time-text").css("margin-left", "198px");
+                if(currentSec >= 0) $("#remaining-time-text").text(currentSec);
+                if(currentSec == -1) endTurn();
+                else {}
+//              if(currentSec == -2 && currentTurn < 30) startTurn();
+            }, 1000)
+            
+            function endTurn() {
+                alert("Time Out");
+                
+                if(currentTurn < 30) startTurn();
+            }
+                
+            function startTurn() {
+                //alert
+                alert("Turn Start");
+                
+                //renew items
+                
+                //renew tip
+                writeNewTip();
+                
+                //renew turn number
+                currentTurn++;
+                if(currentTurn >= 10) $("#current-turn-text").css("margin-left", "52px");
+                $("#current-turn-text").text(currentTurn + "/");
+                
+                //renew turn time
+                currentSec = 30;
+                $("#remaining-time-text").css("margin-left", "90px");
+                $("#remaining-time-text").text(currentSec);
+            }
+            
+            function writeNewTip() {
+                var randomNum;
+                
+                do {
+                    randomNum = Math.floor(Math.random() * 10);
+                }while(randomNum == tipsIndex);
+                
+                tipsIndex = randomNum;
+                
+                $("#tips-tip-text").text(tips[randomNum]);
+            }
+            
+            $(document).ready(function() {
+                $("#item1").click(function() {
+                    alert("use item1");
+                });
+                $("#item2").click(function() {
+                    alert("user item2");
+                });
+            });
+        </script>
+       
+        <style>
             body {
                 margin: 0px;
                 font-family: "Segoe UI", sans-serif;
@@ -13,6 +93,12 @@
             a:link, a:visited, a:hover, a:active {
                 color: white;
                 text-decoration: none;
+            }
+            
+            button {
+                border: 0px;
+                padding: 0px;
+                background-color: #B4DDFB;
             }
             
             /*
@@ -68,15 +154,24 @@
                 height: 768px;
             }
             
-            table {
+            #map {
+                display: flex;
+                flex-direction: column;
+                
                 position: relative;
-                border-spacing: 10px;
-                margin-left: 92px;
-                margin-top: 28px;
                 z-index: 20;
+                
+                margin-left: 108px;
+                margin-top: 28px;
             }
             
-            td {
+            .row {
+                display: flex;
+                flex-direction: row; 
+            }
+            
+            .square {
+                margin: 5px;
                 background-color: white;
                 border: 1px solid black;
                 width: 90px;
@@ -186,14 +281,14 @@
             #current-turn-text {
                 font-size: 200px;
                 margin-left: 160px;
-                margin-top: -100px;
+                margin-top: -60px;
                 color: white;
             }
             
             #max-turn-text {
                 font-size: 50px;
                 margin-left: -30px;
-                margin-top: 80px;
+                margin-top: 120px;
                 color: white;
             }
             
@@ -225,6 +320,12 @@
                 color: white;
             }
             
+            #tips-tip-text {
+                font-size: 25px;
+                font-weight: lighter;
+                margin-left: 20px;
+                color: #44282E;
+            }
         </style>
     </head>
     <body>
@@ -234,106 +335,106 @@
                     <img src="TileBack_LeftBottom.png" style="position:absolute; left:0px; bottom:0; width:512px; height:512px; z-index:10;">
                     <img src="TileBack_RightTop.png" style="position:absolute; right:0px; top:0; width:512px; height:512px; z-index:10;">
                     
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
+                    <div id="map">
+                        <div class="row" id="row1">
+                            <div class="square" id="sqr1x1"></div>
+                            <div class="square" id="sqr1x2"></div>
+                            <div class="square" id="sqr1x3"></div>
+                            <div class="square" id="sqr1x4"></div>
+                            <div class="square" id="sqr1x5"></div>
+                            <div class="square" id="sqr1x6"></div>
+                            <div class="square" id="sqr1x7"></div>
+                            <div class="square" id="sqr1x8"></div>
+                            <div class="square" id="sqr1x9"></div>
+                            <div class="square" id="sqr1x10"></div>
+                            <div class="square" id="sqr1x11"></div>
+                            <div class="square" id="sqr1x12"></div>
+                        </div>
+                        <div class="row" id="row2">
+                            <div class="square" id="sqr2x1"></div>
+                            <div class="square" id="sqr2x2"></div>
+                            <div class="square" id="sqr2x3"></div>
+                            <div class="square" id="sqr2x4"></div>
+                            <div class="square" id="sqr2x5"></div>
+                            <div class="square" id="sqr2x6"></div>
+                            <div class="square" id="sqr2x7"></div>
+                            <div class="square" id="sqr2x8"></div>
+                            <div class="square" id="sqr2x9"></div>
+                            <div class="square" id="sqr2x10"></div>
+                            <div class="square" id="sqr2x11"></div>
+                            <div class="square" id="sqr2x12"></div>
+                        </div>
+                        <div class="row" id="row3">
+                            <div class="square" id="sqr3x1"></div>
+                            <div class="square" id="sqr3x2"></div>
+                            <div class="square" id="sqr3x3"></div>
+                            <div class="square" id="sqr3x4"></div>
+                            <div class="square" id="sqr3x5"></div>
+                            <div class="square" id="sqr3x6"></div>
+                            <div class="square" id="sqr3x7"></div>
+                            <div class="square" id="sqr3x8"></div>
+                            <div class="square" id="sqr3x9"></div>
+                            <div class="square" id="sqr3x10"></div>
+                            <div class="square" id="sqr3x11"></div>
+                            <div class="square" id="sqr3x12"></div>
+                        </div>
+                        <div class="row" id="row4">
+                            <div class="square" id="sqr4x1"></div>
+                            <div class="square" id="sqr4x2"></div>
+                            <div class="square" id="sqr4x3"></div>
+                            <div class="square" id="sqr4x4"></div>
+                            <div class="square" id="sqr4x5"></div>
+                            <div class="square" id="sqr4x6"></div>
+                            <div class="square" id="sqr4x7"></div>
+                            <div class="square" id="sqr4x8"></div>
+                            <div class="square" id="sqr4x9"></div>
+                            <div class="square" id="sqr4x10"></div>
+                            <div class="square" id="sqr4x11"></div>
+                            <div class="square" id="sqr4x12"></div>
+                        </div>
+                        <div class="row" id="row5">
+                            <div class="square" id="sqr5x1"></div>
+                            <div class="square" id="sqr5x2"></div>
+                            <div class="square" id="sqr5x3"></div>
+                            <div class="square" id="sqr5x4"></div>
+                            <div class="square" id="sqr5x5"></div>
+                            <div class="square" id="sqr5x6"></div>
+                            <div class="square" id="sqr5x7"></div>
+                            <div class="square" id="sqr5x8"></div>
+                            <div class="square" id="sqr5x9"></div>
+                            <div class="square" id="sqr5x10"></div>
+                            <div class="square" id="sqr5x11"></div>
+                            <div class="square" id="sqr5x12"></div>
+                        </div>    
+                        <div class="row" id="row6">
+                            <div class="square" id="sqr6x1"></div>
+                            <div class="square" id="sqr6x2"></div>
+                            <div class="square" id="sqr6x3"></div>
+                            <div class="square" id="sqr6x4"></div>
+                            <div class="square" id="sqr6x5"></div>
+                            <div class="square" id="sqr6x6"></div>
+                            <div class="square" id="sqr6x7"></div>
+                            <div class="square" id="sqr6x8"></div>
+                            <div class="square" id="sqr6x9"></div>
+                            <div class="square" id="sqr6x10"></div>
+                            <div class="square" id="sqr6x11"></div>
+                            <div class="square" id="sqr6x12"></div>  
+                        </div>    
+                        <div class="row" id="row7">
+                            <div class="square" id="sqr7x1"></div>
+                            <div class="square" id="sqr7x2"></div>
+                            <div class="square" id="sqr7x3"></div>
+                            <div class="square" id="sqr7x4"></div>
+                            <div class="square" id="sqr7x5"></div>
+                            <div class="square" id="sqr7x6"></div>
+                            <div class="square" id="sqr7x7"></div>
+                            <div class="square" id="sqr7x8"></div>
+                            <div class="square" id="sqr7x9"></div>
+                            <div class="square" id="sqr7x10"></div>
+                            <div class="square" id="sqr7x11"></div>
+                            <div class="square" id="sqr7x12"></div>
+                        </div>    
+                    </div>
                     
                 </div>
                 <div id="select-layout">
@@ -341,8 +442,12 @@
                     <div id="move-text">MOVE</div>
                     <div id="use-terrain-text">USE<br>TERRAIN</div>
                     <div id="item-text">Item</div>
-                    <img src="White_Circle.png" style="width:160px; height:160px; margin-top:20px; margin-left:60px;">
-                    <img src="White_Circle.png" style="width:160px; height:160px; margin-top:20px; margin-left:40px;">
+                    <button type="button" id="item1" style="width:160px; height:160px; margin-top:20px; margin-left:60px;">
+                        <img src="White_Circle.png" style="width:160px; height:160px;">
+                    </button>
+                    <button type="button" id="item2" style="width:160px; height:160px; margin-top:20px; margin-left:40px;">
+                        <img src="White_Circle.png" style="width:160px; height:160px;">
+                    </button>
                 </div>
             </div>
             <div id="right-layout">
@@ -350,7 +455,7 @@
                     <div id="title-text">DisasterTile</div>
                     <div id="turn-text">Turn</div>
                     <div id="turn-layout">
-                        <div id="current-turn-text">8/</div>
+                        <div id="current-turn-text">1/</div>
                         <div id="max-turn-text">30</div>
                     </div>
                     <div id="time-text">Time</div>
@@ -361,6 +466,7 @@
                 </div>
                 <div id="tips-layout">
                     <div id="tips-text">TIPS!</div>
+                    <div id="tips-tip-text">You just don't do anything I would do... and definitely don't do anything I wouldn't do. There's a little gray area in there and that's where you operate.</div>
                 </div>
             </div>
         </div>
