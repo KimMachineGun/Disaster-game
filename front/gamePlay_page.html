@@ -1,87 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script>
-            //current second variable
-            var currentSec = 30;
-            //current turn variable
-            var currentTurn = 1;
-            //array tips' index number
-            var tipsIndex = 1;
-            
-            //for the test
-            var tips = new Array(10);
-            tips[0] = "So, to become an Avenger, are there like trials or an interview?";
-            tips[1] = "You just don't do anything I would do... and definitely don't do anything I wouldn't do. There's a little gray area in there and that's where you operate.";
-            tips[2] = "That's not a hug. I'm just grabbing the door for you.";
-            tips[3] = "But you are a kid. / Yeah. A kid who can stop a bus with his bare hands."
-            tips[4] = "If you're nothing without the suit, then you shouldn't have it.";
-            tips[5] = "Wait a minute... You guys aren't the real Avengers! I can tell Hulk gives it away.";
-            tips[6] = "Can't you just be a friendly neighborhood Spider-Man?";
-            tips[7] = "Can you summon an army of spiders? / No, man!";
-            tips[8] = "What are you hiding Peter? [laughs] I'm just kidding. I don't care. Bye.";
-            tips[9] = "Spider-Man is not a party trick!";
-            
-            //run every second
-            setInterval(function() {
-                if(currentSec > -2) currentSec--;
-//              if(currentSec > -2) currentSec--;
-                if(currentSec < 10) $("#remaining-time-text").css("margin-left", "198px");
-                if(currentSec >= 0) $("#remaining-time-text").text(currentSec);
-                if(currentSec == -1) endTurn();
-                else {}
-//              if(currentSec == -2 && currentTurn < 30) startTurn();
-            }, 1000)
-            
-            function endTurn() {
-                alert("Time Out");
-                
-                if(currentTurn < 30) startTurn();
-            }
-                
-            function startTurn() {
-                //alert
-                alert("Turn Start");
-                
-                //renew items
-                
-                //renew tip
-                writeNewTip();
-                
-                //renew turn number
-                currentTurn++;
-                if(currentTurn >= 10) $("#current-turn-text").css("margin-left", "52px");
-                $("#current-turn-text").text(currentTurn + "/");
-                
-                //renew turn time
-                currentSec = 30;
-                $("#remaining-time-text").css("margin-left", "90px");
-                $("#remaining-time-text").text(currentSec);
-            }
-            
-            function writeNewTip() {
-                var randomNum;
-                
-                do {
-                    randomNum = Math.floor(Math.random() * 10);
-                }while(randomNum == tipsIndex);
-                
-                tipsIndex = randomNum;
-                
-                $("#tips-tip-text").text(tips[randomNum]);
-            }
-            
-            $(document).ready(function() {
-                $("#item1").click(function() {
-                    alert("use item1");
-                });
-                $("#item2").click(function() {
-                    alert("user item2");
-                });
-            });
-        </script>
-       
         <style>
             body {
                 margin: 0px;
@@ -143,7 +62,6 @@
                 display: flex;
                 flex-direction: column;
                 width: 400px;
-                /* width: 480px; */
             }
             
              /* 실제 맵이 존재하고 게임 말이 움직이는 공간 */
@@ -332,7 +250,7 @@
         <div id="flex">
             <div id="left-layout">
                 <div id="game-play-layout">
-                    <img src="TileBack_LeftBottom.png" style="position:absolute; left:0px; bottom:0; width:512px; height:512px; z-index:10;">
+                    <img src="TileBack_LeftBottom.png" id="sample" style="position:absolute; left:0px; bottom:0; width:512px; height:512px; z-index:10;">
                     <img src="TileBack_RightTop.png" style="position:absolute; right:0px; top:0; width:512px; height:512px; z-index:10;">
                     
                     <div id="map">
@@ -470,5 +388,136 @@
                 </div>
             </div>
         </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            // 이번 턴이 끝나끼까지 남은 시간을 알려주는 변수
+            var currentSec = 30;
+            // 현재 턴이 몇 번째인지를 담는 변수
+            var currentTurn = 1;
+            // 배열 tips의 index를 담는 변수
+            var tipsIndex = 1;
+            
+            // 테스트용 배열
+            // tip들을 모아놓은 배열
+            var tips = new Array(10);
+            tips[0] = "So, to become an Avenger, are there like trials or an interview?";
+            tips[1] = "You just don't do anything I would do... and definitely don't do anything I wouldn't do. There's a little gray area in there and that's where you operate.";
+            tips[2] = "That's not a hug. I'm just grabbing the door for you.";
+            tips[3] = "But you are a kid. / Yeah. A kid who can stop a bus with his bare hands."
+            tips[4] = "If you're nothing without the suit, then you shouldn't have it.";
+            tips[5] = "Wait a minute... You guys aren't the real Avengers! I can tell Hulk gives it away.";
+            tips[6] = "Can't you just be a friendly neighborhood Spider-Man?";
+            tips[7] = "Can you summon an army of spiders? / No, man!";
+            tips[8] = "What are you hiding Peter? [laughs] I'm just kidding. I don't care. Bye.";
+            tips[9] = "Spider-Man is not a party trick!";
+            
+            // 1초마다 실행
+            setInterval(function() {
+                if(currentSec > -2) currentSec--;
+                if(currentSec < 10) $("#remaining-time-text").css("margin-left", "198px");
+                if(currentSec >= 0) $("#remaining-time-text").text(currentSec);
+                if(currentSec == -1) endTurn();
+                else {}
+            }, 1000)
+            
+            // 각 턴이 끝날 때 실행되는 메서드
+            function endTurn() {
+                alert("Time Out");
+                
+                if(currentTurn < 30) startTurn();
+            }
+            
+            // 각 턴이 시작될 때 실행되는 메서드
+            function startTurn() {
+                
+                // 턴 시작 알람
+                alert("Turn Start");
+                
+                // 아이템 정보 갱신
+                
+                // 팁 갱신
+                writeNewTip();
+                
+                // 현재 턴 갱신
+                currentTurn++;
+                if(currentTurn >= 10) $("#current-turn-text").css("margin-left", "52px");
+                $("#current-turn-text").text(currentTurn + "/");
+                
+                // 남은 시간 갱신
+                currentSec = 30;
+                $("#remaining-time-text").css("margin-left", "90px");
+                $("#remaining-time-text").text(currentSec);
+            }
+            
+            // 팁을 갱신하는 메서드
+            function writeNewTip() {
+                var randomNum;
+                
+                do {
+                    randomNum = Math.floor(Math.random() * 10);
+                }while(randomNum == tipsIndex);
+                
+                tipsIndex = randomNum;
+                
+                $("#tips-tip-text").text(tips[randomNum]);
+            }
+            
+            // player를 그리는 메서드
+            // canvasID : player가 그려질 canvas의 ID
+            // imageSrc : player 이미지의 경로
+            // x : player의 x좌표
+            // y : player의 y좌표
+            function drawPlayer(canvasID, imageSrc, x, y) {
+                var layoutID = "sqr" + y + "x" + x;
+                document.getElementById(layoutID).innerHTML = '<canvas id="' + canvasID + '" width="80" height="80" style="margin:4px;"></canvas>';
+                
+                var playerCanvas = document.getElementById(canvasID);
+                var playerCanvasTX = playerCanvas.getContext("2d");
+                var playerImage = new Image();
+                playerImage.src = imageSrc;
+                playerCanvasTX.drawImage(playerImage, 0, 0, 80, 80);
+            }
+            
+            // move 버튼을 눌렀을 때 실행되는 메서드
+            // player 주위 상하좌우에 연한 원이 그려짐
+            function chooseMoveDirection(player) {
+                var playerID = $(player).parent().attr("id");
+                var y = parseInt(playerID.charAt(3));
+                var x = parseInt(playerID.charAt(5));
+                
+                if(playerID.length == 7) {
+                    x = x + playerID.charAt(6);
+                }
+                
+                if(y != 1 ) drawCircle(x, y, "Top");
+                if(x != 12) drawCircle(x, y, "Right");
+                if(y != 7 ) drawCircle(x, y, "Bottom");
+                if(x != 1 ) drawCircle(x, y, "Left");
+            }
+            
+            // HTML이 load되었을 때 실행
+            $(document).ready(function() {
+                
+                // dummy
+                // 이 코드가 없으면 첫 번째 실행한 drawPlayer가 이미지를 그리지 못함
+                drawPlayer("player", "Player1.png", 1, 1);
+                
+                // 첫 번째 item 슬롯을 클릭하면
+                $("#item1").click(function() {
+                    drawPlayer("player1", "Player1.png", 2, 2);
+                });
+                
+                // 두 번째 item 슬롯을 클릭하면
+                $("#item2").click(function() {
+                    drawPlayer("player2", "Player1.png", 1, 1);
+                });
+                
+                // move 버튼을 클릭하면
+                $("#move-text").click(function() {
+                    chooseMoveDirection(player1);
+                });
+            });
+        </script>
     </body>
 </html>
