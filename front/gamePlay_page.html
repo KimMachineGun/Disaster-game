@@ -245,6 +245,7 @@
                 color: #44282E;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
         <div id="flex">
@@ -388,8 +389,7 @@
                 </div>
             </div>
         </div>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
         <script>
             // 이번 턴이 끝나끼까지 남은 시간을 알려주는 변수
             var currentSec = 30;
@@ -463,61 +463,149 @@
                 $("#tips-tip-text").text(tips[randomNum]);
             }
             
+            // player의 x좌표를 구하는 메서드
+            function getMapCoordinateX(playerID) {
+                var squareID = $(document.getElementById(playerID)).parent().attr("id");
+                var x = parseInt(squareID.charAt(5));
+                
+                if(squareID.length == 7) {
+                    x = parseInt(x + squareID.charAt(6));
+                }
+                
+                return x;
+            }
+            
+            // player의 y좌표를 구하는 메서드
+            function getMapCoordinateY(playerID) {
+                var squareID = $(document.getElementById(playerID)).parent().attr("id");
+                var y = parseInt(squareID.charAt(3));
+                
+                return y;
+            }
+            
             // player를 그리는 메서드
-            // canvasID : player가 그려질 canvas의 ID
+            // playerID : player의 id
             // imageSrc : player 이미지의 경로
             // x : player의 x좌표
             // y : player의 y좌표
-            function drawPlayer(canvasID, imageSrc, x, y) {
-                var layoutID = "sqr" + y + "x" + x;
-                document.getElementById(layoutID).innerHTML = '<canvas id="' + canvasID + '" width="80" height="80" style="margin:4px;"></canvas>';
+            function drawPlayer(playerID, imageSrc, x, y) {
+                var squareID = "sqr" + y + "x" + x;
+                if(document.getElementById(squareID).innerHTML == '')
+                    document.getElementById(squareID).innerHTML = '<img src="' + imageSrc + '" id="' + playerID +'" style="margin:4px; width:80px; height:80px;">';
+            }
+            
+            //id가 playerID인 이미지를 삭제
+            function erasePlayer(playerID) {
+                var x = getMapCoordinateX(playerID);
+                var y = getMapCoordinateY(playerID);
                 
-                var playerCanvas = document.getElementById(canvasID);
-                var playerCanvasTX = playerCanvas.getContext("2d");
-                var playerImage = new Image();
-                playerImage.src = imageSrc;
-                playerCanvasTX.drawImage(playerImage, 0, 0, 80, 80);
+                var squareID = "sqr" + y + "x" + x;
+                document.getElementById(squareID).innerHTML = '';
+            }
+            
+            //id가 playerID인 이미지와 그 상하좌우에 위치한(except는 제외) 이미지들을 삭제
+            //except : string, Top/Right/Bottom/Left 중 하나
+            function erasePlayerExcept(playerID, except) {
+                //삭제하지 않을 이미지의 x, y값 받아오기
+                var x = getMapCoordinateX(playerID + except);
+                var y = getMapCoordinateY(playerID + except);
+                
+                //이미지 모두 삭제
+                if(document.getElementById(playerID) != null)
+                    erasePlayer(playerID);
+                if(document.getElementById(playerID + "Top") != null)
+                    erasePlayer(playerID + "Top");
+                if(document.getElementById(playerID + "Right") != null)
+                    erasePlayer(playerID + "Right");
+                if(document.getElementById(playerID + "Bottom") != null)
+                    erasePlayer(playerID + "Bottom");
+                if(document.getElementById(playerID + "Left") != null)
+                    erasePlayer(playerID + "Left");
+                
+                //삭제하지 않았어야 할 이미지 다시 그리기
+                drawPlayer(playerID, playerID + ".png", x, y);
+                bindingFunction();
             }
             
             // move 버튼을 눌렀을 때 실행되는 메서드
             // player 주위 상하좌우에 연한 원이 그려짐
-            function chooseMoveDirection(player) {
-                var playerID = $(player).parent().attr("id");
-                var y = parseInt(playerID.charAt(3));
-                var x = parseInt(playerID.charAt(5));
+            function chooseMoveDirection(playerID) {
+                var x = getMapCoordinateX(playerID);
+                var y = getMapCoordinateY(playerID);
                 
-                if(playerID.length == 7) {
-                    x = x + playerID.charAt(6);
+                if(y != 1 ) drawPlayer(playerID + "Top", playerID + "Light" + ".png", x, y - 1); // Top
+                if(x != 12) drawPlayer(playerID + "Right", playerID + "Light" + ".png", x + 1, y); // Right
+                if(y != 7 ) drawPlayer(playerID + "Bottom", playerID + "Light" + ".png", x, y + 1); // Bottom
+                if(x != 1 ) drawPlayer(playerID + "Left", playerID + "Light" + ".png", x - 1, y); // Left
+                bindingFunction();
+            }
+
+            // 테스트 코드
+            // menu 버튼을 클릭하면
+            $("#menu-text").click(function() {
+                drawPlayer("player1", "player1.png", 8, 1);
+                drawPlayer("player2", "player2.png", 3, 2);
+                drawPlayer("player3", "player3.png", 7, 4);
+                drawPlayer("player4", "player4.png", 10, 7);
+            });
+
+            // move 버튼을 클릭하면
+            $("#move-text").click(function() {
+                chooseMoveDirection("player1");
+            });
+
+            // 첫 번째 item 슬롯을 클릭하면
+            $("#item1").click(function() {
+                drawPlayer("player1", "player1.png", 2, 2);
+            });
+
+            // 두 번째 item 슬롯을 클릭하면
+            $("#item2").click(function() {
+                drawPlayer("player2", "player1.png", 1, 1);
+            });
+            
+            $("#player1").click(function() {
+                alert("player1");
+            });
+            
+            $("#player2").click(function() {
+                alert("player2");
+            });
+            
+            $("#player3").click(function() {
+                alert("player3");
+            });
+            
+            $("#player4").click(function() {
+                alert("player4");
+            });
+            
+            //이동할 방향을 선택했을 때 나머지 이미지를 지워주는 onclick 메서드
+            function bindingFunction() {
+                if(document.getElementById("player1Top") != null) {
+                    document.getElementById("player1Top").onclick = function() {
+                        erasePlayerExcept("player1", "Top");
+                    }
                 }
                 
-                if(y != 1 ) drawCircle(x, y, "Top");
-                if(x != 12) drawCircle(x, y, "Right");
-                if(y != 7 ) drawCircle(x, y, "Bottom");
-                if(x != 1 ) drawCircle(x, y, "Left");
+                if(document.getElementById("player1Right") != null) {
+                    document.getElementById("player1Right").onclick = function() {
+                        erasePlayerExcept("player1", "Right");
+                    }
+                }
+                
+                if(document.getElementById("player1Bottom") != null) {
+                    document.getElementById("player1Bottom").onclick = function() {
+                        erasePlayerExcept("player1", "Bottom");
+                    }
+                }
+                
+                if(document.getElementById("player1Left") != null) {
+                    document.getElementById("player1Left").onclick = function() {
+                        erasePlayerExcept("player1", "Left");
+                    }
+                }
             }
-            
-            // HTML이 load되었을 때 실행
-            $(document).ready(function() {
-                
-                // dummy
-                // 이 코드가 없으면 첫 번째 실행한 drawPlayer가 이미지를 그리지 못함
-                drawPlayer("player", "Player1.png", 1, 1);
-                
-                // 첫 번째 item 슬롯을 클릭하면
-                $("#item1").click(function() {
-                    drawPlayer("player1", "Player1.png", 2, 2);
-                });
-                
-                // 두 번째 item 슬롯을 클릭하면
-                $("#item2").click(function() {
-                    drawPlayer("player2", "Player1.png", 1, 1);
-                });
-                
-                // move 버튼을 클릭하면
-                $("#move-text").click(function() {
-                    chooseMoveDirection(player1);
-                });
-            });
         </script>
     </body>
 </html>
