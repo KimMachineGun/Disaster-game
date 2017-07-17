@@ -539,16 +539,6 @@
                 if(x != 1 ) drawPlayer(playerID + "Left", playerID + "Light" + ".png", x - 1, y); // Left
             }
 
-            // 테스트 코드
-            // menu 버튼을 클릭하면
-            $("#menu-text").click(function() {
-                drawPlayer("player1", "player1.png", 8, 1);
-                drawPlayer("player2", "player2.png", 3, 2);
-                drawPlayer("player3", "player3.png", 7, 4);
-                drawPlayer("player4", "player4.png", 10, 7);
-                bindingFunction();
-            });
-
             // move 버튼을 클릭하면
             $("#move-text").click(function() {
                 chooseMoveDirection("player1");
@@ -606,6 +596,12 @@
                     }
                 }
             }
+            
+            drawPlayer("player1", "player1.png", 8, 1);
+            drawPlayer("player2", "player2.png", 3, 2);
+            drawPlayer("player3", "player3.png", 7, 4);
+            drawPlayer("player4", "player4.png", 10, 7);
+            bindingFunction();
         </script>
     </body>
 </html>
