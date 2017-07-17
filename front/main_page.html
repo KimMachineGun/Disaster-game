@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+    <head>
+        
+    <meta name="subject" content="재난 대비 대처 교육용 게임"/>
+    <meta name="title" content="Disaster Tile"/>
+    <meta name="keywords" content="Disaster, prepare, game, project"/>
+    <meta name="author" content="심소욱, 조경욱"/>
+    <meta charset="utf-8"/>
+    
+        <title>Disaster Tile</title> 
+        
+        <style type="text/css">
+            
+            body {
+                
+                margin: 0px;
+                background-color: #A4D6FA;
+                font-family: "Segoe UI", sans-serif;
+                color: white;
+            }
+            
+            #login {
+                margin-left: 32px;
+                margin-top: 24px;
+            }
+            
+            #ranking {
+                margin-left: 40px;
+                margin-top: 24px;
+                margin-right: auto;  
+            }
+            
+            login-ranking {
+                display: flex;
+                flex-direction: row;
+                
+                font-size: 50px;
+                font-weight: lighter;
+            }
+            
+            #title {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 180px;
+                text-align: center;  
+                
+                font-size: 100px;
+            }
+            
+            #start {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 160px;
+                text-align: center;
+                
+                font-size: 50px;
+            }
+            
+            #how-to-play {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 48px;
+                text-align: center;
+                
+                font-size: 50px;
+            }            
+            
+            .center{
+            display: block;
+            margin :0 auto;
+            }
+            
+            a:link{
+                color: white;
+                text-decoration: none;
+            }
+            a:visited{
+                color: white;
+                text-decoration: none;
+            }
+            a:hover{
+                color: cornflowerblue;
+                text-decoration: none;
+            }
+    
+        </style>
+    </head>
+    
+    <body>
+        <img src="TileBack_LeftBottom.png" style="position:fixed; left:0; bottom:0; width:512px; height:512px;">
+        <img src="TileBack_RightTop.png" style="position:fixed; right:0; top:0; width:512px; height:512px;">
+        
+        <login-ranking>
+        <div id="login"><a href="login_page.html" id="login">Login</a></div>
+        <div id="ranking"><a href="ranking_page.html">Ranking</a></div>
+        </login-ranking>
+        <img src="최종로고.png" alt="Disaster Tile" width="720" height="400" class=center />
+        <div id="start"><a href="loading_page.html">START</a></div>
+        <div id="how-to-play"><a href="howToPlay_page.html">HOW TO PLAY</a></div>
+    </body>
+</html>
