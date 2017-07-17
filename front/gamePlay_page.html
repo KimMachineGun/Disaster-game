@@ -494,7 +494,7 @@
                     document.getElementById(squareID).innerHTML = '<img src="' + imageSrc + '" id="' + playerID +'" style="margin:4px; width:80px; height:80px;">';
             }
             
-            //id가 playerID인 이미지를 삭제
+            // id가 playerID인 이미지를 삭제
             function erasePlayer(playerID) {
                 var x = getMapCoordinateX(playerID);
                 var y = getMapCoordinateY(playerID);
@@ -503,10 +503,10 @@
                 document.getElementById(squareID).innerHTML = '';
             }
             
-            //id가 playerID인 이미지와 그 상하좌우에 위치한(except는 제외) 이미지들을 삭제
-            //except : string, Top/Right/Bottom/Left 중 하나
+            // id가 playerID인 이미지와 그 상하좌우에 위치한(except는 제외) 이미지들을 삭제
+            // except : string, Top/Right/Bottom/Left 중 하나
             function erasePlayerExcept(playerID, except) {
-                //삭제하지 않을 이미지의 x, y값 받아오기
+                // 삭제하지 않을 이미지의 x, y값 받아오기
                 var x = getMapCoordinateX(playerID + except);
                 var y = getMapCoordinateY(playerID + except);
                 
@@ -522,7 +522,7 @@
                 if(document.getElementById(playerID + "Left") != null)
                     erasePlayer(playerID + "Left");
                 
-                //삭제하지 않았어야 할 이미지 다시 그리기
+                // 삭제하지 않았어야 할 이미지 다시 그리기
                 drawPlayer(playerID, playerID + ".png", x, y);
                 bindingFunction();
             }
@@ -537,7 +537,6 @@
                 if(x != 12) drawPlayer(playerID + "Right", playerID + "Light" + ".png", x + 1, y); // Right
                 if(y != 7 ) drawPlayer(playerID + "Bottom", playerID + "Light" + ".png", x, y + 1); // Bottom
                 if(x != 1 ) drawPlayer(playerID + "Left", playerID + "Light" + ".png", x - 1, y); // Left
-                bindingFunction();
             }
 
             // 테스트 코드
@@ -547,41 +546,42 @@
                 drawPlayer("player2", "player2.png", 3, 2);
                 drawPlayer("player3", "player3.png", 7, 4);
                 drawPlayer("player4", "player4.png", 10, 7);
+                bindingFunction();
             });
 
             // move 버튼을 클릭하면
             $("#move-text").click(function() {
                 chooseMoveDirection("player1");
+                bindingFunction();  
             });
 
             // 첫 번째 item 슬롯을 클릭하면
             $("#item1").click(function() {
-                drawPlayer("player1", "player1.png", 2, 2);
             });
 
             // 두 번째 item 슬롯을 클릭하면
             $("#item2").click(function() {
-                drawPlayer("player2", "player1.png", 1, 1);
             });
             
-            $("#player1").click(function() {
-                alert("player1");
-            });
-            
-            $("#player2").click(function() {
-                alert("player2");
-            });
-            
-            $("#player3").click(function() {
-                alert("player3");
-            });
-            
-            $("#player4").click(function() {
-                alert("player4");
-            });
-            
-            //이동할 방향을 선택했을 때 나머지 이미지를 지워주는 onclick 메서드
+            // innerhtml로 그린 오브젝트와 onclick 메서드를 연결해주는 역할
             function bindingFunction() {
+                $("#player1").click(function() {
+                    alert("player1");
+                });
+
+                $("#player2").click(function() {
+                    alert("player2");
+                });
+
+                $("#player3").click(function() {
+                    alert("player3");
+                });
+
+                $("#player4").click(function() {
+                    alert("player4");
+                });
+                
+                //이동할 방향을 선택했을 때 나머지 이미지를 지워주는 onclick 메서드
                 if(document.getElementById("player1Top") != null) {
                     document.getElementById("player1Top").onclick = function() {
                         erasePlayerExcept("player1", "Top");
