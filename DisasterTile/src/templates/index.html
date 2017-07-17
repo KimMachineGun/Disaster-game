@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<input type="text" id="message" value="">
+	<span id="sendBtn">Send</span>
+	<script>
+            var socket;
+
+            if (window.WebSocket) {
+                socket = new WebSocket("ws://10.156.145.115:8090/game-ws");
+                
+                socket.onmessage = function (event) {
+                    alert("받은 데이터: " + event.data);
+                    console.log(event.data);
+                };
+                
+                socket.onopen = function (event) {
+                    alert("웹소켓 열려있음");
+                };
+                
+                socket.onclose = function (event) {
+                    alert("웹소켓 닫힘");
+                };
+                
+            } else {
+                alert("지원하지 않는 브라우저");
+            }
+
+            $("#sendBtn").on("click", function() {
+                send($("#message").val());
+            });
+
+            function send(message) {
+                if (socket.readyState == WebSocket.OPEN) {
+                    socket.send(message);
+                } else {
+                    alert("웹소켓 닫힘");
+                }
+            }
+            
+        </script>
+</body>
+</html>
