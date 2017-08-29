@@ -10,6 +10,8 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ServerWebSocket;
 
+import java.sql.*;
+
 public class Server {
 	static Vertx vertx = null;
 	
@@ -18,7 +20,8 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
-		Runner.runExample(Server.class);
+		DB.connect();
+		DB.create();     
 		startServer("main", vertx);
 	}
 
@@ -59,18 +62,27 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 			ws.handler(new Handler<Buffer>() {
 				@Override
 				public void handle(final Buffer data) {
-					System.out.println(data);
-					// ws.writeFinalTextFrame(data + " 가 서버에 도착했데요~");
-//					Buffer a = Buffer.buffer();
+					String temp = data.toString();
+//					ResultSet rs = DB.executeQuery(temp);
 //					
-//					a.appendBuffer(data);
-
+//					try {
+//						while(true) {
+//							if(rs.next()) {
+//								System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
+//							} else {
+//								break;
+//							}
+//						}
+//						
+//					} catch (SQLException e) {
+//						e.printStackTrace();
+//					}
+					
 					Set<String> keySet = wsSessions.keySet();
 					Iterator<String> keySetIt = keySet.iterator();
 					while(keySetIt.hasNext()) {
-						String temp = keySetIt.next();
-						System.out.println("data 전송");
-						wsSessions.get(temp).writeTextMessage(data + "가 서버에 도착");
+						String key = keySetIt.next();
+						wsSessions.get(key).writeTextMessage(data + "가 서버에 도착");
 					}
 				}
 			});
