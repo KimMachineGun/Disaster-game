@@ -14,11 +14,16 @@ public class DB {
 			               "WIN INT, " + 
 			               "LOSE INT, " +
 			               "EXP INT, " +
-			               "HIGHSCORE INT)";
+			               "HIGHSCORE INT);";
+		
+		String tipTable = "CREATE TABLE TIPS " +
+						  "(NO INT PRIMARY KEY NOT NULL, " +
+						  "CONTENT TEXT NOT NULL);";
 		
 		try {
 			statement.executeUpdate(userTable);
-		} catch (SQLException e) {
+			statement.executeUpdate(tipTable);
+			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
