@@ -30,7 +30,6 @@ public class DB {
 	}
 	
 	static void connect() {
-		System.out.println(System.getProperty("java.class.path"));
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:DisasterTile.db");

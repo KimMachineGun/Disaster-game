@@ -8,7 +8,10 @@ import java.util.Set;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.http.ServerWebSocket;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
 
 import java.sql.*;
 
@@ -21,7 +24,7 @@ public class Server {
 
 	public static void main(String[] args) {
 		DB.connect();
-		DB.create();     
+		//DB.create();     
 		startServer("main", vertx);
 	}
 
@@ -31,11 +34,19 @@ public class Server {
 		if(vertx == null)	{
 			vertx = Vertx.vertx();
 		}
-		vertx.createHttpServer().requestHandler(req -> {
-			if (req.uri().equals("/")) {
-				req.response().sendFile("src/templates/index.html");
-			}
-		}).listen(8080);
+		Router router = Router.router(vertx);
+		
+		router.route("/static/*").handler(StaticHandler.create("../front/"));
+		
+		router.get("/").handler(ctx -> {
+			HttpServerResponse response = ctx.response();
+			  
+			response.sendFile("../front/login_page.html");
+		});
+		
+
+		
+		vertx.createHttpServer().requestHandler(router::accept).listen(8080);
 
 		vertx.createHttpServer().websocketHandler(new CustomWebsocketHandler()).listen(8090);
 	}
