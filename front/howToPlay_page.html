@@ -7,12 +7,16 @@
                 font-family: "Segoe UI", sans-serif;
             }
             
+            a:link, a:visited, a:hover, a:active {
+                color: black;
+                text-decoration: none;
+            }
+            
             #title-layout {
                 display: flex;
             }
             
             #how-to-play-layout {
-                position: relative;
                 background-color: #A4D6FA;
                 height: 100%;
             }
@@ -44,22 +48,21 @@
                 font-size: 50px;
                 font-weight: lighter;
             }
-            
-            .logo{
-                margin: -20 auto;
-                display: flex;
-            }
 
         </style>
     </head>
     
     <body>
             <div id="title-layout">
-               <img src="최종로고.png" alt="Disaster Tile" width="720" height="400" />
-                <div id="back">BACK</div>
+                <div id="title-text">DisasterTile</div>
+                <div id="back">
+                <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/main_page.html">
+                BACK  
+                </a>
+                </div>
             </div>
             <div id="how-to-play-layout">
-               <img src="TileBack_LeftTop.png" style="position:absolute; left:0; top:0; width:512px; height:512px;">
+               <img src="TileBack_LeftTop.png" style="position:inherit; left:0; top:266px; width:512px; height:512px;">
                 <div id="how-to-play-text">How to play</div>
             </div>
     </body>

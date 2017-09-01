@@ -1,37 +1,37 @@
 <!doctype html>
 <html>
     <head>
-        
-    <meta name="subject" content="재난 대비 대처 교육용 게임"/>
-    <meta name="title" content="Disaster Tile"/>
-    <meta name="keywords" content="Disaster, prepare, game, project"/>
-    <meta name="author" content="심소욱, 조경욱"/>
-    <meta charset="utf-8"/>
-    
-        <title>Disaster Tile</title> 
-        
-        <style type="text/css">
-            
+        <style>
             body {
-                
                 margin: 0px;
-                background-color: #A4D6FA;
                 font-family: "Segoe UI", sans-serif;
-                color: white;
             }
             
-            #login {
-                margin-left: 32px;
-                margin-top: 24px;
+            /* a-tag's style */
+            a:link, a:visited, a:hover, a:active {
+                color: #953434;
+                text-decoration: none;
             }
             
-            #ranking {
-                margin-left: 40px;
-                margin-top: 24px;
-                margin-right: auto;  
+            /* cliff.png */
+            #background {
+                position:fixed;
+                right:0;
+                top:0;
+                width:1300px;
+                height:1300px;
+                
+                z-index: 10;
             }
             
-            login-ranking {
+            /* set other object's z-index value bigger than background */
+            #login-ranking, #logo, #start, #guest, #how-to-play {
+                position: relative;
+                z-index: 20;
+            }
+            
+            /* flex layout including login and ranking */
+            #login-ranking {
                 display: flex;
                 flex-direction: row;
                 
@@ -39,64 +39,81 @@
                 font-weight: lighter;
             }
             
-            #title {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 180px;
-                text-align: center;  
+            /* a button that is linked to login_page */
+            #login {
+                margin-left: 32px;
+                margin-top: 24px;
+            }
+            
+            /* a button that is linked to ranking_page */
+            #ranking {
+                margin-left: 40px;
+                margin-top: 24px;
+            }
+            
+            /* Logo.png */
+            #logo {
+                margin-left: 324px;
+                margin-top: 0px; 
                 
+                width: 720px;
+                height: 432px;
+            }
+            
+            /* two main button's style */
+            #start, #how-to-play {
                 font-size: 100px;
+                font-weight: lighter;
             }
             
+            /* a button that is linked to loading_page */
             #start {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 160px;
-                text-align: center;
-                
-                font-size: 50px;
+                margin-left: 554px;
+                margin-top: 40px;
             }
             
+            /* a button that is linkted to howToPlay_page */
             #how-to-play {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 48px;
-                text-align: center;
+                margin-left: 374px;
+                margin-top: 40px;
+            }
+            
+            /* a text that informs the user is guest */
+            #guest {
+                margin-left: 688px;
+                margin-top: -26px;
                 
-                font-size: 50px;
-            }            
-            
-            .center{
-            display: block;
-            margin :0 auto;
+                font-size: 30px;
+                color: #95989A;
             }
-            
-            a:link{
-                color: white;
-                text-decoration: none;
-            }
-            a:visited{
-                color: white;
-                text-decoration: none;
-            }
-            a:hover{
-                color: cornflowerblue;
-                text-decoration: none;
-            }
-    
         </style>
     </head>
     
     <body>
-        <img src="TileBack_LeftBottom.png" style="position:fixed; left:0; bottom:0; width:512px; height:512px;">
-        <img src="TileBack_RightTop.png" style="position:fixed; right:0; top:0; width:512px; height:512px;">
-        
-        <login-ranking>
-        <div id="login"><a href="login_page.html" id="login">Login</a></div>
-        <div id="ranking"><a href="ranking_page.html">Ranking</a></div>
-        </login-ranking>
-        <img src="최종로고.png" alt="Disaster Tile" width="720" height="400" class=center />
-        <div id="start"><a href="loading_page.html">START</a></div>
-        <div id="how-to-play"><a href="howToPlay_page.html">HOW TO PLAY</a></div>
+        <img src="Cliff.png" id="background">
+        <div id="login-ranking">
+            <div id="login">
+                <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/login_page.html">
+                Login
+                </a>
+            </div>
+            <div id="ranking">
+                <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/ranking_page.html">
+                Ranking
+                </a>
+            </div>
+        </div>
+        <img src="Logo.png" alt="Disaster Tile" id="logo">
+        <div id="start">
+            <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/loading_page.html">
+            START
+            </a>
+        </div>
+        <div id="guest">Now you're guest</div>
+        <div id="how-to-play">
+            <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/howToPlay_page.html">
+            HOW TO PLAY
+            </a>
+        </div>
     </body>
 </html>
