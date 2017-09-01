@@ -1,0 +1,204 @@
+<!doctype>
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0px;
+                font-family: "Segoe UI", sans-serif;
+            }
+            
+            /* a-tag's style */
+            a:link, a:visited, a:hover, a:active {
+                color: #953434;
+                text-decoration: none;
+            }
+            
+            /* cliff.png */
+            #background {
+                position:fixed;
+                
+                right: 0px;
+                top: 0px;
+                width: 1300px;
+                height: 1300px;
+                
+                z-index: 10;
+            }
+            
+            /* set other object's z-index value bigger than background */
+            #back, #title {
+                position: relative;
+                z-index: 20;
+            }
+            
+            /* a button that is linked to login_page */
+            #back {
+                margin-top: 24px;
+                margin-left: 32px;
+                
+                font-size: 50px;
+                font-weight: lighter;
+            }
+            
+            /* left-align elements */
+            #title, #explanation, #ranking-table {
+                margin-left: 200px;
+            }
+            
+            /* 'Ranking' text */
+            #title {
+                margin-top: -60px;
+                
+                font-size: 100px;
+                font-weight: lighter;
+                color: #C77575;
+            }
+            
+            /* explain this page */
+            #explanation {
+                margin-top: 4px;
+                
+                font-size: 30px;
+                color: #C77575
+            }
+            
+            /* the table that shows user's and top 7's ranking */
+            #ranking-table {
+                display: flex;
+                flex-direction: column;
+                
+                margin-top: 52px;
+                border-collapse: collapse;
+                width: 940px;
+                
+                text-align: center;
+            }
+            
+            /* decide each field's width */
+            .ranking { width: 200px; }
+            .username { width: 400px; }
+            .score { width: 260px; }
+            
+            /* headers' style */
+            th {
+                /* make space between records */
+                border-bottom: 4px solid white;
+                background-color: white;
+                
+                font-size: 50px;
+                font-weight: lighter;
+            }
+            
+            /* cells' style */
+            td {
+                height: 76px;
+                font-size: 40px;
+            }
+            
+            /* records' style */
+            tr {
+                /* make space between records */
+                border-bottom: 8px solid white;
+                background-color: #FFF6BA;
+            }
+            
+            /* show user's score, first record */
+            #my-score {
+                background-color: #FFDFBA;
+            }
+            
+            /* make space under #my-score */
+            .blank {
+                height: 0px;
+                background-color: white;    
+            }
+        </style>
+    </head>
+    
+    <body>
+        <img src="Cliff.png" id="background">
+        <div id="back">
+            <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/main_page.html">
+            BACK
+            </a>
+            <div id="title">Ranking</div>
+            <div id="explanation">랭킹은 게임에서 얻은 최고 점수를 기준으로 기록됩니다.</div>
+            <table id="ranking-table">
+               <thead>
+                   <tr>
+                       <th style="width:200px">Ranking</th>
+                       <th style="width:40px"></th>
+                       <th style="width:400px">user name</th>
+                       <th style="width:40px"></th>
+                       <th style="width:260px">score</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr id="my-score">
+                       <td class="ranking">52</td>
+                       <td style="width:40px"></td>
+                       <td class="username">Kim Gun</td>
+                       <td style="width:40px"></td>
+                       <td class="score">8800</td>
+                   </tr>
+                   <tr id="blank">
+                       <td class="blank"></td>
+                       <td class="blank"></td>
+                       <td class="blank"></td>
+                       <td class="blank"></td>
+                       <td class="blank"></td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">1</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">90000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">2</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td style="width:40px"></td>
+                       <td class="score">80000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">3</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">70000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">4</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">60000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">5</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">50000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">6</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">40000</td>
+                   </tr>
+                   <tr>
+                       <td class="ranking">7</td>
+                       <td></td>
+                       <td class="username">my name</td>
+                       <td></td>
+                       <td class="score">30000</td>
+                   </tr>
+               </tbody>
+            </table>
+        </div>
+    </body>
+</html>
