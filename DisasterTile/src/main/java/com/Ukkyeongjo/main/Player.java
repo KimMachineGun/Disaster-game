@@ -13,6 +13,12 @@ public class Player {
 	void disaster(int disasterNum, int usedItem) {
 		int damage = 0;
 		
+		if(usedItem == 1){
+			health += 30;
+			
+			if(health >= 100) health = 100;
+		}
+		
 		//화재
 		if(disasterNum == 1) {
 			//소화기, 젖은 수건
@@ -69,22 +75,8 @@ public class Player {
 			else if(usedItem == 8) damage = 60;
 			else damage = 50;
 		}
-
 		
 		health -= damage;
-	}
-	
-	void useItem(int item){	
-		switch (item) {
-		case 1: // 힐킷
-			health += 30;
-			break;
-		case 2: //소화기
-		default:
-			break;
-		}
-		
-		if(health >= 100) health = 100;
 	}
 	
 	void escapeDisaster(){
