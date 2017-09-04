@@ -433,7 +433,7 @@
                 </div>
                 <div id="select-layout">
                     <div id="menu-text">MENU</div>
-                    <img src="player1.png" id="health-circle">
+                    <img id="health-circle">
                     <div id="health-text">100</div>
                     <div id="score-layout">
                         <div id="score-text">score</div>
@@ -444,13 +444,13 @@
                     <div id="use-terrain-text">USE<br>TERRAIN</div>
                     </div>
                     <div id="item-text">Item</div>
-                        <img src="White_Circle.png" id="item1">
-                        <img src="White_Circle.png" id="item2">
+                        <img src="/static/White_Circle.png" id="item1">
+                        <img src="/static/White_Circle.png" id="item2">
                 </div>
             </div>
             <div id="right-layout">
                 <div id="turn-time-layout">
-                    <img src="Cliff2.png" id="background">
+                    <img src="/static/Cliff2.png" id="background">
                     <div id="turn-text">Turn</div>
                     <div id="turn-layout">
                         <div id="current-turn-text">1/</div>
@@ -613,7 +613,7 @@
                     erasePlayer(playerID + "Left");
                 
                 // 삭제하지 않았어야 할 이미지 다시 그리기
-                drawPlayer(playerID, playerID + ".png", x, y);
+                drawPlayer(playerID, "/static/" + playerID + ".png", x, y);
                 bindingFunction();
             }
             
@@ -623,10 +623,10 @@
                 var x = getMapCoordinateX(playerID);
                 var y = getMapCoordinateY(playerID);
                 
-                if(y != 1 ) drawPlayer(playerID + "Top", playerID + "Light" + ".png", x, y - 1); // Top
-                if(x != 12) drawPlayer(playerID + "Right", playerID + "Light" + ".png", x + 1, y); // Right
-                if(y != 7 ) drawPlayer(playerID + "Bottom", playerID + "Light" + ".png", x, y + 1); // Bottom
-                if(x != 1 ) drawPlayer(playerID + "Left", playerID + "Light" + ".png", x - 1, y); // Left
+                if(y != 1 ) drawPlayer(playerID + "Top", "/static/" + playerID + "Light" + ".png", x, y - 1); // Top
+                if(x != 12) drawPlayer(playerID + "Right", "/static/" + playerID + "Light" + ".png", x + 1, y); // Right
+                if(y != 7 ) drawPlayer(playerID + "Bottom", "/static/" + playerID + "Light" + ".png", x, y + 1); // Bottom
+                if(x != 1 ) drawPlayer(playerID + "Left", "/static/" + playerID + "Light" + ".png", x - 1, y); // Left
             }
 
             // move 버튼을 클릭하면
@@ -711,13 +711,13 @@
                 }
             }
             
-            drawPlayer("player1", "player1.png", 8, 1);
-            drawPlayer("player2", "player2.png", 3, 2);
-            drawPlayer("player3", "player3.png", 7, 4);
-            drawPlayer("player4", "player4.png", 10, 7);
+            drawPlayer("player1", "/static/" + "Player1.png", 8, 1);
+            drawPlayer("player2", "/static/" + "Player2.png", 3, 2);
+            drawPlayer("player3", "/static/" + "Player3.png", 7, 4);
+            drawPlayer("player4", "/static/" + "Player4.png", 10, 7);
             
             //health-circle 이미지 파일을 플레이어의 이미지 파일과 같게 만듦
-            $("#health-circle").attr("src", myID + ".png")
+            $("#health-circle").attr("src", "/static/" + myID + ".png")
             bindingFunction();
         </script>
     </body>

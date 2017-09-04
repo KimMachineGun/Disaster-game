@@ -5,6 +5,7 @@
             body {
                 margin: 0px;
                 font-family: "Segoe UI", sans-serif;
+                color: #953434;
             }          
             
             /* a-tag's style */
@@ -42,42 +43,36 @@
             /* 'Sign up' text */
             #title {
                 margin-left: 528px;
-                margin-top: 144px;
+                margin-top: 100px;
+                margin-bottom: 60px;
                 
                 font-size: 100px;
                 font-weight: lighter;
-                color: #953434;
-                
+            }
+            
+            #username-text, #email-text, #password-text {
+                margin-left: 444px;
+                font-size: 24px;
+                color: #95989A;
             }
             
             /* three input boxes' style */
             #username, #email, #password {
+                margin-left: 444px;
+                margin-top: 4px;
                 padding: 12px;
                 border: 2px solid #C77575;
                 width: 480px;
                 
                 font-size: 30px;
-                color: #95989A;
+                color: black;
             }
             
-            /* a input box that can be typed username */
-            #username {
-                margin-left: 444px;
-                margin-top: 60px;
+            /* three input boxes' style */
+            #username, #email {
+                margin-bottom: 20px;
             }
-            
-            /* a input box that can be typed e-mail */
-            #email {
-                margin-left: 444px;
-                margin-top: 20px;
-            }
-            
-            /* a input box that can be typed password */
-            #password {
-                margin-left: 444px;
-                margin-top: 20px;
-            }
-            
+    
             /* a button that is linked to login_page */
             /* and it send account information to the server*/
             #sign-up-button {
@@ -110,16 +105,19 @@
     </head>
     
     <body>
-        <img src="Cliff.png" id="background">
+        <img src="/static/Cliff.png" id="background">
         <div id="back">
             <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/main_page.html">
             BACK
             </a>
         </div>
         <div id="title">Sign up</div>
-        <div id="username">username</div>
-        <div id="email">email</div>
-        <div id="password">password</div>
+        <label for="id" id="username-text">username</label><br>
+           <input type="text" id="username"><br>
+           <label for="id" id="email-text">email</label><br>
+           <input type="text" id="email"><br>
+           <label for="id" id="password-text">password</label><br>
+           <input type="password" id="password">
         <div id="sign-up-button">
             <a href="file:///D:/%EA%B3%BC%EC%A0%9C/2017/%EC%9E%90%EB%B0%94/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Disaster-game/front/main_page.html">
             Sign up
