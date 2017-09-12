@@ -35,25 +35,25 @@
 [
     {
         "name": "player2",
-        "item": 2,
+        "item": 2
 
     },
 
     {
         "name": "player2",
-        "item": 2,
+        "item": 2
 
     },
 
     {
         "name": "player3",
-        "item": 4,
+        "item": 4
 
     },
 
     {
         "name": "player4",
-        "item": 0,
+        "item": 0
 
     },
 
@@ -86,6 +86,14 @@
     {
         "name": "player1",
         "x": 1,
-        "y": 2,
+        "y": 2
+    }
+]
+
+로그인
+[
+    {
+        "username": "kim_geon",
+        "password": "hellworld"
     }
 ]

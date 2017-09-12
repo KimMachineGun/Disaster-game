@@ -1,0 +1,88 @@
+body {
+    margin: 0px;
+    font-family: "Segoe UI", sans-serif;
+    color: #953434;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #953434;
+    text-decoration: none;
+}
+
+#background {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 1300px;
+    height: 1300px;
+    z-index: 10;
+}
+
+div {
+    position: relative;
+    z-index: 20;
+}
+
+#back {
+    margin-top: 24px;
+    margin-left: 32px;
+    font-size: 50px;
+    font-weight: lighter;
+}
+
+#title {
+    margin-left: 556px;
+    margin-top: 100px;
+    margin-bottom: 60px;
+    font-size: 100px;
+    font-weight: lighter;
+}
+
+div:hover {
+    cursor: default;
+}
+
+#input > label {
+    margin-left: 444px;
+    font-size: 24px;
+    color: #95989A;
+}
+
+#input > input {
+    margin-left: 444px;
+    margin-top: 4px;
+    padding: 12px;
+    border: 2px solid #C77575;
+    width: 480px;
+    font-size: 30px;
+    color: black;
+}
+
+#username {
+    margin-bottom: 20px;
+}
+
+#find-ID-PW {
+    margin-left: 724px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #95989A;
+}
+
+.button {
+    text-align: center;
+    padding: 2px;
+    border: 2px solid #C77575;
+    width: 240px;
+    font-size: 30px;
+}
+
+#login {
+    margin-left: 564px;
+    margin-top: 44px;
+}
+
+#create-account {
+    margin-left: 564px;
+    margin-top: 16px;
+}  
