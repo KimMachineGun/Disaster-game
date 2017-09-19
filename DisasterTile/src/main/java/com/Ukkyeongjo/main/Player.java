@@ -3,7 +3,7 @@ package com.Ukkyeongjo.main;
 public class Player {
 	int health = 100;
 	int x = 0, y = 0;
-	int item = 0;
+	int item = 0; // 보유중인 아이템
 	boolean isItemUsed = false;
 	
 	/* if(isItemUsed == false) usedItem = 0;
@@ -77,9 +77,5 @@ public class Player {
 		}
 		
 		health -= damage;
-	}
-	
-	void escapeDisaster(){
-		
 	}
 }
