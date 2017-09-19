@@ -8,7 +8,7 @@ public class DB {
 	
 	static void create() {
 		String userTable = "CREATE TABLE USERS " +
-			               "(NO INT PRIMARY KEY NOT NULL, " +
+			               "(NO INT PRIMARY KEY, " +
 			               "ID CHAR(16) NOT NULL UNIQUE, " + 
 			               "PW CHAR(16) NOT NULL, " + 
 			               "WIN INT, " + 
@@ -42,27 +42,4 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	
-	static int executeUpdate(String query) {
-		try {
-			int temp = statement.executeUpdate(query);
-			return temp;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return -1;
-		}
-	}
-	
-	static ResultSet executeQuery(String query) {
-		try {
-			ResultSet temp = statement.executeQuery(query);
-			return temp;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 }
