@@ -6,12 +6,16 @@ public class Player {
 	int item = 0; // 보유중인 아이템
 	boolean isItemUsed = false;
 	
-	/* if(isItemUsed == false) usedItem = 0;
-	 * else usedItem = item;
-	 * */
+	void getItem(int itemNum){
+		item = itemNum;
+	}
 	
+	//아이템 사용 여부에 따른 데미지 피해량
 	void disaster(int disasterNum, int usedItem) {
 		int damage = 0;
+		
+		if(isItemUsed == false) usedItem = 0;
+		else usedItem = item;
 		
 		if(usedItem == 1){
 			health += 30;

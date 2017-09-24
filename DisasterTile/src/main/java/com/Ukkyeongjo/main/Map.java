@@ -19,6 +19,7 @@ public class Map {
 
 	Player[] player = new Player[4];
 
+	//재난 생성, 배치
 	private void generateDisaster(int number) {
 		int x, y;
 
@@ -27,7 +28,7 @@ public class Map {
 			y = random.nextInt(8);
 
 			int terrain = terrains[y][x];
-			int disasterNum;
+			int disasterNum = 0;
 
 			switch (terrain) {
 			case 0: 
@@ -42,14 +43,28 @@ public class Map {
 			case 3:
 				disasterNum = chooseDisaster(2, 3, 7);
 			}
+			
+			disasters[y][x] = disasterNum;
+			if ( x > 0  && y > 0) disasters[y-1][x-1] = disasterNum;
+			if ( x > 0  && y < 7) disasters[y+1][x-1] = disasterNum;
+			if ( x < 12  && y > 0) disasters[y-1][x+1] = disasterNum;
+			if ( x < 12  && y < 7) disasters[y+1][x+1] = disasterNum;
+			if ( x > 0 ) disasters[y][x-1] = disasterNum;
+			if ( y > 0 ) disasters[y-1][x] = disasterNum;
+			if ( x < 12 ) disasters[y][x+1] = disasterNum;
+			if ( y < 7 ) disasters[y+1][x] = disasterNum;
 		}
+		
+		
 	}
 
+	//재난 랜덤 선택
 	private int chooseDisaster(int... numbers) {
-		int index = random.nextInt(numbers.length);
+		int index = random.nextInt(numbers.length) + 1;
 		return numbers[index];
 	}
 
+	//아이템 생성
 	private void generateItem() {
 		int x, y;
 
