@@ -2,7 +2,7 @@
 <html>
    
     <head>
-        <link rel="stylesheet" href="../css/game-play.css">
+        <link type="text/css" rel="stylesheet" href="../css/game-play.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     
@@ -142,13 +142,11 @@
                         <div id="score-text">score</div>
                         <div id="current-score-text">12300</div>
                     </div>
-                        <div id="move-use-layout">
+                        <div id="move-layout">
                         <div id="move-text">MOVE</div>
-                    <div id="use-terrain-text">USE<br>TERRAIN</div>
                     </div>
                     <div id="item-text">Item</div>
-                        <img src="/static/White_Circle.png" id="item1">
-                        <img src="/static/White_Circle.png" id="item2">
+                        <img src="/static/White_Circle.png" id="item">
                 </div>
             </div>
             <div id="right-layout">
@@ -157,11 +155,11 @@
                     <div id="turn-text">Turn</div>
                     <div id="turn-layout">
                         <div id="current-turn-text">1/</div>
-                        <div id="max-turn-text">30</div>
+                        <div id="max-turn-text">15</div>
                     </div>
                     <div id="time-text">Time</div>
                     <div id="time-layout">
-                        <div id="remaining-time-text">30</div>
+                        <div id="remaining-time-text">15</div>
                         <div id="sec-text">sec</div>
                     </div>
                 </div>
@@ -173,8 +171,8 @@
         </div>
 
         <script>
-            var INITSEC = 30;
-            var MAXTURN = 30;
+            var INITSEC = 15;
+            var MAXTURN = 15;
             
             // 이번 턴이 끝나끼까지 남은 시간을 알려주는 변수
             var currentSec = INITSEC;

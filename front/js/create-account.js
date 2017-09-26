@@ -1,19 +1,20 @@
-$("#login").on("click", function() {
+$("#sign-up").on("click", function() {
     let jsonData = JSON.stringify({
         "username": $("#username").val(),
-        "password": $("#password").val()
+        "password": $("#password").val(),
+        "confirm-password": $("#confirm-password").val()
     });
     $.ajax({
-        url: '/login',
+        url: '/create-account',
         type : 'post',
         dataType: 'json',
         data : jsonData,
         success : function() {
-            alert("로그인 성공");
+            alert("회원가입 성공");
             window.location.href = "/";
         },
         error : function() {
-            alert("로그인 실패");
+            alert("회원가입 실패");
         }
     }); 
 });

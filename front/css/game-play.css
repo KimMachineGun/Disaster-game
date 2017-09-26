@@ -10,7 +10,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 /* 절벽 모양 배경보다 z-index를 높이기 위한 코드 */
-#item2, #turn-text, #turn-layout, #time-text, #time-layout, #tips-layout {
+#item, #turn-text, #turn-layout, #time-text, #time-layout, #tips-layout {
     position: relative;
     z-index: 20;
 }
@@ -21,7 +21,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 /* pointer (button) 커서 모양 적용 */
-#menu-text, #move-text, #use-terrain-text, #item1, #item2 {
+#menu-text, #move-text, #item {
     cursor: pointer;
 }
 
@@ -106,7 +106,7 @@ flex {
 }
 
 /* move-text, use-terrain-text를 포함한 레이아웃 */
-#move-use-layout {
+#move-layout {
     /* 좌우 구분선 그리는 코드 */
     margin-top: 28px;
     margin-bottom: 28px;
@@ -242,14 +242,8 @@ flex {
 /* 클릭 시 플레이어 주변에 이동할 수 있는 방향이 표시됨 */
 #move-text {
     font-size: 50px;
-    margin-top: -20px;
+    margin-top: 40px;
     margin-bottom: 8px;
-}
-
-/* "USE TERRAIN" 텍스트 */
-/* 클릭 시 지형 이용 가능 (미구현) */
-#use-terrain-text {
-    font-size: 40px;
 }
 
 /* "Item" 텍스트 */
@@ -260,21 +254,12 @@ flex {
 }
 
 /* item 슬롯 (원 모양 이미지) */
-#item1, #item2 {
+#item {
     margin-top: 20px;
     width: 160px;
     height: 160px;
+    margin-left: 60px;
 }
-/* 첫 번째 슬롯 */
-#item1 {
-    margin-left: 40px;
-}
-
-/* 두 번째 슬롯 */
-#item2 {
-    margin-left:20px;
-}
-
 /* right */
 
 #turn-text, #time-text, #sec-text, #tips-text, #tips-tip-text {
