@@ -21,7 +21,7 @@ public class Game {
 
 	//재난 생성, 배치
 	//매 턴마다 실행
-	private void generateDisaster(int number) {
+	public void generateDisaster(int number) {
 		int x, y;
 
 		for (int i = 0; i < number; i++) {
@@ -58,14 +58,14 @@ public class Game {
 	}
 
 	//재난 랜덤 선택
-	private int chooseDisaster(int... numbers) {
+	public int chooseDisaster(int... numbers) {
 		int index = random.nextInt(numbers.length);
 		return numbers[index];
 	}
 
 	//아이템 생성
 	//매 턴마다 실행
-	private void generateItem() {
+	public void generateItem() {
 		int x, y;
 
 		for (int i = 0; i < 2; i++) {
@@ -90,18 +90,18 @@ public class Game {
 		}
 	}
 	
-	//체력 반환
-	private int playerControl(int x, int y, int playerNum, boolean isItemUsed, int item){
-		int disasterNum;
-		
+	public void setPlayerPosition(int x, int y, int playerNum, int item) {
 		player[playerNum].x = x;
 		player[playerNum].y = y;
+		player[playerNum].item = item;
+	}
+	
+	//체력 반환
+	public void playerControl(int x, int y, int playerNum, boolean isItemUsed){
+		int disasterNum;
 		
 		disasterNum = disasters[y][x];
 		
-		player[playerNum].item = item;
 		player[playerNum].disaster(disasterNum, isItemUsed);
-		
-		return player[playerNum].health;
 	}
 }
