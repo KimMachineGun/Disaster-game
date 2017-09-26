@@ -1,5 +1,3 @@
-"use strict";
-
 var INITSEC = 15;
 var MAXTURN = 15;
 
@@ -26,6 +24,10 @@ var isItemUsed = false;
 // 7 라디오
 // 8 자동차
 var item = 0;
+var health = 100;
+var disasters;
+var items;
+var i;
 
 // 테스트용 배열
 // tip들을 모아놓은 배열
@@ -50,15 +52,19 @@ if (window.WebSocket) {
 
     socket.onmessage = function (event) {
         var resData = JSON.parse(event.data);   
-        if(resData.status == 'in-game') {
-            if(resData.code == 'receiveMove') {
-                for(var i = 0; i < 3; i++) {
+        if (resData.status === 'in-game') {
+            if (resData.code === 'receiveMove') {
+                for (i = 0; i < 3; i++) {
                     drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.x, resData.y);
                 }
-            }
-            else if(resData.code == 'init') {
+            } else if (resData.code === 'init') {
                 id = resData.id;
                 myID = "player" + (id + 1);
+            } else if (resData.code === "start") {
+                item = resData.item;
+                health = resData.health;
+                disasters = resData.disasters;
+                items = resData.items;
             }
         }
     };
@@ -75,12 +81,12 @@ if (window.WebSocket) {
     alert("지원하지 않는 브라우저");
 }
 
-$("#sendBtn").on("click", function() {
+$("#sendBtn").on("click", function () {
     send($("#message").val());
 });
 
 function send(message) {
-    if (socket.readyState == WebSocket.OPEN) {
+    if (socket.readyState === WebSocket.OPEN) {
         socket.send(message);
     } else {
         alert("웹소켓 닫힘");
@@ -133,6 +139,10 @@ function startTurn() {
 // 각 턴이 끝날 때 실행되는 메서드
 function endTurn() {
     alert("Time Out");
+    var text = '{ "status" : "in-game", "code" : "end", "isItemUsed" : ' + isItemUsed + ' }';
+    
+    var jsonFile = JSON.parse(text);
+    send(JSON.stringify(jsonFile));
     
     if (currentTurn < MAXTURN) {
         startTurn();
@@ -335,11 +345,10 @@ $("#move-text").click(function () {
 
 // 첫 번째 item 슬롯을 클릭하면
 $("#item").click(function () {
-    if(isItemUsed === true) {
+    if (isItemUsed === true) {
         isItemUsed = false;
         $("#item").css("border", "");  
-    }
-    else {
+    } else {
         isItemUsed = true;
         $("#item").css("border", "1px solid black");    
     }
