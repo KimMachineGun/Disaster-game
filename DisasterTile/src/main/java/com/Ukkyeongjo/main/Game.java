@@ -2,7 +2,7 @@ package com.Ukkyeongjo.main;
 
 import java.util.Random;
 
-public class Map {
+public class Game {
 	Random random = new Random();
 
 	// 0 일반, 1 산, 2 바다, 3 강
@@ -20,6 +20,7 @@ public class Map {
 	Player[] player = new Player[4];
 
 	//재난 생성, 배치
+	//매 턴마다 실행
 	private void generateDisaster(int number) {
 		int x, y;
 
@@ -54,17 +55,16 @@ public class Map {
 			if ( x < 12 ) disasters[y][x+1] = disasterNum;
 			if ( y < 7 ) disasters[y+1][x] = disasterNum;
 		}
-		
-		
 	}
 
 	//재난 랜덤 선택
 	private int chooseDisaster(int... numbers) {
-		int index = random.nextInt(numbers.length) + 1;
+		int index = random.nextInt(numbers.length);
 		return numbers[index];
 	}
 
 	//아이템 생성
+	//매 턴마다 실행
 	private void generateItem() {
 		int x, y;
 
@@ -74,7 +74,7 @@ public class Map {
 				x = random.nextInt(13);
 				y = random.nextInt(8);
 
-				for (int j = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
 					if (player[j].x == x && player[j].y == y)
 						flag = false;
 				}
@@ -88,5 +88,20 @@ public class Map {
 
 			items[y][x] = random.nextInt(8) + 1;
 		}
+	}
+	
+	//체력 반환
+	private int playerControl(int x, int y, int playerNum, boolean isItemUsed, int item){
+		int disasterNum;
+		
+		player[playerNum].x = x;
+		player[playerNum].y = y;
+		
+		disasterNum = disasters[y][x];
+		
+		player[playerNum].item = item;
+		player[playerNum].disaster(disasterNum, isItemUsed);
+		
+		return player[playerNum].health;
 	}
 }
