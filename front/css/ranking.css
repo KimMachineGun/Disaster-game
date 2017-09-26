@@ -1,0 +1,89 @@
+body {
+    margin: 0px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #953434;
+    text-decoration: none;
+}
+
+#background {
+    position:fixed;
+    right: 0px;
+    top: 0px;
+    width: 1300px;
+    height: 1300px;
+    z-index: 10;
+}
+
+div {
+    position: relative;
+    z-index: 20;
+}
+
+#back {
+    margin-top: 24px;
+    margin-left: 32px;
+    font-size: 50px;
+    font-weight: lighter;
+}
+
+#container {
+    margin-left: 200px;
+}
+
+#title {
+    margin-top: -60px;
+    font-size: 100px;
+    font-weight: lighter;
+    color: #C77575;
+}
+
+#description {
+    margin-top: 4px;
+    font-size: 30px;
+    color: #C77575
+}
+
+#ranking-table {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 52px;
+    border-collapse: collapse;
+    width: 940px;
+
+    text-align: center;
+}
+
+.ranking { width: 200px; }
+.username { width: 400px; }
+.score { width: 260px; }
+
+th {
+    border-bottom: 4px solid white;
+    background-color: white;
+
+    font-size: 50px;
+    font-weight: lighter;
+}
+
+td {
+    height: 76px;
+    font-size: 40px;
+}
+
+tr {
+    border-bottom: 8px solid white;
+    background-color: #FFF6BA;
+}
+
+#my-score {
+    background-color: #FFDFBA;
+}
+
+.blank {
+    height: 0px;
+    background-color: white;    
+}

@@ -39,12 +39,29 @@ public class Server {
 	    router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
 		
 		// Static 파일 핸들러
-		router.route("/static/*").handler(StaticHandler.create("../front/"));
+		router.route("/static/*").handler(StaticHandler.create("../front/static/"));
+		router.route("/css/*").handler(StaticHandler.create("../front/css/"));
+		router.route("/js/*").handler(StaticHandler.create("../front/js/"));
 		
 		// 메인페이지 라우팅
 		router.get("/").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
-			res.sendFile("../front/main_page.html");
+			Session session = ctx.session();
+			if(session.data().containsKey("user") == false) {
+				res.sendFile("../front/html/login.html");
+			} else {
+				res.sendFile("../front/html/main.html");
+			}
+		});
+		
+		router.get("/game").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			res.sendFile("../front/html/game-play.html");
+		});
+		
+		router.get("/register").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			res.sendFile("../front/html/create-account.html");
 		});
 		
 		router.post("/register").handler(ctx -> {

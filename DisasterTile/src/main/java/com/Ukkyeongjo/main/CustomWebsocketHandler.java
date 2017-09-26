@@ -18,6 +18,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 	static Map<String, ServerWebSocket> wsSessions = new HashMap<String, ServerWebSocket>();
 	static Map<String, ServerWebSocket> gameSessions = new HashMap<String, ServerWebSocket>();
 	static Game game;
+	static int cnt = 0;
 	
 	public void broadcast(JsonObject data) {
 		Set<String> keySet = wsSessions.keySet();
@@ -57,13 +58,18 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 			ws.handler(new Handler<Buffer>() {
 				@Override
 				public void handle(final Buffer data) {
-					JsonObject reqData = new JsonObject(data);
+					System.out.println(data.toString());
+					JsonObject reqData = new JsonObject(data.toString());
 					JsonObject resData = new JsonObject();
+					
+					System.out.println(reqData.getString("status"));
 					
 					if(reqData.getString("status").equals("matching")) {
 						// 매칭 로직
 						if(gameSessions.size() < 4) {
 							gameSessions.put(ws.textHandlerID(), ws);
+							System.out.println(ws.textHandlerID());
+							System.out.println(gameSessions.size());
 							if(gameSessions.size() == 4) {
 								game = new Game();
 								game.player[0] = new Player();
@@ -71,12 +77,14 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								game.player[2] = new Player();
 								game.player[3] = new Player();
 								
+								resData.put("status", "matched");
+								
 								Set<String> keySet = gameSessions.keySet();
 								Iterator<String> keySetIt = keySet.iterator();
 								int i = 0;
 								while(keySetIt.hasNext()) {
 									JsonObject temp = new JsonObject();
-									temp.put("status", "init");
+									temp.put("status", "matched");
 									temp.put("id", i++);
 									String key = keySetIt.next();
 									gameSessions.get(key).write(temp.toBuffer());
@@ -107,6 +115,11 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							}
 							resData.put("postions", resArray);
 							multicast(resData);
+						} else if(reqData.getString("code").equals("connected")) {
+							resData.put("code", "init");
+							resData.put("id", cnt++);
+							ws.write(resData.toBuffer());
+							if(cnt == 4) cnt = 0;
 						}
 					} else {
 						// 잘못된 요청 차단

@@ -1,0 +1,68 @@
+body {
+    margin: 0px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #953434;
+    text-decoration: none;
+}
+
+#background {
+    position:fixed;
+    right:0;
+    top:0;
+    width:1300px;
+    height:1300px;
+    z-index: 10;
+}
+
+div {
+    position: relative;
+    z-index: 20;
+}
+
+.header {
+    display: inline-block;
+    font-size: 50px;
+    font-weight: lighter;;
+}
+
+header > #login {
+    margin-left: 32px;
+    margin-top: 24px;
+}
+
+header > #ranking {
+    margin-left: 40px;
+    margin-top: 24px;
+}
+
+#logo {
+    margin-left: 324px;
+    margin-top: 0px; 
+    width: 720px;
+    height: 432px;
+}
+
+#start, #how-to-play {
+    font-size: 100px;
+    font-weight: lighter;
+}
+
+#start {
+    margin-left: 554px;
+    margin-top: 40px;
+}
+
+#how-to-play {
+    margin-left: 374px;
+    margin-top: 40px;
+}
+
+#guest {
+    margin-left: 688px;
+    margin-top: -26px;
+    font-size: 30px;
+    color: #95989A;
+}
