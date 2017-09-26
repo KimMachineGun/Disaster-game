@@ -9,8 +9,9 @@ var currentSec = INITSEC;
 var currentTurn = 1;
 // 배열 tips의 index를 담는 변수
 var tipsIndex = 1;
+var id = 0;
 // 자신의 player의 ID - player1, player2, player3, player4 중에 하나
-var myID = "player2";
+var myID = "player1";
 //이번 턴에 이동했는지에 대한 변수
 var isMoved = false;
 
@@ -48,10 +49,16 @@ if (window.WebSocket) {
     socket = new WebSocket("ws://localhost:8090/game-ws");
 
     socket.onmessage = function (event) {
-        var resData = JSON.parse(event.data);
+        var resData = JSON.parse(event.data);   
         if(resData.status == 'in-game') {
             if(resData.code == 'receiveMove') {
-                
+                for(var i = 0; i < 3; i++) {
+                    drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.x, resData.y);
+                }
+            }
+            else if(resData.code == 'init') {
+                id = resData.id;
+                myID = "player" + (id + 1);
             }
         }
     };
