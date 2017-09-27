@@ -5,6 +5,11 @@ public class Player {
 	int x = 0, y = 0;
 	int item = 0; // 보유중인 아이템
 	
+	public Player(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	//아이템 사용 여부에 따른 데미지 피해량
 	void disaster(int disasterNum, boolean isItemUsed) {
 		int usedItem;

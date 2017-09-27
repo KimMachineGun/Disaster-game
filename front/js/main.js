@@ -1,17 +1,28 @@
 var socket;
+const reader = new FileReader();
 
-if (window.WebSocket) {
-    socket = new WebSocket("ws://localhost:8090/game-ws");
-
-    socket.onmessage = function (event) {
-        var resData = JSON.parse(event.data);   
-        if(resData.status == 'matched') {
+reader.onload = function(event) {
+		let temp = JSON.parse(reader.result);
+		console.log(temp);
+		if(temp.status == 'matched') {
             window.location.href = '/game';
         }
+};	
+
+if (window.WebSocket) {
+    socket = new WebSocket("ws://10.156.145.115:8090/game-ws");
+
+    socket.onmessage = function (event) {
+        reader.readAsText(event.data);
+        
     };
 
     socket.onopen = function (event) {
         alert("Server On");
+		send(JSON.stringify({
+				"status" : "in-game",
+				"code" : "connected"
+		}));
     };
 
     socket.onclose = function (event) {

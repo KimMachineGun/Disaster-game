@@ -44,27 +44,41 @@ tips[9] = "Spider-Man is not a party trick!";
 //socket
 
 var socket;
+const reader = new FileReader();
 
-if (window.WebSocket) {
-    socket = new WebSocket("ws://localhost:8090/game-ws");
-
-    socket.onmessage = function (event) {
-        var resData = JSON.parse(event.data);   
+reader.onload = function(event) {
+		let temp = JSON.parse(reader.result);
+		var resData = temp;
         if(resData.status == 'in-game') {
             if(resData.code == 'receiveMove') {
+				
                 for(var i = 0; i < 3; i++) {
-                    drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.x, resData.y);
+					erasePlayer("player" + (resData.positions[i].id + 1));
+                    drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.positions[i].x, resData.positions[i].y);
                 }
             }
             else if(resData.code == 'init') {
                 id = resData.id;
+				console.log(id);
                 myID = "player" + (id + 1);
             }
         }
+};	
+
+
+if (window.WebSocket) {
+    socket = new WebSocket("ws://10.156.145.115:8090/game-ws");
+
+    socket.onmessage = function (event) {
+        reader.readAsText(event.data);
     };
 
     socket.onopen = function (event) {
         alert("Server On");
+		send(JSON.stringify({
+				"status" : "in-game",
+				"code" : "connected"
+		}));
     };
 
     socket.onclose = function (event) {
@@ -106,7 +120,7 @@ function writeNewTip() {
 function startTurn() {
 
     // 턴 시작 알람
-    alert("Turn Start");
+    console.log("Turn Start");
 
     //move 기능 활성화
     isMoved = false;
@@ -132,7 +146,7 @@ function startTurn() {
 
 // 각 턴이 끝날 때 실행되는 메서드
 function endTurn() {
-    alert("Time Out");
+    console.log("Time Out");
     
     if (currentTurn < MAXTURN) {
         startTurn();
@@ -160,8 +174,9 @@ setInterval(function () {
 
 // player의 x좌표를 구하는 메서드
 function getMapCoordinateX(playerID) {
-    var squareID = $(document.getElementById(playerID)).parent().attr("id"),
-        x = parseInt(squareID.charAt(5), 10);
+    var squareID = $("#"+playerID).parent().attr("id");
+	console.log(squareID);
+    var x = parseInt(squareID.charAt(5), 10);
 
     if (squareID.length === 7) {
         x = parseInt(x + squareID.charAt(6), 10);
@@ -172,17 +187,22 @@ function getMapCoordinateX(playerID) {
 
 // player의 y좌표를 구하는 메서드
 function getMapCoordinateY(playerID) {
-    var squareID = $(document.getElementById(playerID)).parent().attr("id"),
-        y = parseInt(squareID.charAt(3), 10);
+    var squareID = $("#"+playerID).parent().attr("id");
+    var y = parseInt(squareID.charAt(3), 10);
 
     return y;
 }
 
 function sendPlayerXY() {
-    var text = '{ "status" : "in-game", "code" : "sendMove", "x" : ' + getMapCoordinateX(myID) + ', "y" : ' + getMapCoordinateY(myID) + ' }';
-
-    var jsonFile = JSON.parse(text);
-    send(JSON.stringify(jsonFile));
+	var temp = {
+		"status" : "in-game",
+		"code" : "sendMove",
+		"id" : id,
+		"x" : getMapCoordinateX(myID),
+		"y" : getMapCoordinateY(myID),
+		"item": 0
+	};
+    send(JSON.stringify(temp));
 }
 
 // player를 그리는 메서드
@@ -190,10 +210,12 @@ function sendPlayerXY() {
 // imageSrc : player 이미지의 경로
 // x : player의 x좌표
 // y : player의 y좌표
-function drawPlayer(playerID, imageSrc, x, y) {
-    var squareID = "sqr" + y + "x" + x;
-    if (document.getElementById(squareID).innerHTML === '') {
-        document.getElementById(squareID).innerHTML = '<img src="' + imageSrc + '" id="' + playerID + '" style="margin:4px; width:80px; height:80px;">';
+function drawPlayer(playerID, imageSrc, x, y) {		
+    var squareID = "#sqr" + y + "x" + x;
+	var temp = $(squareID).html();
+	
+    if (temp == '') {
+        $(squareID).html('<img src="' + imageSrc + '" id="' + playerID + '" style="margin:4px; width:80px; height:80px;">');
     }
 }
 
@@ -356,3 +378,4 @@ drawPlayer("player4", "/static/" + "Player4.png", 10, 7);
 //health-circle 이미지 파일을 플레이어의 이미지 파일과 같게 만듦
 $("#health-circle").attr("src", "/static/" + myID + ".png");
 bindingFunction();
+

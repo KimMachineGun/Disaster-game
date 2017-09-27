@@ -72,23 +72,16 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							System.out.println(gameSessions.size());
 							if(gameSessions.size() == 4) {
 								game = new Game();
-								game.player[0] = new Player();
-								game.player[1] = new Player();
-								game.player[2] = new Player();
-								game.player[3] = new Player();
+								game.player[0] = new Player(7, 0);
+								game.player[1] = new Player(2, 1);
+								game.player[2] = new Player(6, 3);
+								game.player[3] = new Player(9, 6);
 								
 								resData.put("status", "matched");
 								
-								Set<String> keySet = gameSessions.keySet();
-								Iterator<String> keySetIt = keySet.iterator();
-								int i = 0;
-								while(keySetIt.hasNext()) {
-									JsonObject temp = new JsonObject();
-									temp.put("status", "matched");
-									temp.put("id", i++);
-									String key = keySetIt.next();
-									gameSessions.get(key).write(temp.toBuffer());
-								}
+								multicast(resData);
+								
+								gameSessions.clear();
 							}
 						} else {
 							resData.put("status", "full");
@@ -103,6 +96,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 		
 						} else if(reqData.getString("code").equals("sendMove")) {
 							// 실시간 움직임
+							System.out.println(reqData.toString());
 							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue(), reqData.getInteger("item").intValue());
 							resData.put("code", "receiveMove");
 							JsonArray resArray = new JsonArray();
@@ -113,9 +107,10 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								temp.put("y", game.player[i].y);
 								resArray.add(temp);
 							}
-							resData.put("postions", resArray);
+							resData.put("positions", resArray);
 							multicast(resData);
 						} else if(reqData.getString("code").equals("connected")) {
+							gameSessions.put(ws.textHandlerID(), ws);
 							resData.put("code", "init");
 							resData.put("id", cnt++);
 							ws.write(resData.toBuffer());
