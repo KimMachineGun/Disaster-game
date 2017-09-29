@@ -86,3 +86,43 @@ tip
     
     border: 5px solid blue;
 }
+
+#map
+{
+    box-sizing: border-box;
+    padding: 2em;
+    height: 100%;
+    
+    border: 5px solid skyblue;
+}
+
+table
+{
+    display: block;
+    border-collapse: collapse;
+    height: 100%;
+}
+
+tbody
+{
+    display: block;
+    height: 100%;
+}
+
+tr
+{ 
+    display: inline-block;
+    width: 100%;
+    height: 10%;
+}
+
+td
+{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 5%;
+    height: 100%;
+    
+    background-color: gray;
+    border: 1px solid white;
+}
