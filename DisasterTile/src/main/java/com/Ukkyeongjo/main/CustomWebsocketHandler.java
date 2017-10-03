@@ -20,21 +20,12 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 	static Game game;
 	static int cnt = 0;
 	
-	public void broadcast(JsonObject data) {
-		Set<String> keySet = wsSessions.keySet();
+	public void multicast(Map<String, ServerWebSocket> sessions, JsonObject data) {
+		Set<String> keySet = sessions.keySet();
 		Iterator<String> keySetIt = keySet.iterator();
 		while(keySetIt.hasNext()) {
 			String key = keySetIt.next();
-			wsSessions.get(key).write(data.toBuffer());
-		}
-	}
-	
-	public void multicast(JsonObject data) {
-		Set<String> keySet = gameSessions.keySet();
-		Iterator<String> keySetIt = keySet.iterator();
-		while(keySetIt.hasNext()) {
-			String key = keySetIt.next();
-			gameSessions.get(key).write(data.toBuffer());
+			sessions.get(key).write(data.toBuffer());
 		}
 	}
 	
@@ -79,7 +70,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								
 								resData.put("status", "matched");
 								
-								multicast(resData);
+								multicast(gameSessions, resData);
 								
 								gameSessions.clear();
 							}
@@ -93,7 +84,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 						if(reqData.getString("code").equals("end")) {
 							// 턴 종료 로직
 							game.playerControl(game.player[reqData.getInteger("id").intValue()].x, game.player[reqData.getInteger("id").intValue()].y, reqData.getInteger("id").intValue(), reqData.getBoolean("isItemUsed").booleanValue());
-		
+							
 						} else if(reqData.getString("code").equals("sendMove")) {
 							// 실시간 움직임
 							System.out.println(reqData.toString());
@@ -108,7 +99,8 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								resArray.add(temp);
 							}
 							resData.put("positions", resArray);
-							multicast(resData);
+							multicast(gameSessions, resData);
+							
 						} else if(reqData.getString("code").equals("connected")) {
 							gameSessions.put(ws.textHandlerID(), ws);
 							resData.put("code", "init");

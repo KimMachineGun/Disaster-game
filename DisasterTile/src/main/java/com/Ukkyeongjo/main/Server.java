@@ -67,22 +67,48 @@ public class Server {
 		router.post("/register").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
 			JsonObject json = ctx.getBodyAsJson();
+			
 			String tId = json.getString("id");
 			String tPw = json.getString("pw");
 			String tRePw = json.getString("re-pw");
+			
 			if(!tPw.equals(tRePw)) {
-				res.setStatusCode(400).setStatusMessage("It's not same").end();
+				res.setStatusCode(400).setStatusMessage("Please Re Write The Password").end();
 			} else {
 				String sql = "INSERT INTO USERS(ID,PW) VALUES('" + tId + "','" + tPw + "');";
 				try {
 					DB.statement.executeUpdate(sql);
 					System.out.println("REGISTER SUCCESS : " + tId);
-					res.setStatusCode(200).end();
+					res.setStatusCode(200).setStatusMessage("Register Success").end();
 				} catch (SQLException e) {
-					System.out.println("REGISTER FAILED");
-					res.setStatusCode(400).setStatusMessage("Register Failed").end();
+					System.out.println("REGISTER FAILURE");
+					res.setStatusCode(400).setStatusMessage("Register Failure").end();
 				}
 			}
+		});
+		
+		router.get("/tip").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			JsonObject jsonData = new JsonObject();
+			
+			String sql = "SELECT * FROM TIPS ORDER BY RANDOM() LIMIT 1;";
+			PreparedStatement pstmt;
+			try {
+				pstmt = DB.conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				
+				jsonData.put("content", rs.getString("CONTENT"));
+				
+				res.putHeader("Content-Length", String.valueOf(jsonData.toBuffer().length()));
+				res.write(jsonData.toBuffer());
+				res.setStatusCode(200).setStatusMessage("Getting Tip Success").end();
+				
+			} catch (SQLException e) {
+				System.out.println("Getting Tip Failure");
+				res.setStatusCode(400).setStatusMessage("Getting Tip Failure").end();
+				e.printStackTrace();
+			}
+			
 		});
 		
 		router.post("/login").handler(ctx -> {
@@ -103,13 +129,13 @@ public class Server {
 
 				ResultSet rs = pstmt.executeQuery();
 
-				System.out.println("LOGIN SUCEESS : " + rs.getString("ID"));
+				System.out.println("LOGIN SUCCESS : " + rs.getString("ID"));
 
 				session.put("user", tId);
-				res.setStatusCode(200).end();
+				res.setStatusCode(200).setStatusMessage("Login Success").end();
 			} catch (SQLException e) {
-				System.out.println("LOGIN FAILED");
-				res.setStatusCode(400).end();
+				System.out.println("LOGIN FAILURE");
+				res.setStatusCode(400).setStatusMessage("Login Failure").end();
 			}
 		});
 		
@@ -119,9 +145,9 @@ public class Server {
 			
 			if(session.data().containsKey("user") == true) {
 				session.remove("user");
-				res.setStatusCode(200).end();
+				res.setStatusCode(200).setStatusMessage("Logout Success").end();
 			} else {
-				res.setStatusCode(400).end();
+				res.setStatusCode(400).setStatusMessage("Logout Failure").end();
 			}
 			
 		});
@@ -139,7 +165,7 @@ public class Server {
 		});
 		
 		// 포트 8080
-		vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+		vertx.createHttpServer().requestHandler(router::accept).listen(80);
 
 		// 웹소켓 핸들러
 		vertx.createHttpServer().websocketHandler(new CustomWebsocketHandler()).listen(8090);
