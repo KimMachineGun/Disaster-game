@@ -53,8 +53,11 @@ main
 
 bottom
 {
-    display: block;
+    display: table;
     box-sizing: border-box;
+    background-color: #FFEDBB;
+    padding: 2rem;
+    width: 100%;
     height: 20%;
     
     border: 5px solid blue;
@@ -90,7 +93,7 @@ tip
 #map
 {
     box-sizing: border-box;
-    padding: 2em;
+    padding: 2rem;
     height: 100%;
     
     border: 5px solid skyblue;
@@ -125,4 +128,92 @@ td
     
     background-color: gray;
     border: 1px solid white;
+}
+
+.padding
+{
+    display: table-cell;
+    box-sizing: border-box;
+    width: 2%;
+}
+
+#menu
+{
+    display: table-cell;
+    box-sizing: border-box;
+    vertical-align: middle;
+    line-height: 4rem;
+    font-size: 5rem;
+}
+
+#health
+{
+    display: table-cell;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 4rem;
+    
+    background-image: url(../static/Player1.png);
+    background-size: cover;
+}
+
+#score
+{
+    display: table-cell;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: right;
+    width: 20%;
+}
+
+#move
+{
+    display: table-cell;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 6rem;
+}
+
+#item
+{
+    display: table-cell;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#score > #top
+{
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 2rem;
+    width: 100%;
+    height: 40%;
+}
+
+#score > #bottom
+{
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 3.5rem;
+    width: 100%;
+    height: 60%;
+}
+
+#item > #text
+{
+    float: left;
+    font-size: 2rem;
+}
+
+#item > #slot
+{
+    box-sizing: border-box;
+    
+    background-image: url(../static/White_Circle.png);
+    background-size: cover;
 }
