@@ -56,12 +56,12 @@ public class Server {
 		
 		router.get("/game").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
-			res.sendFile("../front/html/game-play.html");
+			res.sendFile("../front/html/game.html");
 		});
 		
 		router.get("/register").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
-			res.sendFile("../front/html/create-account.html");
+			res.sendFile("../front/html/createAccount.html");
 		});
 		
 		router.post("/register").handler(ctx -> {
@@ -164,7 +164,7 @@ public class Server {
 			}
 		});
 		
-		// 포트 8080
+		// 포트 80
 		vertx.createHttpServer().requestHandler(router::accept).listen(80);
 
 		// 웹소켓 핸들러
