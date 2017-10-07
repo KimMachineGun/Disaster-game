@@ -47,22 +47,13 @@ function setHealthCircleSize()
     var bottom = document.getElementsByTagName("bottom")[0];
     var menu = document.getElementById("menu");
     var health = document.getElementById("health");
-    var item = document.getElementById("item");
     var slot = document.getElementById("slot");
     
     healthHeight = health.offsetHeight;
     
     health.style.width = healthHeight + "px";
-    
-    slot.style.height = healthHeight + "px";
     slot.style.width = healthHeight + "px";
-    
-    console.log("itemWidth = " + item.offsetWidth);
-    console.log("healthHeight = " + healthHeight);
-    
-    slot.style.marginLeft = (item.offsetWidth - healthHeight) + "px";
-    
-    console.log("slotMarginLeft = " + slot.style.marginLeft);
+    slot.style.height = healthHeight + "px";
 }
 
 
