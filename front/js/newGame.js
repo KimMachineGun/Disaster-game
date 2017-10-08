@@ -1,10 +1,5 @@
 var tiles = document.getElementsByClassName("tile");
 
-for(var i = 0; i < tiles.length; i++)
-{
-    tiles[i].innerHTML = i;
-}
-
 var body = document.getElementById("body");
 var width, height;
 
@@ -19,8 +14,7 @@ var width, height;
 onresize = function()
 {
     makeTilesToSquare();
-    //setMenuMargin();
-    setHealthCircleSize();
+    setCircleSize();
 }
 
 function makeTilesToSquare()
@@ -33,16 +27,7 @@ function makeTilesToSquare()
     bottom.style.height = left.clientHeight - main.offsetHeight + "px";
 }
 
-function setMenuMargin()
-{
-    var bottom = document.getElementsByTagName("bottom")[0];
-    var menu = document.getElementById("menu");
-
-    menu.style.marginTop = (bottom.clientHeight - menu.offsetHeight) / 2 + "px";
-    menu.style.marginBottom = (bottom.clientHeight - menu.offsetHeight) / 2 + "px";
-}
-
-function setHealthCircleSize()
+function setCircleSize()
 {
     var bottom = document.getElementsByTagName("bottom")[0];
     var menu = document.getElementById("menu");
@@ -56,9 +41,17 @@ function setHealthCircleSize()
     slot.style.height = healthHeight + "px";
 }
 
+function drawPlayer(id, x, y)
+{
+    tiles[x + y * 20].style.backgroundImage = "url(../static/Player" + (id+1) + ".png)";
+}
 
 // onload
 
 makeTilesToSquare();
-//setMenuMargin();
-setHealthCircleSize();
+setCircleSize();
+
+drawPlayer(0, 0, 0);
+drawPlayer(1, 1, 1);
+drawPlayer(2, 2, 2);
+drawPlayer(3, 3, 3);
