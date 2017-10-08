@@ -11,6 +11,20 @@ user.id = 3;
 user.x = 3;
 user.y = 3;
 
+var topography =
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [1, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    ];
+
 //setInterval
 //(
 //    function()
@@ -161,6 +175,34 @@ function moveCancel(id, x, y)
     }
 }
 
+function setMapColor()
+{
+    for(var i = 0; i < 10; i++)
+    {
+        for(var j = 0; j < 20; j++)
+        {
+            switch(topography[i][j])
+            {
+                case 0: tiles[j + i * 20].style.backgroundColor = "#B7E99F";
+                        tiles[j + i * 20].style.borderColor = "#87D463";
+                        break;
+
+                case 1: tiles[j + i * 20].style.backgroundColor = "#D9A379";
+                        tiles[j + i * 20].style.borderColor = "#D87F3A";
+                        break;
+                    
+                case 2: tiles[j + i * 20].style.backgroundColor = "#8FB1C9";
+                        tiles[j + i * 20].style.borderColor = "#779DB8";
+                        break;
+                
+                case 3: tiles[j + i * 20].style.backgroundColor = "#A4D6FA";
+                        tiles[j + i * 20].style.borderColor = "#81CAFF";
+                        break;
+            }
+        }
+    }
+}
+
 // onclick
 
 document.getElementById("move").onclick = function()
@@ -204,14 +246,35 @@ for(var i = 0; i < tiles.length; i++)
     }
 }
 
+document.getElementById("menu").onclick = function()
+{
+    document.getElementById("menuCover").style.display = "block";
+}
+
+document.getElementById("ranking").onclick = function()
+{
+    
+}
+
+document.getElementById("quit").onclick = function()
+{
+    
+}
+
+document.getElementById("back").onclick = function()
+{
+    document.getElementById("menuCover").style.display = "none";
+}
+
 // onload
 
 makeTilesToSquare();
 setCircleSize();
+setMapColor();
 
 drawPlayer(3, 3, 3);
 
-drawItem(2, 4, 7);
+drawItem(2, 4, 7);  
 drawItem(4, 5, 6);
 drawItem(5, 6, 5);
 drawItem(6, 7, 4);

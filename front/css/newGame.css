@@ -14,53 +14,108 @@ body
 
 .container
 {
-    box-sizing: border-box;
+    background-image: url(../static/Background.png);
+    background-size: cover;
     height: 100%;
-    
-    border: 5px solid purple;
 }
+
+
+
+
+
+#menuCover
+{
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #FFBE74;
+}
+
+#menuCover > #background
+{
+    display: block;
+    width: 56%;
+    height: 100%;
+    margin-left: 22%;
+    background-color: #FF961D;
+}
+
+#menuCover > #background > #title
+{
+    text-align: center;
+    font-size: 14rem;
+    font-weight: lighter;
+    color: white;
+}    
+
+#menuCover > #background > #ranking,
+#menuCover > #background > #quit,
+#menuCover > #background > #back
+{
+    height: 20%;
+    background-color: white;
+    margin-bottom: 2rem;
+    color: #C77575;
+}
+
+#menuCover > #background > #back
+{
+    margin-bottom: 0;
+}
+
+#menuCover > #background > #ranking > #text,
+#menuCover > #background > #quit > #text,
+#menuCover > #background > #back > #text
+{
+    display: inline-block;
+    font-size: 8rem;
+    font-weight: lighter;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#menuCover > #background > #ranking > #explain,
+#menuCover > #background > #quit > #explain,
+#menuCover > #background > #back > #explain
+{
+    display: inline-block;
+    font-size: 3rem;
+}
+
+
+
+
 
 left
 {
     display: inline-block;
     vertical-align: top;
-    box-sizing: border-box;
     width: 75%;
     height: 100%;
-    
-    border: 5px solid red;
 }
 
 right
 {
     display: inline-block;
     vertical-align: top;
-    box-sizing: border-box;
     width: 25%;
     height: 100%;
-    
-    border: 5px solid yellow;
 }
 
 left > main
 {
     display: block;
-    box-sizing: border-box;
     height: 80%;
-    
-    border: 5px solid green;
 }
 
 left > bottom
 {
     display: table;
     box-sizing: border-box;
-    background-color: #FFEBB4;
     padding: 2rem;
     width: 100%;
     height: 20%;
-    
-    border: 5px solid blue;
 }
 
 right > .padding
@@ -71,30 +126,21 @@ right > .padding
 right > turn
 {
     display: table;
-    box-sizing: border-box;
     width: 100%;
     height: 20%;
-    
-    border: 5px solid red;
 }
 
 right > time
 {
     display: table;
-    box-sizing: border-box;
     width: 100%;
     height: 20%;
-    
-    border: 5px solid green;
 }
 
 right > tip
 {
     display: block;
-    box-sizing: border-box;
     height: 35%;
-    
-    border: 5px solid blue;
 }
 
 main > #map
@@ -102,8 +148,6 @@ main > #map
     box-sizing: border-box;
     padding: 2rem;
     height: 100%;
-    
-    border: 5px solid skyblue;
 }
 
 table
@@ -148,7 +192,6 @@ bottom > .padding
 bottom > #menu
 {
     display: table-cell;
-    box-sizing: border-box;
     vertical-align: middle;
     line-height: 4rem;
     font-size: 5rem;
@@ -157,7 +200,6 @@ bottom > #menu
 bottom > #health
 {
     display: table-cell;
-    box-sizing: border-box;
     vertical-align: middle;
     text-align: center;
     font-size: 4rem;
@@ -170,7 +212,6 @@ bottom > #health
 bottom > #score
 {
     display: table-cell;
-    box-sizing: border-box;
     vertical-align: middle;
     text-align: right;
     font-weight: lighter;
@@ -180,7 +221,6 @@ bottom > #score
 bottom > #move
 {
     display: table-cell;
-    box-sizing: border-box;
     vertical-align: middle;
     text-align: center;
     font-size: 6rem;
@@ -190,7 +230,6 @@ bottom > #move
 bottom > #item
 {
     display: table-cell;
-    box-sizing: border-box;
     vertical-align: middle;
     text-align: center;
 }
@@ -204,8 +243,6 @@ bottom > #item
 
 bottom > #slot
 {
-    box-sizing: border-box;
-    
     background-image: url(../static/White_Circle.png);
     background-size: cover;
 }
@@ -213,7 +250,6 @@ bottom > #slot
 #score > #top
 {
     display: inline-block;
-    box-sizing: border-box;
     text-align: center;
     font-size: 2rem;
     width: 100%;
@@ -223,7 +259,6 @@ bottom > #slot
 #score > #bottom
 {
     display: inline-block;
-    box-sizing: border-box;
     text-align: center;
     font-size: 3.5rem;
     width: 100%;
@@ -233,7 +268,6 @@ bottom > #slot
 turn > .padding, time > .padding
 {
     display: table-cell;
-    box-sizing: border-box;
     width: 10%;
 }
 
