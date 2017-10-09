@@ -99,6 +99,7 @@ right
 {
     display: inline-block;
     vertical-align: top;
+    color: white;
     width: 25%;
     height: 100%;
 }
@@ -123,21 +124,21 @@ right > .padding
     height: 6%;
 }
 
-right > turn
+right > #turn
 {
     display: table;
     width: 100%;
     height: 20%;
 }
 
-right > time
+right > #time
 {
     display: table;
     width: 100%;
     height: 20%;
 }
 
-right > tip
+right > #tip
 {
     display: block;
     height: 35%;
@@ -265,13 +266,13 @@ bottom > #slot
     height: 60%;
 }
 
-turn > .padding, time > .padding
+#turn > .padding, #time > .padding
 {
     display: table-cell;
     width: 10%;
 }
 
-turn > #text, time > #text
+#turn > #text, #time > #text
 {
     display: table-cell;
     vertical-align: middle;
@@ -280,7 +281,7 @@ turn > #text, time > #text
     width: 30%;
 }
 
-turn > #now, time > #now
+#turn > #now, #time > #now
 {
     display: table-cell;
     font-weight: lighter;
@@ -288,26 +289,26 @@ turn > #now, time > #now
 }
 
 
-turn > #max, time > #max
+#turn > #max, #time > #max
 {
     display: table-cell;
     font-weight: lighter;
     font-size: 4rem;
 }
 
-tip > #text
+#tip > #text
 {
     font-size: 3rem;
     font-weight: lighter;
     margin-bottom: 6%;
-    margin-left: 10%;
+    margin-left: 16%;
 }
 
-tip > #content
+#tip > #content
 {
     font-size: 2rem;
     font-weight: lighter;
-    margin-left: 10%;
+    margin-left: 16%;
 }
 
 bottom { color: #C77575 }

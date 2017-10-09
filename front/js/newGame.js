@@ -5,11 +5,13 @@ var width, height;
 
 var isMoveClicked = false;
 var isMoved = false;
+var isItemUsed = false;
 
 var user = new Object();
 user.id = 3;
 user.x = 3;
 user.y = 3;
+user.item = 0;
 
 var topography =
     [
@@ -23,6 +25,20 @@ var topography =
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    ];
+
+var disasters =
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
 //setInterval
@@ -203,7 +219,57 @@ function setMapColor()
     }
 }
 
-// onclick
+function gainItem(itemNum)
+{
+    var src;
+    
+    switch(itemNum)
+    {
+        case 0: src = "itemHealKit"; break;
+        case 1: src = "itemFireExtinguisher"; break;
+        case 2: src = "itemWetTowel"; break;
+        case 3: src = "itemDesk"; break;
+        case 4: src = "itemSandbag"; break;
+        case 5: src = "itemLightningRod"; break;
+        case 6: src = "itemRadio"; break;
+        case 7: src = "itemCar"; break;
+    }
+    
+    var slot = document.getElementById("slot");
+    slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+}
+
+function updateHealth(health)
+{
+    document.getElementById("health").innerHTML = health;
+}
+
+function updateScore(score)
+{
+    document.getElementById("score").children[1].innerHTML = score;
+}
+
+function updateTurn(turn)
+{
+    document.getElementById("turn").children[3].innerHTML = turn + "/";  
+}
+
+function updateTime(time)
+{
+    document.getElementById("time").children[3].innerHTML = time + "/";
+}
+
+function updateTip(tip)
+{
+    document.getElementById("tip").children[1].innerHTML = tip;
+}
+
+function drawDisaster()
+{
+    
+}
+
+// onclick                                                      
 
 document.getElementById("move").onclick = function()
 {
@@ -266,6 +332,22 @@ document.getElementById("back").onclick = function()
     document.getElementById("menuCover").style.display = "none";
 }
 
+document.getElementById("slot").onclick = function()
+{
+    if(!isItemUsed)
+    {
+        document.getElementById("slot").style.backgroundColor = "black";
+        isItemUsed = true;
+    }
+    
+    else
+    {
+        document.getElementById("slot").style.backgroundColor = "";
+        isItemUsed = false;
+    }
+    
+}
+
 // onload
 
 makeTilesToSquare();
@@ -278,3 +360,12 @@ drawItem(2, 4, 7);
 drawItem(4, 5, 6);
 drawItem(5, 6, 5);
 drawItem(6, 7, 4);
+
+gainItem(6);
+updateHealth(40);
+
+updateScore(340);
+
+updateTurn(5);
+updateTime(10);
+updateTip("Hello");
