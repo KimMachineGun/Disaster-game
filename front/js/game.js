@@ -80,18 +80,24 @@ reader.onload = function(event)
     {
         if(resData.code == 'receiveMove')
         {
-            for(var i = 0; i < 3; i++)
+            for(var i = 0; i < 4; i++)
             {
-                erasePlayer("player" + (resData.positions[i].id + 1));
-                drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.positions[i].x, resData.positions[i].y);
+                if(i == myID) i++;
+                else
+                {
+                    erase(users[i].x, users[i].y);
+                    
+                    users[i].x = resData.positions[i].x;
+                    users[i].y = resData.positions[i].y;
+                    
+                    drawPlayer(users[i].id, users[i].x, users[i].y)
+                }
             }
         }
         
         else if(resData.code == 'init')
         {
-            id = resData.id;
-            console.log(id);
-            myID = "player" + (id + 1);
+            myID = resData.id;
         }
     }
 };
@@ -348,7 +354,7 @@ for(var i = 0; i < tiles.length; i++)
     {
         var x = this.getAttribute("data-index") % 20;
         var y = Math.floor(this.getAttribute("data-index") / 20);
-        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID.id+1) + 'Light.png")')
+        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID].id+1) + 'Light.png")')
         {
             erase(users[myID].x, users[myID].y);
             if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
