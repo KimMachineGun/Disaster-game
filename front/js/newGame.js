@@ -7,11 +7,38 @@ var isMoveClicked = false;
 var isMoved = false;
 var isItemUsed = false;
 
-var user = new Object();
-user.id = 3;
-user.x = 3;
-user.y = 3;
-user.item = 0;
+var users =
+    [
+        {
+            id: 0,
+            x: 0,
+            y: 0,
+            item: 0
+        },
+        
+        {
+            id: 1,
+            x: 1,
+            y: 1,
+            item: 0
+        },
+        
+        {
+            id: 2,
+            x: 2,
+            y: 2,
+            item: 0
+        },
+        
+        {
+            id: 3,
+            x: 3,
+            y: 3,
+            item: 0
+        }
+    ];
+
+var myID = 0;
 
 var topography =
     [
@@ -40,6 +67,35 @@ var disasters =
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
+
+var socket;
+const reader = new FileReader();
+
+reader.onload = function(event)
+{
+    let temp = JSON.parse(reader.result);
+    var resData = temp;
+    
+    if(resData.status == 'in-game')
+    {
+        if(resData.code == 'receiveMove')
+        {
+            for(var i = 0; i < 3; i++)
+            {
+                erasePlayer("player" + (resData.positions[i].id + 1));
+                drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.positions[i].x, resData.positions[i].y);
+            }
+        }
+        
+        else if(resData.code == 'init')
+        {
+            id = resData.id;
+            console.log(id);
+            myID = "player" + (id + 1);
+        }
+    }
+};
+
 
 //setInterval
 //(
@@ -275,13 +331,13 @@ document.getElementById("move").onclick = function()
 {
     if(!isMoveClicked && !isMoved)
     {
-        move(user.id, user.x, user.y);
+        move(users[myID].id, users[myID].x, users[myID].y);
         isMoveClicked = true;
     }
     
     else
     {
-        moveCancel(user.id, user.x, user.y);
+        moveCancel(users[myID].id, users[myID].x, users[myID].y);
         isMoveClicked = false;
     }
 }
@@ -292,17 +348,17 @@ for(var i = 0; i < tiles.length; i++)
     {
         var x = this.getAttribute("data-index") % 20;
         var y = Math.floor(this.getAttribute("data-index") / 20);
-        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (user.id+1) + 'Light.png")')
+        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID.id+1) + 'Light.png")')
         {
-            erase(user.x, user.y);
-            if(user.x < 19) erase(user.x + 1, user.y);
-            if(user.x > 0) erase(user.x - 1, user.y);
-            if(user.y < 9) erase(user.x, user.y + 1);
-            if(user.y > 0) erase(user.x, user.y - 1);
+            erase(users[myID].x, users[myID].y);
+            if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
+            if(users[myID].x > 0) erase(users[myID].x - 1, users[myID].y);
+            if(users[myID].y < 9) erase(users[myID].x, users[myID].y + 1);
+            if(users[myID].y > 0) erase(users[myID].x, users[myID].y - 1);
 
-            user.x = x;
-            user.y = y;
-            drawPlayer(user.id, user.x, user.y);
+            users[myID].x = x;
+            users[myID].y = y;
+            drawPlayer(users[myID].id, users[myID].x, users[myID].y);
 
             isMoveClicked = false;
             isMoved = true;

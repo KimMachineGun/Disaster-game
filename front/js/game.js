@@ -63,7 +63,7 @@ reader.onload = function(event) {
                 myID = "player" + (id + 1);
             }
         }
-};	
+};
 
 
 if (window.WebSocket) {
