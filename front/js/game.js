@@ -68,6 +68,8 @@ var disasters =
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
 
+// socket
+
 var socket;
 const reader = new FileReader();
 
@@ -80,28 +82,78 @@ reader.onload = function(event)
     {
         if(resData.code == 'receiveMove')
         {
-            for(var i = 0; i < 4; i++)
-            {
-                if(i == myID) i++;
-                else
-                {
-                    erase(users[i].x, users[i].y);
-                    
-                    users[i].x = resData.positions[i].x;
-                    users[i].y = resData.positions[i].y;
-                    
-                    drawPlayer(users[i].id, users[i].x, users[i].y)
-                }
-            }
+            readerReceiveMove(resData);
         }
         
         else if(resData.code == 'init')
         {
             myID = resData.id;
         }
+        
+        else if(resData.code == 'turn')
+        {
+            updateTurn(resData)
+        }
+        
+        else if(resData.code == 'time')
+        {
+            
+        }
+        
+        else if(resData.code == 'tip')
+        {
+            updateTip(resData.tip);
+        }
     }
 };
 
+if (window.WebSocket)
+{
+    socket = new WebSocket("ws://13.125.11.10/game-ws");
+
+    socket.onmessage = function (event)
+    {
+        reader.readAsText(event.data);
+    };
+
+    socket.onopen = function (event)
+    {
+        alert("Server On");
+		send(JSON.stringify
+        (
+            {
+				"status" : "in-game",
+				"code" : "connected"
+            }
+        )
+        );
+    };
+
+    socket.onclose = function (event)
+    {
+        alert("Server Closed");
+    };
+}
+
+else
+{
+    alert("Use Different Browser");
+}
+
+function send(message)
+{
+    if (socket.readyState == WebSocket.OPEN)
+    {
+        socket.send(message);
+    }
+    
+    else
+    {
+        alert("WebSocket Closed");
+    }
+}
+
+// socket
 
 //setInterval
 //(
@@ -115,6 +167,23 @@ onresize = function()
 {
     makeTilesToSquare();
     setCircleSize();
+}
+
+function readerReceiveMove(resData)
+{
+    for(var i = 0; i < 4; i++)
+    {
+        if(i == myID) i++;
+        else
+        {
+            erase(users[i].x, users[i].y);
+
+            users[i].x = resData.positions[i].x;
+            users[i].y = resData.positions[i].y;
+
+            drawPlayer(users[i].id, users[i].x, users[i].y)
+        }
+    }
 }
 
 function makeTilesToSquare()
