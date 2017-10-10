@@ -1,381 +1,427 @@
-"use strict";
+var tiles = document.getElementsByClassName("tile");
 
-var INITSEC = 15;
-var MAXTURN = 15;
+var body = document.getElementById("body");
+var width, height;
 
-// 이번 턴이 끝나끼까지 남은 시간을 알려주는 변수
-var currentSec = INITSEC;
-// 현재 턴이 몇 번째인지를 담는 변수
-var currentTurn = 1;
-// 배열 tips의 index를 담는 변수
-var tipsIndex = 1;
-var id = 0;
-// 자신의 player의 ID - player1, player2, player3, player4 중에 하나
-var myID = "player1";
-//이번 턴에 이동했는지에 대한 변수
+var isMoveClicked = false;
 var isMoved = false;
-
 var isItemUsed = false;
-// 0 없음
-// 1 힐킷
-// 2 소화기
-// 3 젖은 수건
-// 4 책상
-// 5 튜브
-// 6 피뢰침
-// 7 라디오
-// 8 자동차
-var item = 0;
 
-// 테스트용 배열
-// tip들을 모아놓은 배열
-var tips = new Array(10);
-tips[0] = "So, to become an Avenger, are there like trials or an interview?";
-tips[1] = "You just don't do anything I would do... and definitely don't do anything I wouldn't do. There's a little gray area in there and that's where you operate.";
-tips[2] = "That's not a hug. I'm just grabbing the door for you.";
-tips[3] = "But you are a kid. / Yeah. A kid who can stop a bus with his bare hands.";
-tips[4] = "If you're nothing without the suit, then you shouldn't have it.";
-tips[5] = "Wait a minute... You guys aren't the real Avengers! I can tell Hulk gives it away.";
-tips[6] = "Can't you just be a friendly neighborhood Spider-Man?";
-tips[7] = "Can you summon an army of spiders? / No, man!";
-tips[8] = "What are you hiding Peter? [laughs] I'm just kidding. I don't care. Bye.";
-tips[9] = "Spider-Man is not a party trick!";
+var users =
+    [
+        {
+            id: 0,
+            x: 0,
+            y: 0,
+            item: 0
+        },
+        
+        {
+            id: 1,
+            x: 1,
+            y: 1,
+            item: 0
+        },
+        
+        {
+            id: 2,
+            x: 2,
+            y: 2,
+            item: 0
+        },
+        
+        {
+            id: 3,
+            x: 3,
+            y: 3,
+            item: 0
+        }
+    ];
 
-//socket
+var myID = 0;
+
+var topography =
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [1, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    ];
+
+var disasters =
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
 
 var socket;
 const reader = new FileReader();
 
-reader.onload = function(event) {
-		let temp = JSON.parse(reader.result);
-		var resData = temp;
-        if(resData.status == 'in-game') {
-            if(resData.code == 'receiveMove') {
-				
-                for(var i = 0; i < 3; i++) {
-					erasePlayer("player" + (resData.positions[i].id + 1));
-                    drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.positions[i].x, resData.positions[i].y);
-                }
-            }
-            else if(resData.code == 'init') {
-                id = resData.id;
-				console.log(id);
-                myID = "player" + (id + 1);
+reader.onload = function(event)
+{
+    let temp = JSON.parse(reader.result);
+    var resData = temp;
+    
+    if(resData.status == 'in-game')
+    {
+        if(resData.code == 'receiveMove')
+        {
+            for(var i = 0; i < 3; i++)
+            {
+                erasePlayer("player" + (resData.positions[i].id + 1));
+                drawPlayer("player" + (resData.positions[i].id + 1), "/static/" + "Player" + (resData.positions[i].id + 1) + ".png", resData.positions[i].x, resData.positions[i].y);
             }
         }
+        
+        else if(resData.code == 'init')
+        {
+            id = resData.id;
+            console.log(id);
+            myID = "player" + (id + 1);
+        }
+    }
 };
 
 
-if (window.WebSocket) {
-    socket = new WebSocket("ws://10.156.145.115:8090/game-ws");
+//setInterval
+//(
+//    function()
+//    {
+//        console.log(tiles[0]);
+//    }
+//);
 
-    socket.onmessage = function (event) {
-        reader.readAsText(event.data);
-    };
-
-    socket.onopen = function (event) {
-        alert("Server On");
-		send(JSON.stringify({
-				"status" : "in-game",
-				"code" : "connected"
-		}));
-    };
-
-    socket.onclose = function (event) {
-        alert("Server Closed");
-    };
-
-} else {
-    alert("Use Different Browser");
+onresize = function()
+{
+    makeTilesToSquare();
+    setCircleSize();
 }
 
-$("#sendBtn").on("click", function() {
-    send($("#message").val());
-});
-
-function send(message) {
-    if (socket.readyState == WebSocket.OPEN) {
-        socket.send(message);
-    } else {
-        alert("WebSocket Closed");
-    }
-}
-
-//socket
-
-// 팁을 갱신하는 메서드
-function writeNewTip() {
-    var randomNum;
-
-    do {
-        randomNum = Math.floor(Math.random() * 10);
-    } while (randomNum === tipsIndex);
-
-    tipsIndex = randomNum;
-
-    $("#tips-tip-text").text(tips[randomNum]);
-}
-
-// 각 턴이 시작될 때 실행되는 메서드
-function startTurn() {
-
-    // 턴 시작 알람
-    console.log("Turn Start");
-
-    //move 기능 활성화
-    isMoved = false;
-    $("#move-text").css("color", "#C77575");
-
-    // 아이템 정보 갱신
-
-    // 팁 갱신
-    writeNewTip();
-
-    // 현재 턴 갱신
-    currentTurn += 1;
-    if (currentTurn >= 10) {
-        $("#current-turn-text").css("margin-left", "12px");
-    }
-    $("#current-turn-text").text(currentTurn + "/");
-
-    // 남은 시간 갱신
-    currentSec = INITSEC;
-    $("#remaining-time-text").css("margin-left", "60px");
-    $("#remaining-time-text").text(currentSec);
-}
-
-// 각 턴이 끝날 때 실행되는 메서드
-function endTurn() {
-    console.log("Time Out");
+function makeTilesToSquare()
+{
+    var left = document.getElementsByTagName("left")[0];
+    var main = document.getElementsByTagName("main")[0];
+    var bottom = document.getElementsByTagName("bottom")[0];
     
-    if (currentTurn < MAXTURN) {
-        startTurn();
-    }
+    main.style.height = ((main.offsetWidth - 64) / 2) + 64 + "px";
+    bottom.style.height = left.clientHeight - main.offsetHeight + "px";
 }
 
-
-
-// 1초마다 실행
-setInterval(function () {
-    if (currentSec > -2) {
-        currentSec -= 1;
-    }
-    if (currentSec < 10) {
-        $("#remaining-time-text").css("margin-left", "168px");
-    }
-    if (currentSec >= 0) {
-        $("#remaining-time-text").text(currentSec);
-    }
-    if (currentSec === -1) {
-        endTurn();
-    } else { }
-}, 1000);
-
-
-// player의 x좌표를 구하는 메서드
-function getMapCoordinateX(playerID) {
-    var squareID = $("#"+playerID).parent().attr("id");
-	console.log(squareID);
-    var x = parseInt(squareID.charAt(5), 10);
-
-    if (squareID.length === 7) {
-        x = parseInt(x + squareID.charAt(6), 10);
-    }
-
-    return x;
-}
-
-// player의 y좌표를 구하는 메서드
-function getMapCoordinateY(playerID) {
-    var squareID = $("#"+playerID).parent().attr("id");
-    var y = parseInt(squareID.charAt(3), 10);
-
-    return y;
-}
-
-function sendPlayerXY() {
-	var temp = {
-		"status" : "in-game",
-		"code" : "sendMove",
-		"id" : id,
-		"x" : getMapCoordinateX(myID),
-		"y" : getMapCoordinateY(myID),
-		"item": 0
-	};
-    send(JSON.stringify(temp));
-}
-
-// player를 그리는 메서드
-// playerID : player의 id
-// imageSrc : player 이미지의 경로
-// x : player의 x좌표
-// y : player의 y좌표
-function drawPlayer(playerID, imageSrc, x, y) {		
-    var squareID = "#sqr" + y + "x" + x;
-	var temp = $(squareID).html();
-	
-    if (temp == '') {
-        $(squareID).html('<img src="' + imageSrc + '" id="' + playerID + '" style="margin:4px; width:80px; height:80px;">');
-    }
-}
-
-// id가 playerID인 이미지를 삭제
-function erasePlayer(playerID) {
-    var x = getMapCoordinateX(playerID),
-        y = getMapCoordinateY(playerID),
-        squareID = "sqr" + y + "x" + x;
-    document.getElementById(squareID).innerHTML = '';
-}
-
-
-// id가 playerID인 이미지와 그 상하좌우에 위치한(except는 제외) 이미지들을 삭제
-// except : string, Top/Right/Bottom/Left 중 하나
-function erasePlayerExcept(playerID, except) {
-    // 삭제하지 않을 이미지의 x, y값 받아오기
-    var x = getMapCoordinateX(playerID + except),
-        y = getMapCoordinateY(playerID + except);
-
-    //이미지 모두 삭제
-    if (document.getElementById(playerID) !== null) {
-        erasePlayer(playerID);
-    }
-    if (document.getElementById(playerID + "Top") !== null) {
-        erasePlayer(playerID + "Top");
-    }
-    if (document.getElementById(playerID + "Right") !== null) {
-        erasePlayer(playerID + "Right");
-    }
-    if (document.getElementById(playerID + "Bottom") !== null) {
-        erasePlayer(playerID + "Bottom");
-    }
-    if (document.getElementById(playerID + "Left") !== null) {
-        erasePlayer(playerID + "Left");
-    }
-
-    // 삭제하지 않았어야 할 이미지 다시 그리기
-    drawPlayer(playerID, "/static/" + playerID + ".png", x, y);
-    //bindingFunction();
-}
-
-// innerhtml로 그린 오브젝트와 onclick 메서드를 연결해주는 역할
-function bindingFunction() {
-//    $("#player1").click(function() {
-//        alert("player1");
-//    });
-//
-//    $("#player2").click(function() {
-//        alert("player2");
-//    });
-//
-//    $("#player3").click(function() {
-//        alert("player3");
-//    });
-//
-//    $("#player4").click(function() {
-//        alert("player4");
-//    });
-
-    //이동할 방향을 선택했을 때 나머지 이미지를 지워주는 onclick 메서드
-    if (document.getElementById(myID + "Top") !== null) {
-        document.getElementById(myID + "Top").onclick = function () {
-            erasePlayerExcept(myID, "Top");
-            $("#move-text").css("color", "#bbbbbb");
-            isMoved = true;
-            sendPlayerXY();
-        };
-    }
-
-    if (document.getElementById(myID + "Right") !== null) {
-        document.getElementById(myID + "Right").onclick = function () {
-            erasePlayerExcept(myID, "Right");
-            $("#move-text").css("color", "#8d8d8d");
-            isMoved = true;
-            sendPlayerXY();
-        };
-    }
-
-    if (document.getElementById(myID + "Bottom") !== null) {
-        document.getElementById(myID + "Bottom").onclick = function () {
-            erasePlayerExcept(myID, "Bottom");
-            $("#move-text").css("color", "#8d8d8d");
-            isMoved = true;
-            sendPlayerXY();
-        };
-    }
-
-    if (document.getElementById(myID + "Left") !== null) {
-        document.getElementById(myID + "Left").onclick = function () {
-            erasePlayerExcept(myID, "Left");
-            $("#move-text").css("color", "#8d8d8d");
-            isMoved = true;
-            sendPlayerXY();
-        };
-    }
-}
-
-// move 버튼을 눌렀을 때 실행되는 메서드
-// player 주위 상하좌우에 연한 원이 그려짐
-function chooseMoveDirection(playerID) {
-    var x = getMapCoordinateX(playerID),
-        y = getMapCoordinateY(playerID);
-
-    if (y !== 1) {
-        drawPlayer(playerID + "Top", "/static/" + playerID + "Light" + ".png", x, y - 1); // Top
-    }
-    if (x !== 12) {
-        drawPlayer(playerID + "Right", "/static/" + playerID + "Light" + ".png", x + 1, y); // Right
-    }
-    if (y !== 7) {
-        drawPlayer(playerID + "Bottom", "/static/" + playerID + "Light" + ".png", x, y + 1); // Bottom
-    }
-    if (x !== 1) {
-        drawPlayer(playerID + "Left", "/static/" + playerID + "Light" + ".png", x - 1, y); // Left
-    }
-}
-
-
-// move 버튼을 클릭하면
-$("#move-text").click(function () {
-    //이미 움직였으면 아무것도 안함
-    if (isMoved) {
+function setCircleSize()
+{
+    var bottom = document.getElementsByTagName("bottom")[0];
+    var menu = document.getElementById("menu");
+    var health = document.getElementById("health");
+    var slot = document.getElementById("slot");
     
-    //움직일 기회가 있다면, 이미 주위에 원이 그려져 있지 않다면
-    } else if ((document.getElementById(myID + "Top") === null) &&
-             (document.getElementById(myID + "Right") === null) &&
-             (document.getElementById(myID + "Bottom") === null) &&
-             (document.getElementById(myID + "Left") === null)) {
-        //주위에 원을 그림
-        chooseMoveDirection(myID);
+    healthHeight = health.offsetHeight;
+    
+    health.style.width = healthHeight + "px";
+    slot.style.width = healthHeight + "px";
+    slot.style.height = healthHeight + "px";
+}
+
+function drawPlayer(id, x, y)
+{
+    tiles[x + y * 20].style.backgroundImage = "url(../static/Player" + (id+1) + ".png)";
+}
+
+function drawPlayerLight(id, x, y)
+{
+    tiles[x + y * 20].style.backgroundImage = "url(../static/Player" + (id+1) + "Light.png)";
+}
+
+function erase(x, y)
+{
+    tiles[x + y * 20].style.backgroundImage = "";
+}
+
+function eraseAll()
+{
+    for(var i = 0; i < tiles.length; i++)
+    {
+        tiles[i].style.backgroundImage = "";
+    }
+}
+
+function drawItem(itemNum, x, y)
+{
+    var src;
+    
+    switch(itemNum)
+    {
+        case 0: src = "itemHealKit"; break;
+        case 1: src = "itemFireExtinguisher"; break;
+        case 2: src = "itemWetTowel"; break;
+        case 3: src = "itemDesk"; break;
+        case 4: src = "itemSandbag"; break;
+        case 5: src = "itemLightningRod"; break;
+        case 6: src = "itemRadio"; break;
+        case 7: src = "itemCar"; break;
+    }
+    
+    tiles[x + y * 20].style.backgroundImage = "url(../static/" + src + ".png)"
+}
+
+function move(id, x, y)
+{
+    if(x != 0)
+    {
+        if(tiles[(x - 1) + y * 20].style.backgroundImage == "")
+        {
+            drawPlayerLight(id, x - 1, y);
+        }
+    }
         
-    //이미 주위에 원이 그려져 있다면 move를 취소하는 기능 실행
-    } else {
-        erasePlayerExcept(myID, "");
+    if(x != 19)
+    {
+        if(tiles[(x + 1) + y * 20].style.backgroundImage == "")
+        {
+            drawPlayerLight(id, x + 1, y);
+        }
     }
-
-    bindingFunction();
-});
-
-// 첫 번째 item 슬롯을 클릭하면
-$("#item").click(function () {
-    if(isItemUsed === true) {
-        isItemUsed = false;
-        $("#item").css("border", "");  
+    
+    if(y != 0)
+    {
+        if(tiles[x + (y - 1) * 20].style.backgroundImage == "")
+        {
+            drawPlayerLight(id, x, y - 1);
+        }
     }
-    else {
+    
+    if(y != 9)
+    {
+        if(tiles[x + (y + 1) * 20].style.backgroundImage == "")
+        {
+            drawPlayerLight(id, x, y + 1);
+        }
+    }
+}
+
+function moveCancel(id, x, y)
+{
+    if(x > 0)
+    {
+        if(tiles[(x - 1) + y * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
+        {
+            erase(x - 1, y);
+        }
+    }
+    
+    if(x < 19)
+    {
+        if(tiles[(x + 1) + y * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
+        {
+            erase(x + 1, y);
+        }
+    }
+    
+    if(y > 0)
+    {
+        if(tiles[x + (y - 1) * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
+        {
+            erase(x, y - 1);
+        }
+    }
+    
+    if(y < 9)
+    {
+        if(tiles[x + (y + 1) * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
+        {
+            erase(x, y + 1);
+        }
+    }
+}
+
+function setMapColor()
+{
+    for(var i = 0; i < 10; i++)
+    {
+        for(var j = 0; j < 20; j++)
+        {
+            switch(topography[i][j])
+            {
+                case 0: tiles[j + i * 20].style.backgroundColor = "#B7E99F";
+                        tiles[j + i * 20].style.borderColor = "#87D463";
+                        break;
+
+                case 1: tiles[j + i * 20].style.backgroundColor = "#D9A379";
+                        tiles[j + i * 20].style.borderColor = "#D87F3A";
+                        break;
+                    
+                case 2: tiles[j + i * 20].style.backgroundColor = "#8FB1C9";
+                        tiles[j + i * 20].style.borderColor = "#779DB8";
+                        break;
+                
+                case 3: tiles[j + i * 20].style.backgroundColor = "#A4D6FA";
+                        tiles[j + i * 20].style.borderColor = "#81CAFF";
+                        break;
+            }
+        }
+    }
+}
+
+function gainItem(itemNum)
+{
+    var src;
+    
+    switch(itemNum)
+    {
+        case 0: src = "itemHealKit"; break;
+        case 1: src = "itemFireExtinguisher"; break;
+        case 2: src = "itemWetTowel"; break;
+        case 3: src = "itemDesk"; break;
+        case 4: src = "itemSandbag"; break;
+        case 5: src = "itemLightningRod"; break;
+        case 6: src = "itemRadio"; break;
+        case 7: src = "itemCar"; break;
+    }
+    
+    var slot = document.getElementById("slot");
+    slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+}
+
+function updateHealth(health)
+{
+    document.getElementById("health").innerHTML = health;
+}
+
+function updateScore(score)
+{
+    document.getElementById("score").children[1].innerHTML = score;
+}
+
+function updateTurn(turn)
+{
+    document.getElementById("turn").children[3].innerHTML = turn + "/";  
+}
+
+function updateTime(time)
+{
+    document.getElementById("time").children[3].innerHTML = time + "/";
+}
+
+function updateTip(tip)
+{
+    document.getElementById("tip").children[1].innerHTML = tip;
+}
+
+function drawDisaster()
+{
+    
+}
+
+// onclick                                                      
+
+document.getElementById("move").onclick = function()
+{
+    if(!isMoveClicked && !isMoved)
+    {
+        move(users[myID].id, users[myID].x, users[myID].y);
+        isMoveClicked = true;
+    }
+    
+    else
+    {
+        moveCancel(users[myID].id, users[myID].x, users[myID].y);
+        isMoveClicked = false;
+    }
+}
+
+for(var i = 0; i < tiles.length; i++)
+{
+    tiles[i].onclick = function()
+    {
+        var x = this.getAttribute("data-index") % 20;
+        var y = Math.floor(this.getAttribute("data-index") / 20);
+        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID.id+1) + 'Light.png")')
+        {
+            erase(users[myID].x, users[myID].y);
+            if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
+            if(users[myID].x > 0) erase(users[myID].x - 1, users[myID].y);
+            if(users[myID].y < 9) erase(users[myID].x, users[myID].y + 1);
+            if(users[myID].y > 0) erase(users[myID].x, users[myID].y - 1);
+
+            users[myID].x = x;
+            users[myID].y = y;
+            drawPlayer(users[myID].id, users[myID].x, users[myID].y);
+
+            isMoveClicked = false;
+            isMoved = true;
+            
+            document.getElementById("move").style.color = "gray";
+        }
+    }
+}
+
+document.getElementById("menu").onclick = function()
+{
+    document.getElementById("menuCover").style.display = "block";
+}
+
+document.getElementById("ranking").onclick = function()
+{
+    
+}
+
+document.getElementById("quit").onclick = function()
+{
+    
+}
+
+document.getElementById("back").onclick = function()
+{
+    document.getElementById("menuCover").style.display = "none";
+}
+
+document.getElementById("slot").onclick = function()
+{
+    if(!isItemUsed)
+    {
+        document.getElementById("slot").style.backgroundColor = "black";
         isItemUsed = true;
-        $("#item").css("border", "1px solid black");    
     }
-});
+    
+    else
+    {
+        document.getElementById("slot").style.backgroundColor = "";
+        isItemUsed = false;
+    }
+    
+}
 
+// onload
 
+makeTilesToSquare();
+setCircleSize();
+setMapColor();
 
+drawPlayer(3, 3, 3);
 
-drawPlayer("player1", "/static/" + "Player1.png", 8, 1);
-drawPlayer("player2", "/static/" + "Player2.png", 3, 2);
-drawPlayer("player3", "/static/" + "Player3.png", 7, 4);
-drawPlayer("player4", "/static/" + "Player4.png", 10, 7);
+drawItem(2, 4, 7);  
+drawItem(4, 5, 6);
+drawItem(5, 6, 5);
+drawItem(6, 7, 4);
 
-//health-circle 이미지 파일을 플레이어의 이미지 파일과 같게 만듦
-$("#health-circle").attr("src", "/static/" + myID + ".png");
-bindingFunction();
+gainItem(6);
+updateHealth(40);
 
+updateScore(340);
+
+updateTurn(5);
+updateTime(10);
+updateTip("Hello");

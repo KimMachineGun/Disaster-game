@@ -1,324 +1,315 @@
-body {
+html
+{
+    width: 100%;
+    height: 100%;
+}
+
+body
+{
     margin: 0px;
+    width: 100%;
+    height: 100%;
     font-family: "Segoe UI", sans-serif;
 }
 
-/* a 태그의 스타일을 하얀색에 밑줄이 없도록 변경 */
-a:link, a:visited, a:hover, a:active {
-    color: white;
-    text-decoration: none;
-}
-
-/* 절벽 모양 배경보다 z-index를 높이기 위한 코드 */
-#item, #turn-text, #turn-layout, #time-text, #time-layout, #tips-layout {
-    position: relative;
-    z-index: 20;
-}
-
-/* defalut 커서 모양 적용 */
-#health-circle, #health-text, #score-text, #current-score-text, #item-text, #right-layout {
-    cursor: default;
-}
-
-/* pointer (button) 커서 모양 적용 */
-#menu-text, #move-text, #item {
-    cursor: pointer;
-}
-
-/* turn-time 레이아웃을 기준으로 오른쪽 위에 고정 */
-/* cliff2.png */
-#background {
-    position: absolute;
-    right:0;
-    top:0;
-    width:480px;
-    height:968px;
-    z-index: 10;
-}
-
-/*
-
-flex의 구조
-
-flex {
-    left {
-        select
-    }
-
-    right {
-        turn-time {
-            turn
-            time
-        }
-    }
-}
-
-*/
-
-/* 제일 큰 태그 flex, 좌우 방향의 flex */
-#flex {
-    display: flex;
-    flex-direction: row;
+.container
+{
+    background-image: url(../static/Background.png);
+    background-size: cover;
     height: 100%;
-
 }
 
-#left-layout, #right-layout {
-    background-color: #FFEDBB;
+
+
+
+
+#menuCover
+{
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #FFBE74;
 }
 
-/* game-play와 select 레이아웃을 포함한 레이아웃, 상하 방향의 flex */
-#left-layout {
-    display: flex;
-    flex-direction: column;
-    width: 1440px;
+#menuCover > #background
+{
+    display: block;
+    width: 56%;
+    height: 100%;
+    margin-left: 22%;
+    background-color: #FF961D;
 }
 
-/* turn-text와 tips 레이아웃을 포함한 레이아웃, 상하 방향의 flex */
-#right-layout {
-    display: flex;
-    flex-direction: column;
-
-    color: white;
-    width: 400px;
-}
-
- /* 실제 맵이 존재하고 게임 말이 움직이는 공간 */
-#game-play-layout {
-    width: 1440px;
-    height: 768px;
-}
-
-/* menu, move, use terrain, item을 포함한 레이아웃, 좌우 방항의 flex */
-#select-layout {
-    display: flex;
-    flex-direction: row;
-
-    color: #C77575;
-    font-weight: lighter;
+#menuCover > #background > #title
+{
     text-align: center;
-    height: 200px;
+    font-size: 14rem;
+    font-weight: lighter;
+    color: white;
+}    
+
+#menuCover > #background > #ranking,
+#menuCover > #background > #quit,
+#menuCover > #background > #back
+{
+    height: 20%;
+    background-color: white;
+    margin-bottom: 2rem;
+    color: #C77575;
 }
 
-/* scrore-text, current-score-text를 포함한 레이아웃 */
-#score-layout {
-    width: 312px;
+#menuCover > #background > #back
+{
+    margin-bottom: 0;
 }
 
-/* move-text, use-terrain-text를 포함한 레이아웃 */
-#move-layout {
-    /* 좌우 구분선 그리는 코드 */
-    margin-top: 28px;
-    margin-bottom: 28px;
-
-    padding-left: 60px;
-    padding-right: 60px;
-    border-left: 2px solid #C77575;
-    border-right: 2px solid #C77575;
+#menuCover > #background > #ranking > #text,
+#menuCover > #background > #quit > #text,
+#menuCover > #background > #back > #text
+{
+    display: inline-block;
+    font-size: 8rem;
+    font-weight: lighter;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
-/* turn-text, turn-layout, time-text, time-layout을 포함한 레이아웃, 상하 방향의 flex */
-#turn-time-layout {
-    display: flex;
-    flex-direction: column;
-    height: 690px;
-
-    /* background를 이 레이아웃을 기준으로 맞추기 위한 position 지정 */
-    position: relative;
+#menuCover > #background > #ranking > #explain,
+#menuCover > #background > #quit > #explain,
+#menuCover > #background > #back > #explain
+{
+    display: inline-block;
+    font-size: 3rem;
 }
 
-/* current-turn과 max-turn을 포함한 레이아웃, 좌우 방향의 flex */
 
-#turn-layout {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
+
+
+
+left
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 75%;
+    height: 100%;
 }
 
-/* remaining-time과 sec을 포함한 레이아웃, 좌우 방향의 flex */
-
-#time-layout {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
+right
+{
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 25%;
+    height: 100%;
 }
 
-/* tips-text, tips-tip-text를 포함한 */
-#tips-layout {
-    height: 278px;
+left > main
+{
+    display: block;
+    height: 80%;
 }
 
-/* text */
-
-/* left */
-
-/* game-play 안에 말이 움직이는 7*12 맵을 구성하는 #map, .row, .square */
-
-/* .row를 7개 가지고 있는 상하 방향의 flex */
-#map {
-    display: flex;
-    flex-direction: column;
-
-    margin-left: 108px;
-    margin-top: 28px;
+left > bottom
+{
+    display: table;
+    box-sizing: border-box;
+    padding: 2rem;
+    width: 100%;
+    height: 20%;
 }
 
-/* .square를 12개 가지고 있는 좌우 방향의 flex */
-.row {
-    display: flex;
-    flex-direction: row; 
+right > .padding
+{
+    height: 6%;
 }
 
-/* 정사각형 모양의 84개 칸 */
-.square {
-    margin: -1px;
-    border: 1px solid #95989A;
-    width: 90px;
-    height: 90px;
+right > #turn
+{
+    display: table;
+    width: 100%;
+    height: 20%;
 }
 
-.default {
-    background-color: #B7E99F;
-    border-color: #87D463;
+right > #time
+{
+    display: table;
+    width: 100%;
+    height: 20%;
 }
 
-.mountain {
-    background-color: #D9A379;
-    border-color: #D87F3A;
+right > #tip
+{
+    display: block;
+    height: 35%;
 }
 
-.ocean {
-    background-color: #8FB1C9;
-    border-color: #779DB8;
+main > #map
+{
+    box-sizing: border-box;
+    padding: 2rem;
+    height: 100%;
 }
 
-.river {
-    background-color: #A4D6FA;
-    border-color: #81CAFF;
+table
+{
+    display: block;
+    border-collapse: collapse;
+    height: 100%;
 }
 
-/* "MENU" 텍스트 */
-/* 클릭 시 메뉴창이 뜸 (미구현) */
-#menu-text {
-    font-size: 50px;
-    font-weight: normal;
-
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: -40px;
-    transform: rotate(90deg);
+tbody
+{
+    display: block;
+    height: 100%;
 }
 
-/* health-text 아래에 그려진 원 */
-/* 플레이어의 색깔을 이 원의 색깔로써 알려줌 */
-#health-circle {
-    margin-top: 10px;
-    width: 180px;
-    height: 180px;
+tr
+{ 
+    display: inline-block;
+    width: 100%;
+    height: 10%;
 }
 
-/* health-circle 위의 숫자(텍스트) */
-/* 플레이어의 체력을 나타냄 */
-#health-text {
-    font-size: 100px;
-    /* player2.png의 색깔 */
-    color: #E64C4C;
-
-    margin-top: 32px;
-    margin-left: -160px;
+td
+{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 5%;
+    height: 100%;
+    background-size: cover;
+    
+    background-color: gray;
+    border: 1px solid white;
 }
 
-/* "score" 텍스트 */
-#score-text {
-    font-size: 50px;
+bottom > .padding
+{
+    display: table-cell;
+    box-sizing: border-box;
+    width: 2%;
 }
 
-/* 플레이어의 현재 스코어를 나타냄 */
-#current-score-text {
-    font-size: 80px;
+bottom > #menu
+{
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 4rem;
+    font-size: 5rem;
 }
 
-/* "MOVE" 텍스트 */
-/* 클릭 시 플레이어 주변에 이동할 수 있는 방향이 표시됨 */
-#move-text {
-    font-size: 50px;
-    margin-top: 40px;
-    margin-bottom: 8px;
+bottom > #health
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: lighter;
+    
+    background-image: url(../static/Player1.png);
+    background-size: cover;
 }
 
-/* "Item" 텍스트 */
-#item-text {
-    font-size: 80px;
-    margin-top: 36px;
-    margin-left: 30px;
+bottom > #score
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    font-weight: lighter;
+    width: 20%;
 }
 
-/* item 슬롯 (원 모양 이미지) */
-#item {
-    margin-top: 20px;
-    width: 160px;
-    height: 160px;
-    margin-left: 60px;
+bottom > #move
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 6rem;
+    font-weight: lighter;    
 }
-/* right */
 
-#turn-text, #time-text, #sec-text, #tips-text, #tips-tip-text {
+bottom > #item
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+bottom > #item
+{
+    vertical-align: top;
+    font-size: 2rem;
     font-weight: lighter;
 }
 
-/* "Turn" 텍스트 */
-#turn-text {
-    font-size: 80px;
-    margin-left: -40px;
+bottom > #slot
+{
+    background-image: url(../static/White_Circle.png);
+    background-size: cover;
 }
 
-/* 현재 턴을 나타냄 */
-/* 턴이 시작되면 1 증가 */
-/* 31 이상으로 올라가지 않음 */
-#current-turn-text {
-    font-size: 200px;
-    margin-left: 120px;
-    margin-top: -60px;
+#score > #top
+{
+    display: inline-block;
+    text-align: center;
+    font-size: 2rem;
+    width: 100%;
+    height: 40%;
 }
 
-/* 최대 턴(30)을 보여줌 */
-#max-turn-text {
-    font-size: 50px;
-    margin-left: -20px;
-    margin-top: 110px;
+#score > #bottom
+{
+    display: inline-block;
+    text-align: center;
+    font-size: 3.5rem;
+    width: 100%;
+    height: 60%;
 }
 
-/* "Time" 텍스트 */
-#time-text {
-    font-size: 80px;
-    margin-top: 0px;
-    margin-left: -40px;
+#turn > .padding, #time > .padding
+{
+    display: table-cell;
+    width: 10%;
 }
 
-/* 현재 턴이 끝나기까지 남은 시간을 나타냄 */
-/* 30부터 시작해 0이 되면 내려가기를 멈추고 턴이 끝남 */
-#remaining-time-text {
-    font-size: 200px;
-    margin-left: 60px;
-    margin-top: -60px;
+#turn > #text, #time > #text
+{
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: lighter;
+    font-size: 4rem;
+    width: 30%;
 }
 
-/* "sec" 텍스트 */
-#sec-text {
-    font-size: 50px;
-    margin-top: 100px;
-    margin-left: 10px;
+#turn > #now, #time > #now
+{
+    display: table-cell;
+    font-weight: lighter;
+    font-size: 10rem;
 }
 
-/* "TIPS!" 텍스트 */
-#tips-text {
-    font-size: 50px;
-    margin-left: 20px;
+
+#turn > #max, #time > #max
+{
+    display: table-cell;
+    font-weight: lighter;
+    font-size: 4rem;
 }
 
-/* 게임에 관한 팁을 띄워줌 */
-/* 턴이 시작할 때 바뀜 */
-#tips-tip-text {
-    font-size: 25px;
-    margin-left: 20px;
+#tip > #text
+{
+    font-size: 3rem;
+    font-weight: lighter;
+    margin-bottom: 6%;
+    margin-left: 16%;
 }
+
+#tip > #content
+{
+    font-size: 2rem;
+    font-weight: lighter;
+    margin-left: 16%;
+}
+
+bottom { color: #C77575 }
+#health { color: #E64C4C }
