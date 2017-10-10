@@ -12,10 +12,10 @@ public class Game {
 			{ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
 
 	// 재난
-	int[][] disasters = new int[8][13];
+	int[][] disasters = new int[10][20];
 
 	// 아이템
-	int[][] items = new int[8][13];
+	int[][] items = new int[10][20];
 
 	Player[] player = new Player[4];
 
@@ -25,8 +25,8 @@ public class Game {
 		int x, y;
 
 		for (int i = 0; i < number; i++) {
-			x = random.nextInt(13);
-			y = random.nextInt(8);
+			x = random.nextInt(20);
+			y = random.nextInt(10);
 
 			int terrain = terrains[y][x];
 			int disasterNum = 0;
@@ -96,7 +96,6 @@ public class Game {
 		player[playerNum].item = item;
 	}
 	
-	//체력 반환
 	public void playerControl(int x, int y, int playerNum, boolean isItemUsed){
 		int disasterNum;
 		

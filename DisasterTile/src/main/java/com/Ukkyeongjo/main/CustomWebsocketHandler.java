@@ -74,6 +74,8 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								
 								gameSessions.clear();
 							}
+							resData.put("status", "loading");
+							ws.write(resData.toBuffer());
 						} else {
 							resData.put("status", "full");
 							ws.write(resData.toBuffer());
@@ -105,6 +107,15 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							gameSessions.put(ws.textHandlerID(), ws);
 							resData.put("code", "init");
 							resData.put("id", cnt++);
+							JsonArray resArray = new JsonArray();
+							for(int i = 0; i < 4; i++) {
+								JsonObject temp = new JsonObject();
+								temp.put("id", i);
+								temp.put("x", game.player[i].x);
+								temp.put("y", game.player[i].y);
+								resArray.add(temp);
+							}
+							resData.put("positions", resArray);
 							ws.write(resData.toBuffer());
 							if(cnt == 4) cnt = 0;
 						}
