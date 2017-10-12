@@ -1,6 +1,7 @@
 com\Ukkyeongjo\main\Runner$GroovyAuthRunner.class
 com\Ukkyeongjo\main\Runner$GroovyChatRunner.class
 com\Ukkyeongjo\main\Runner$RubyAuthJDBC.class
+com\Ukkyeongjo\main\Game.class
 com\Ukkyeongjo\main\Runner$RubyTemplatingRunner.class
 com\Ukkyeongjo\main\Runner$RubyChatRunner.class
 com\Ukkyeongjo\main\Runner$JSSessionsRunner.class

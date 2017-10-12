@@ -6,10 +6,18 @@ public class Game {
 	Random random = new Random();
 
 	// 0 일반, 1 산, 2 바다, 3 강
-	int[][] terrains = { { 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 1, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 1, 1, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 2 }, { 1, 0, 0, 0, 3, 3, 0, 0, 0, 0, 2, 2, 2 },
-			{ 0, 0, 0, 0, 0, 3, 3, 3, 0, 2, 2, 2, 2 }, { 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 2, 2, 2 },
-			{ 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
+	int[][] terrains = { 
+			{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{1, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2},
+			{0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 2, 2, 2},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+	};
 
 	// 재난
 	int[][] disasters = new int[10][20];
@@ -47,13 +55,13 @@ public class Game {
 			
 			disasters[y][x] = disasterNum;
 			if ( x > 0  && y > 0) disasters[y-1][x-1] = disasterNum;
-			if ( x > 0  && y < 7) disasters[y+1][x-1] = disasterNum;
-			if ( x < 12  && y > 0) disasters[y-1][x+1] = disasterNum;
-			if ( x < 12  && y < 7) disasters[y+1][x+1] = disasterNum;
+			if ( x > 0  && y < 9) disasters[y+1][x-1] = disasterNum;
+			if ( x < 19  && y > 0) disasters[y-1][x+1] = disasterNum;
+			if ( x < 19  && y < 9) disasters[y+1][x+1] = disasterNum;
 			if ( x > 0 ) disasters[y][x-1] = disasterNum;
 			if ( y > 0 ) disasters[y-1][x] = disasterNum;
-			if ( x < 12 ) disasters[y][x+1] = disasterNum;
-			if ( y < 7 ) disasters[y+1][x] = disasterNum;
+			if ( x < 19 ) disasters[y][x+1] = disasterNum;
+			if ( y < 9 ) disasters[y+1][x] = disasterNum;
 		}
 	}
 
@@ -71,8 +79,8 @@ public class Game {
 		for (int i = 0; i < 2; i++) {
 			while (true) {
 				boolean flag = true;
-				x = random.nextInt(13);
-				y = random.nextInt(8);
+				x = random.nextInt(20);
+				y = random.nextInt(10);
 
 				for (int j = 0; j < 4; j++) {
 					if (player[j].x == x && player[j].y == y)
