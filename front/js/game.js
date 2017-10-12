@@ -11,8 +11,8 @@ var users =
     [
         {
             id: 0,
-            x: 0,
-            y: 0,
+            x: 10,
+            y: 7,
             item: 0
         },
         
@@ -153,7 +153,32 @@ function send(message)
     }
 }
 
-// socket
+function sendPlayerXY()
+{
+    var temp =
+    {
+		"status" : "in-game",
+		"code" : "sendMove",
+		"id" : myID,
+		"x" : users[myID].x ,
+		"y" : users[myID].y,
+		"item": 0
+	};
+    send(JSON.stringify(temp));
+}
+
+function sendTurnEnd()
+{
+    var temp =
+    {
+		"status" : "in-game",
+		"code" : "end",
+		"isItemUsed" : isItemUsed
+	};
+    send(JSON.stringify(temp));
+}
+
+// socket   
 
 //setInterval
 //(
@@ -166,7 +191,7 @@ function send(message)
 onresize = function()
 {
     makeTilesToSquare();
-    setCircleSize();
+    setCircleSizfe();
 }
 
 function readerReceiveMove(resData)
@@ -176,7 +201,7 @@ function readerReceiveMove(resData)
         if(i == myID) i++;
         else
         {
-            erase(users[i].x, users[i].y);
+            erase("player" + i);
 
             users[i].x = resData.positions[i].x;
             users[i].y = resData.positions[i].y;
@@ -212,24 +237,60 @@ function setCircleSize()
 
 function drawPlayer(id, x, y)
 {
-    tiles[x + y * 20].style.backgroundImage = "url(../static/Player" + (id+1) + ".png)";
+    var width = tiles[x + y * 20].clientWidth;
+    
+    tiles[x + y * 20].children[0].innerHTML =
+        '<img src="../static/Player' + (id+1) + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+    
+    tiles[x + y * 20].children[1].style.display = "none";
 }
 
-function drawPlayerLight(id, x, y)
+function drawPlayerLight(id, x, y, direction)
 {
-    tiles[x + y * 20].style.backgroundImage = "url(../static/Player" + (id+1) + "Light.png)";
+    var width = tiles[x + y * 20].clientWidth;
+    
+    tiles[x + y * 20].children[0].innerHTML = 
+        '<img src="../static/Player' + (id+1) + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+    
+    tiles[x + y * 20].children[1].style.display = "none";
 }
 
-function erase(x, y)
+function erase(id)
 {
-    tiles[x + y * 20].style.backgroundImage = "";
+    document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
+    document.getElementById(id).parentElement.innerHTML = "";
+    
 }
 
 function eraseAll()
 {
     for(var i = 0; i < tiles.length; i++)
     {
-        tiles[i].style.backgroundImage = "";
+        tiles[x + y * 20].children[0].innerHTML = "";
+        tiles[x + y * 20].children[1].innerHTML = "";
+    }
+}
+
+function eraseLight()
+{   
+    if(document.getElementById("player" + myID + "Left") != null)
+    {
+        erase("player" + myID + "Left");
+    }
+    
+    if(document.getElementById("player" + myID + "Right") != null)
+    {
+        erase("player" + myID + "Right");
+    }
+    
+    if(document.getElementById("player" + myID + "Top") != null)
+    {
+        erase("player" + myID + "Top");
+    }
+    
+    if(document.getElementById("player" + myID + "Bottom") != null)
+    {
+        erase("player" + myID + "Bottom");
     }
 }
 
@@ -248,78 +309,96 @@ function drawItem(itemNum, x, y)
         case 6: src = "itemRadio"; break;
         case 7: src = "itemCar"; break;
     }
+
+    var width = tiles[x + y * 20].clientWidth;
     
-    tiles[x + y * 20].style.backgroundImage = "url(../static/" + src + ".png)"
+    console.log(tiles[x + y * 20].children[1]);
+    
+    tiles[x + y * 20].children[1].innerHTML =
+        '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 }
 
-function move(id, x, y)
+// MOVE 버튼 누르면 실행됨
+function move()
 {
+    var id = users[myID].id;
+    var x = users[myID].x;
+    var y = users[myID].y;
+    
     if(x != 0)
     {
-        if(tiles[(x - 1) + y * 20].style.backgroundImage == "")
+        if(tiles[(x - 1) + y * 20].children[0].innerHTML.indexOf("player") == -1)
         {
-            drawPlayerLight(id, x - 1, y);
+            drawPlayerLight(id, x - 1, y, "Left");
+            
+            document.getElementById("player" + id + "Left").onclick = function()
+            {
+                moveDecide("Left");
+            }
         }
     }
         
     if(x != 19)
     {
-        if(tiles[(x + 1) + y * 20].style.backgroundImage == "")
+        if(tiles[(x + 1) + y * 20].children[0].innerHTML.indexOf("player") == -1)
         {
-            drawPlayerLight(id, x + 1, y);
+            drawPlayerLight(id, x + 1, y, "Right");
+            
+            document.getElementById("player" + id + "Right").onclick = function()
+            {
+                moveDecide("Right");
+            }
         }
     }
     
     if(y != 0)
     {
-        if(tiles[x + (y - 1) * 20].style.backgroundImage == "")
+        if(tiles[x + (y - 1) * 20].children[0].innerHTML.indexOf("player") == -1)
         {
-            drawPlayerLight(id, x, y - 1);
+            drawPlayerLight(id, x, y - 1, "Top");
+            
+            document.getElementById("player" + id + "Top").onclick = function()
+            {
+                moveDecide("Top");
+            }
         }
     }
     
     if(y != 9)
     {
-        if(tiles[x + (y + 1) * 20].style.backgroundImage == "")
+        if(tiles[x + (y + 1) * 20].children[0].innerHTML.indexOf("player") == -1)
         {
-            drawPlayerLight(id, x, y + 1);
+            drawPlayerLight(id, x, y + 1, "Bottom");
+            
+            document.getElementById("player" + id + "Bottom").onclick = function()
+            {
+                moveDecide("Bottom");
+            }
         }
     }
 }
 
-function moveCancel(id, x, y)
+function moveDecide(direction)
 {
-    if(x > 0)
-    {
-        if(tiles[(x - 1) + y * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
-        {
-            erase(x - 1, y);
-        }
-    }
+    erase("player" + myID);
+    eraseLight();
+
+    if(direction == "Left") users[myID].x -= 1;
+    else if(direction == "Right") users[myID].x += 1;
+    else if(direction == "Top") users[myID].y -= 1;
+    else if(direction == "Bottom") users[myID].y += 1;
     
-    if(x < 19)
-    {
-        if(tiles[(x + 1) + y * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
-        {
-            erase(x + 1, y);
-        }
-    }
-    
-    if(y > 0)
-    {
-        if(tiles[x + (y - 1) * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
-        {
-            erase(x, y - 1);
-        }
-    }
-    
-    if(y < 9)
-    {
-        if(tiles[x + (y + 1) * 20].style.backgroundImage == 'url("../static/Player' + (id+1) + 'Light.png")')
-        {
-            erase(x, y + 1);
-        }
-    }
+    sendPlayerXY();
+    drawPlayer(users[myID].id, users[myID].x, users[myID].y);
+    isMoveClicked = false;
+    //isMoved = true;
+
+    document.getElementById("move").style.color = "gray";
+}
+
+function moveCancel()
+{
+    eraseLight();
 }
 
 function setMapColor()
@@ -397,7 +476,14 @@ function updateTip(tip)
 
 function drawDisaster()
 {
-    
+    for(var i = 0; i < 10; i++)
+    {
+        for(var j = 0; j < 20; j++)
+        {
+            //tiles[j + i * 20].innerHTML = '<img src="../static/Disaster.png" style="opacity: 0.6; width: ' + width + 'px">';
+            tiles[j + i * 20].style.backgroundImage = "url(../static/Disaster.png)";
+        }
+    }
 }
 
 // onclick                                                      
@@ -406,42 +492,43 @@ document.getElementById("move").onclick = function()
 {
     if(!isMoveClicked && !isMoved)
     {
-        move(users[myID].id, users[myID].x, users[myID].y);
+        move();
         isMoveClicked = true;
     }
     
     else
     {
-        moveCancel(users[myID].id, users[myID].x, users[myID].y);
+        moveCancel();
         isMoveClicked = false;
     }
 }
 
-for(var i = 0; i < tiles.length; i++)
-{
-    tiles[i].onclick = function()
-    {
-        var x = this.getAttribute("data-index") % 20;
-        var y = Math.floor(this.getAttribute("data-index") / 20);
-        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID].id+1) + 'Light.png")')
-        {
-            erase(users[myID].x, users[myID].y);
-            if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
-            if(users[myID].x > 0) erase(users[myID].x - 1, users[myID].y);
-            if(users[myID].y < 9) erase(users[myID].x, users[myID].y + 1);
-            if(users[myID].y > 0) erase(users[myID].x, users[myID].y - 1);
-
-            users[myID].x = x;
-            users[myID].y = y;
-            drawPlayer(users[myID].id, users[myID].x, users[myID].y);
-
-            isMoveClicked = false;
-            isMoved = true;
-            
-            document.getElementById("move").style.color = "gray";
-        }
-    }
-}
+//for(var i = 0; i < tiles.length; i++)
+//{
+//    tiles[i].onclick = function()
+//    {
+//        var x = this.getAttribute("data-index") % 20;
+//        var y = Math.floor(this.getAttribute("data-index") / 20);
+//        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID].id+1) + 'Light.png")')
+//        {
+//            erase(users[myID].x, users[myID].y);
+//            if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
+//            if(users[myID].x > 0) erase(users[myID].x - 1, users[myID].y);
+//            if(users[myID].y < 9) erase(users[myID].x, users[myID].y + 1);
+//            if(users[myID].y > 0) erase(users[myID].x, users[myID].y - 1);
+//
+//            users[myID].x = x;
+//            users[myID].y = y;
+//            sendPlayerXY();
+//            drawPlayer(users[myID].id, users[myID].x, users[myID].y);
+//            
+//            isMoveClicked = false;
+//            isMoved = true;
+//            
+//            document.getElementById("move").style.color = "gray";
+//        }
+//    }
+//}
 
 document.getElementById("menu").onclick = function()
 {
@@ -485,7 +572,10 @@ makeTilesToSquare();
 setCircleSize();
 setMapColor();
 
-drawPlayer(3, 3, 3);
+for(var i = 0; i < 4; i++)
+{
+    drawPlayer(users[i].id, users[i].x, users[i].y);
+}
 
 drawItem(2, 4, 7);  
 drawItem(4, 5, 6);
@@ -500,3 +590,5 @@ updateScore(340);
 updateTurn(5);
 updateTime(10);
 updateTip("Hello");
+
+//drawDisaster();
