@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
@@ -164,8 +165,36 @@ public class Server {
 			}
 		});
 		
+		router.get("/ranking").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			String sql = "SELECT ID, EXP FROM USERS ORDER BY EXP";
+			
+			try {
+				ResultSet rs = DB.statement.executeQuery(sql);
+				JsonArray resArray = new JsonArray();
+				int ranking = 1;
+				
+				while (rs.next()) {
+					JsonObject resData = new JsonObject();
+					resData.put("ranking", ranking++);
+					resData.put("username", rs.getString("ID"));
+					resData.put("exp", rs.getInt("EXP"));
+					resArray.add(resData);
+				}
+				
+				res.putHeader("Content-Length", String.valueOf(resArray.toBuffer().length()));
+				res.write(resArray.toBuffer());
+				res.setStatusCode(200).setStatusMessage("Getting Ranking Success").end();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				res.setStatusCode(400).setStatusMessage("Getting Ranking Failure").end();
+			}
+			
+		});
+		
 		// 포트 80
-		vertx.createHttpServer().requestHandler(router::accept).listen(80);
+		vertx.createHttpServer().requestHandler(router::accept).listen(8080);
 
 		// 웹소켓 핸들러
 		vertx.createHttpServer().websocketHandler(new CustomWebsocketHandler()).listen(8090);
