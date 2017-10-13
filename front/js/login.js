@@ -18,4 +18,4 @@ $("#login").on("click", function() {
             alert("Login Failed");
         }
     }); 
-});
+}); 
