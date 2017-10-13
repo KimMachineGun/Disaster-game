@@ -28,8 +28,7 @@ function request()
             success: function(data)
             {
                 console.log(data);
-                let temp = JSON.parse(data);
-                var resData = temp;
+                var resData = JSON.parse(data);
                 
                 for(var i = 0; i < resData.length; i++)
                 {
