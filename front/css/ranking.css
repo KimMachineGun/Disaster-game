@@ -59,7 +59,7 @@ div {
 
 .ranking { width: 200px; }
 .username { width: 400px; }
-.score { width: 260px; }
+.exp { width: 260px; }
 
 th {
     border-bottom: 4px solid white;
@@ -79,7 +79,7 @@ tr {
     background-color: #FFF6BA;
 }
 
-#my-score {
+#my-ranking {
     background-color: #FFDFBA;
 }
 
