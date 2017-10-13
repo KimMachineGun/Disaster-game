@@ -58,14 +58,14 @@ var disasters =
     [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
     ];
 
 // socket
@@ -92,7 +92,10 @@ reader.onload = function(event)
         
         else if(resData.code == 'turn')
         {
-            updateTurn(resData)
+            eraseAllBackground();
+            setTimeout("drawDisaster()", 600);  
+            setTimeout("eraseAllBackground()", 800);
+            updateTurn(resData);
         }
         
         else if(resData.code == 'time')
@@ -271,6 +274,20 @@ function eraseAll()
     }
 }
 
+function eraseAllBackground()
+{
+    for(var i = 0; i < 10; i++)
+    {
+        for(var j = 0; j < 20; j++)
+        {
+            setTimeout("", 500);
+            console.log(tiles[j + i * 20].style.backgroundImage);
+            tiles[j + i * 20].style.backgroundImage = "";
+            console.log(tiles[j + i * 20].style.backgroundImage);
+        }
+    }
+}
+
 function eraseLight()
 {   
     if(document.getElementById("player" + myID + "Left") != null)
@@ -300,19 +317,17 @@ function drawItem(itemNum, x, y)
     
     switch(itemNum)
     {
-        case 0: src = "itemHealKit"; break;
-        case 1: src = "itemFireExtinguisher"; break;
-        case 2: src = "itemWetTowel"; break;
-        case 3: src = "itemDesk"; break;
-        case 4: src = "itemSandbag"; break;
-        case 5: src = "itemLightningRod"; break;
-        case 6: src = "itemRadio"; break;
-        case 7: src = "itemCar"; break;
+        case 0: src = "ItemHealKit"; break;
+        case 1: src = "ItemFireExtinguisher"; break;
+        case 2: src = "ItemWetTowel"; break;
+        case 3: src = "ItemDesk"; break;
+        case 4: src = "ItemSandbag"; break;
+        case 5: src = "ItemLightningRod"; break;
+        case 6: src = "ItemRadio"; break;
+        case 7: src = "ItemCar"; break;
     }
 
     var width = tiles[x + y * 20].clientWidth;
-    
-    console.log(tiles[x + y * 20].children[1]);
     
     tiles[x + y * 20].children[1].innerHTML =
         '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
@@ -480,8 +495,52 @@ function drawDisaster()
     {
         for(var j = 0; j < 20; j++)
         {
-            //tiles[j + i * 20].innerHTML = '<img src="../static/Disaster.png" style="opacity: 0.6; width: ' + width + 'px">';
-            tiles[j + i * 20].style.backgroundImage = "url(../static/Disaster.png)";
+            var src;
+    
+            switch(disasters[i][j])
+            {
+                case 1: src = "DisasterFire"; break;
+                case 2: src = "DisasterEarthquake"; break;
+                case 3: src = "DisasterFlood"; break;
+                case 4: src = "DisasterTsunami"; break;
+                case 5: src = "DisasterLightning"; break;
+                case 6: src = "DisasterLandslide"; break;
+                case 7: src = "DisasterEarthquake"; break;
+                case 8: src = "DisasterTyphoon"; break;
+            }
+            
+            if(disasters[i][j] != 0)
+            {
+                tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png)";
+            }
+        }
+    }
+}
+
+function drawDisasterAlarm()
+{
+    for(var i = 0; i < 10; i++)
+    {
+        for(var j = 0; j < 20; j++)
+        {
+            var src;
+    
+            switch(disasters[i][j])
+            {
+                case 1: src = "DisasterFire"; break;
+                case 2: src = "DisasterEarthquake"; break;
+                case 3: src = "DisasterFlood"; break;
+                case 4: src = "DisasterTsunami"; break;
+                case 5: src = "DisasterLightning"; break;
+                case 6: src = "DisasterLandslide"; break;
+                case 7: src = "DisasterEarthquake"; break;
+                case 8: src = "DisasterTyphoon"; break;
+            }
+            
+            if(disasters[i][j] != 0)
+            {
+                tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png), url(../static/Disaster40.png)";
+            }
         }
     }
 }
@@ -502,33 +561,6 @@ document.getElementById("move").onclick = function()
         isMoveClicked = false;
     }
 }
-
-//for(var i = 0; i < tiles.length; i++)
-//{
-//    tiles[i].onclick = function()
-//    {
-//        var x = this.getAttribute("data-index") % 20;
-//        var y = Math.floor(this.getAttribute("data-index") / 20);
-//        if(tiles[x + y * 20].style.backgroundImage == 'url("../static/Player' + (users[myID].id+1) + 'Light.png")')
-//        {
-//            erase(users[myID].x, users[myID].y);
-//            if(users[myID].x < 19) erase(users[myID].x + 1, users[myID].y);
-//            if(users[myID].x > 0) erase(users[myID].x - 1, users[myID].y);
-//            if(users[myID].y < 9) erase(users[myID].x, users[myID].y + 1);
-//            if(users[myID].y > 0) erase(users[myID].x, users[myID].y - 1);
-//
-//            users[myID].x = x;
-//            users[myID].y = y;
-//            sendPlayerXY();
-//            drawPlayer(users[myID].id, users[myID].x, users[myID].y);
-//            
-//            isMoveClicked = false;
-//            isMoved = true;
-//            
-//            document.getElementById("move").style.color = "gray";
-//        }
-//    }
-//}
 
 document.getElementById("menu").onclick = function()
 {
@@ -554,13 +586,13 @@ document.getElementById("slot").onclick = function()
 {
     if(!isItemUsed)
     {
-        document.getElementById("slot").style.backgroundColor = "black";
+        document.getElementById("slot").style.backgroundImage = "url(../static/BorderCircle.png)";
         isItemUsed = true;
     }
     
     else
     {
-        document.getElementById("slot").style.backgroundColor = "";
+        document.getElementById("slot").style.backgroundImage = "url(../static/WhiteCircle.png)";
         isItemUsed = false;
     }
     
@@ -591,4 +623,4 @@ updateTurn(5);
 updateTime(10);
 updateTip("Hello");
 
-//drawDisaster();
+drawDisasterAlarm();
