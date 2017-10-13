@@ -190,7 +190,11 @@ public class Server {
 				e.printStackTrace();
 				res.setStatusCode(400).setStatusMessage("Getting Ranking Failure").end();
 			}
-			
+		});
+		
+		router.get("/howtoplay").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			res.sendFile("../front/html/howToPlay.html");
 		});
 		
 		// 포트 80
