@@ -210,7 +210,7 @@ function readerReceiveMove(resData)
 {
     for(var i = 0; i < 4; i++)
     {
-        if(i == myID) i++;
+        if(i == myID || users[i].isDisconnected) i++;
         else
         {
             erase("player" + i);
@@ -427,7 +427,8 @@ function moveCancel()
 
 function disconnectPlayer(id)
 {
-    
+    erase("player" + id);
+    users[id].isDisconnected == true;
 }
 
 function setMapColor()
@@ -487,7 +488,7 @@ function updateScore(score)
 {
     document.getElementById("score").children[1].innerHTML = score;
 }
-
+    
 function updateTurn(turn)
 {
     document.getElementById("turn").children[3].innerHTML = turn + "/";  
