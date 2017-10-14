@@ -48,3 +48,7 @@ $("#start").on("click", function() {
     send(jsonData);
 });
 
+document.getElementById("how-to-play").onclick = function()
+{
+    window.location.href = '/howtoplay';
+}

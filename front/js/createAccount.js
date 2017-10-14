@@ -1,4 +1,4 @@
-$("#sign-up").on("click", function() {
+    $("#sign-up").on("click", function() {
     let jsonData = JSON.stringify({
         "id": $("#username").val(),
         "pw": $("#password").val(),
