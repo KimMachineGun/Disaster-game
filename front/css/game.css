@@ -49,7 +49,7 @@ body
     color: white;
 }    
 
-#menuCover > #background > #ranking,
+#menuCover > #background > #howToPlay,
 #menuCover > #background > #quit,
 #menuCover > #background > #back
 {
@@ -64,7 +64,7 @@ body
     margin-bottom: 0;
 }
 
-#menuCover > #background > #ranking > #text,
+#menuCover > #background > #howToPlay > #text,
 #menuCover > #background > #quit > #text,
 #menuCover > #background > #back > #text
 {
@@ -75,7 +75,7 @@ body
     margin-right: 2rem;
 }
 
-#menuCover > #background > #ranking > #explain,
+#menuCover > #background > #howToPlay > #explain,
 #menuCover > #background > #quit > #explain,
 #menuCover > #background > #back > #explain
 {

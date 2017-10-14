@@ -567,7 +567,7 @@ document.getElementById("menu").onclick = function()
     document.getElementById("menuCover").style.display = "block";
 }
 
-document.getElementById("ranking").onclick = function()
+document.getElementById("howToPlay").onclick = function()
 {
     
 }

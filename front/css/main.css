@@ -48,6 +48,7 @@ header > #ranking {
 #start, #how-to-play {
     font-size: 100px;
     font-weight: lighter;
+    color: #953434;
 }
 
 #start {
@@ -65,4 +66,8 @@ header > #ranking {
     margin-top: -26px;
     font-size: 30px;
     color: #95989A;
+}
+
+#ranking {
+    color: #953434;
 }

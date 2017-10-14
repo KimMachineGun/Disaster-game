@@ -1,54 +1,81 @@
 var socket;
 const reader = new FileReader();
 
-reader.onload = function(event) {
+reader.onload = function(event)
+{
 		let temp = JSON.parse(reader.result);
 		console.log(temp);
-		if(temp.status == 'matched') {
+		if(temp.status == 'matched')
+        {
             window.location.href = '/game';
         }
 };	
 
-if (window.WebSocket) {
+if (window.WebSocket)
+{
     socket = new WebSocket("ws://52.79.133.54/game-ws");
 
-    socket.onmessage = function (event) {
+    socket.onmessage = function (event)
+    {
         reader.readAsText(event.data);
-        
     };
 
-    socket.onopen = function (event) {
+    socket.onopen = function (event)
+    {
         alert("Server On");
-		send(JSON.stringify({
-				"status" : "in-game",
-				"code" : "connected"
-		}));
+		send(JSON.stringify
+            (
+                {
+                    "status" : "in-game",
+				    "code" : "connected"
+                }      
+            )
+        );
     };
 
-    socket.onclose = function (event) {
+    socket.onclose = function (event)
+    {
         alert("Server Closed");
     };
+}
 
-} else {
+else
+{
     alert("Use Different Browser");
 }
 
-function send(message) {
-    if (socket.readyState == WebSocket.OPEN) {
+
+function send(message)
+{
+    if (socket.readyState == WebSocket.OPEN)
+    {
         socket.send(message);
-    } else {
+    }
+    
+    else
+    {
         alert("WebSocket Closed");
     }
 }
 
-$("#start").on("click", function() {
-    let jsonData = JSON.stringify({
-        "status": "matching"
-    });
+document.getElementById("start").onclick = function()
+{
+    let jsonData = JSON.stringify
+    (
+        {
+            "status": "matching"
+        }
+    );
+    
     send(jsonData);
-});
+}
 
 document.getElementById("how-to-play").onclick = function()
 {
     window.location.href = '/howtoplay';
+}
+
+document.getElementById("ranking").onclick = function()
+{
+    window.location.href = '/ranking';
 }
