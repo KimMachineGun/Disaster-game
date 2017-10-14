@@ -10,7 +10,7 @@ reader.onload = function(event) {
 };	
 
 if (window.WebSocket) {
-    socket = new WebSocket("ws://10.156.145.115:8090/game-ws");
+    socket = new WebSocket("ws://52.79.133.54/game-ws");
 
     socket.onmessage = function (event) {
         reader.readAsText(event.data);
