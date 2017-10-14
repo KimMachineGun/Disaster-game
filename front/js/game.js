@@ -13,28 +13,32 @@ var users =
         id: 0,
         x: 10,
         y: 7,
-        item: 0
+        item: 0,
+        isDisconnected: false
     },
 
     {
         id: 1,
         x: 1,
         y: 1,
-        item: 0
+        item: 0,
+        isDisconnected: false
     },
 
     {
         id: 2,
         x: 2,
         y: 2,
-        item: 0
+        item: 0,
+        isDisconnected: false
     },
 
     {
         id: 3,
         x: 3,
         y: 3,
-        item: 0
+        item: 0,
+        isDisconnected: false
     }
 ];
 
@@ -95,17 +99,22 @@ reader.onload = function(event)
             eraseAllBackground();
             setTimeout("drawDisaster()", 600);  
             setTimeout("eraseAllBackground()", 800);
-            updateTurn(resData);
+            updateTurn(resData.turn);
         }
         
         else if(resData.code == 'time')
         {
-            
+            updateTime(resData.time);
         }
         
         else if(resData.code == 'tip')
         {
             updateTip(resData.tip);
+        }
+        
+        else if(resData.code == 'disconnect')
+        {
+            disconnectPlayer(resData.id);
         }
     }
 };
@@ -414,6 +423,11 @@ function moveDecide(direction)
 function moveCancel()
 {
     eraseLight();
+}
+
+function disconnectPlayer(id)
+{
+    
 }
 
 function setMapColor()

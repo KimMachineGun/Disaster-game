@@ -58,4 +58,9 @@ function printRanking()
     }
 }
 
+document.getElementById("back").onclick = function()
+{
+    window.location.href = "/";
+}
+
 printRanking();
