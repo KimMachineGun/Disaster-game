@@ -165,7 +165,7 @@ public class Server {
 			}
 		});
 		
-		router.get("/ranking").handler(ctx -> {
+		router.post("/ranking").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
 			String sql = "SELECT ID, EXP FROM USERS ORDER BY EXP";
 			
@@ -190,6 +190,11 @@ public class Server {
 				e.printStackTrace();
 				res.setStatusCode(400).setStatusMessage("Getting Ranking Failure").end();
 			}
+		});
+		
+		router.get("/ranking").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			res.sendFile("../front/html/ranking.html");
 		});
 		
 		router.get("/howtoplay").handler(ctx -> {
