@@ -1,0 +1,71 @@
+body
+{
+    margin: 0px;
+    height: 100%;
+    font-family: "Segoe UI", sans-serif;
+}
+
+#endbox
+{
+    width: 50%;
+    padding: 0% 5%;
+    padding-top: 0%;
+
+   /* border-radius: 10px;*/
+    margin-left: 25%;
+    margin-top: 10%;
+
+}
+
+/* a-tag's style */
+a:link, a:visited, a:hover, a:active
+{
+    color: #953434;
+    text-decoration: none;
+}
+
+
+
+/* the table that shows user's and top 7's ranking */
+#ranking-table
+{
+    display: block;
+
+    margin-top: 20px;
+    border-collapse: collapse;
+
+    /*width: 90%;
+    margin-left: 5%;*/
+    text-align: center;
+}
+
+/* headers' style */
+th
+{
+    /* make space between records */
+    border-bottom: 4px solid white;
+    background-color: white;
+
+    font-size: 36px;
+    font-weight: lighter;
+}
+
+
+/* cells' style */
+td
+{
+    margin: 20px;
+}
+
+/* records' style */
+tr
+{
+    /* make space between records */
+    font-size: 32px;
+    width: 80%;
+    height: auto;
+    margin: 10px;
+    margin-left: 10%;
+    padding: 10px;
+    background-color: #FFF6BA;
+}
