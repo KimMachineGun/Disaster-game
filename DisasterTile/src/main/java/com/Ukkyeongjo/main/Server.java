@@ -198,7 +198,7 @@ public class Server {
 		});
 		
 		// 포트 80
-		vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+		vertx.createHttpServer().requestHandler(router::accept).listen(80);
 
 		// 웹소켓 핸들러
 		vertx.createHttpServer().websocketHandler(new CustomWebsocketHandler()).listen(8090);
