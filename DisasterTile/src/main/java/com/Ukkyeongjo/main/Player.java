@@ -4,6 +4,7 @@ public class Player {
 	int health = 100;
 	int x = 0, y = 0;
 	int item = 0; // 보유중인 아이템
+	int id;
 	
 	public Player(int x, int y) {
 		this.x = x;

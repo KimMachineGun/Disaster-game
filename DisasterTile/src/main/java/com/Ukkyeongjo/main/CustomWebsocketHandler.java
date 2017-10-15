@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
@@ -44,6 +46,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 				System.out.println("closing : " + ws.textHandlerID());
 				wsSessions.remove(ws.textHandlerID());
 				gameSessions.remove(ws.textHandlerID());
+				
 			});
 	
 			ws.handler(new Handler<Buffer>() {
@@ -79,6 +82,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								
 								multicast(gameSessions, resData);
 								
+								
 								gameSessions.clear();
 							}
 							resData.put("status", "loading");
@@ -111,6 +115,8 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							multicast(gameSessions, resData);
 							
 						} else if(reqData.getString("code").equals("connected")) {
+							Timer jobScheduler = new Timer();
+
 							gameSessions.put(ws.textHandlerID(), ws);
 							resData.put("code", "init");
 							resData.put("id", cnt++);
@@ -118,11 +124,13 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							for(int i = 0; i < 4; i++) {
 								JsonObject temp = new JsonObject();
 								temp.put("id", i);
+								game.player[i].id = i;
 								temp.put("x", game.player[i].x);
 								temp.put("y", game.player[i].y);
 								resArray.add(temp);
 							}
 							resData.put("positions", resArray);
+							jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);
 							ws.write(resData.toBuffer());
 							if(cnt == 4) cnt = 0;
 						}
@@ -131,11 +139,33 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 						resData.put("status", "wrong");
 						ws.write(resData.toBuffer());
 					}
-					
 				}
 			});
 		}
-		
+	}
+}
+
+class Turn extends TimerTask {
+	static int cnt = 10;
+	Map<String, ServerWebSocket> gameSessions;
+	
+	public Turn(Map<String, ServerWebSocket> game) {
+		this.gameSessions = game;
 	}
 	
+	public void run() {
+		JsonObject data = new JsonObject();
+		
+		data.put("status", "in-game");
+		data.put("code", "time");
+		data.put("tiem", cnt--);
+		if(cnt == -2) cnt = 10;
+		
+		Set<String> keySet = gameSessions.keySet();
+		Iterator<String> keySetIt = keySet.iterator();
+		while(keySetIt.hasNext()) {
+			String key = keySetIt.next();
+			gameSessions.get(key).write(data.toBuffer());
+		}
+	}
 }
