@@ -59,38 +59,39 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 					System.out.println(reqData.getString("status"));
 					
 					if(reqData.getString("status").equals("matching")) {
-						// 매칭 로직
-						if(gameSessions.size() < 4) {
-							gameSessions.put(ws.textHandlerID(), ws);
-							System.out.println(ws.textHandlerID());
-							System.out.println(gameSessions.size());
-							if(gameSessions.size() == 4) {
-								game = new Game();
-								game.player[0] = new Player(7, 0);
-								game.player[1] = new Player(2, 1);
-								game.player[2] = new Player(6, 3);
-								game.player[3] = new Player(9, 6);
-								
-								try {
-									Thread.sleep(5000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+						if(game == null) {
+							// 매칭 로직
+							if(gameSessions.size() < 4) {
+								gameSessions.put(ws.textHandlerID(), ws);
+								System.out.println(ws.textHandlerID());
+								System.out.println(gameSessions.size());
+								if(gameSessions.size() == 4) {
+									game = new Game();
+									
+									try {
+										Thread.sleep(5000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									resData.put("status", "matched");
+									
+									multicast(gameSessions, resData);
+									
+									gameSessions.clear();
+								} else {
+									resData.put("status", "loading");
+									ws.write(resData.toBuffer());
 								}
-								
-								resData.put("status", "matched");
-								
-								multicast(gameSessions, resData);
-								
-								
-								gameSessions.clear();
+							} else {
+								resData.put("status", "full");
+								ws.write(resData.toBuffer());
 							}
-							resData.put("status", "loading");
-							ws.write(resData.toBuffer());
 						} else {
-							resData.put("status", "full");
+							resData.put("status", "exist");
 							ws.write(resData.toBuffer());
-						}
+						}						
 					} else if(reqData.getString("status").equals("in-game")) {
 						resData.put("status", "in-game");
 						// 인게임 통신
@@ -104,7 +105,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue(), reqData.getInteger("item").intValue());
 							resData.put("code", "receiveMove");
 							JsonArray resArray = new JsonArray();
-							for(int i = 0; i < 4; i++) {
+							for(int i = 0; i < game.player.length; i++) {
 								JsonObject temp = new JsonObject();
 								temp.put("id", i);
 								temp.put("x", game.player[i].x);
@@ -116,23 +117,18 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							
 						} else if(reqData.getString("code").equals("connected")) {
 							Timer jobScheduler = new Timer();
+							gameSessions.put(String.valueOf(cnt), ws);
 
-							gameSessions.put(ws.textHandlerID(), ws);
+							game.player[cnt] = new Player(0, 0);
+							
 							resData.put("code", "init");
-							resData.put("id", cnt++);
-							JsonArray resArray = new JsonArray();
-							for(int i = 0; i < 4; i++) {
-								JsonObject temp = new JsonObject();
-								temp.put("id", i);
-								game.player[i].id = i;
-								temp.put("x", game.player[i].x);
-								temp.put("y", game.player[i].y);
-								resArray.add(temp);
-							}
-							resData.put("positions", resArray);
+							resData.put("id", cnt);
+							game.player[cnt].id = cnt;
+							cnt++;
+							
 							jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);
 							ws.write(resData.toBuffer());
-							if(cnt == 4) cnt = 0;
+							if(cnt == game.player.length) cnt = 0;
 						}
 					} else {
 						// 잘못된 요청 차단
