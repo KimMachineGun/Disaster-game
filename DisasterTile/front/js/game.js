@@ -2,6 +2,7 @@ var tiles = document.getElementsByClassName("tile");
 
 var body = document.getElementById("body");
 var width, height;
+var turn = 0;
 
 var isMoveClicked = false;
 var isMoved = false;
@@ -94,17 +95,27 @@ reader.onload = function(event)
             myID = resData.id;
         }
         
-        else if(resData.code == 'turn')
-        {
-            eraseAllBackground();
-            setTimeout("drawDisaster()", 600);  
-            setTimeout("eraseAllBackground()", 800);
-            updateTurn(resData.turn);
-        }
-        
         else if(resData.code == 'time')
         {
-            updateTime(resData.time);
+            if(resData.time == 10)
+            {
+                turn++;
+                updateTurn(resData.turn);
+                updateTip();
+            }
+            
+            if(resData.time == -1)
+            {
+                sendTurnEnd();
+                eraseAllBackground();
+                setTimeout("drawDisaster()", 500);
+                setTimeout("eraseAllBackground()", 700);
+            }
+            
+            if(resData.time != -1)
+            {
+                updateTime(resData.time);
+            }
         }
         
         else if(resData.code == 'tip')
@@ -121,7 +132,7 @@ reader.onload = function(event)
 
 if (window.WebSocket)
 {
-    socket = new WebSocket("ws://13.124.89.246/game-ws");
+    socket = new WebSocket("ws://13.124.89.246:8090/game-ws");
 
     socket.onmessage = function (event)
     {
@@ -172,7 +183,7 @@ function sendPlayerXY()
 		"status" : "in-game",
 		"code" : "sendMove",
 		"id" : myID,
-		"x" : users[myID].x ,
+		"x" : users[myID].x,
 		"y" : users[myID].y,
 		"item": 0
 	};
@@ -188,6 +199,23 @@ function sendTurnEnd()
 		"isItemUsed" : isItemUsed
 	};
     send(JSON.stringify(temp));
+}
+
+function requestTip()
+{
+    $.ajax
+    (
+        {
+            url: '/tip',
+            type: 'get',
+            data: jsonData,
+            success: function(data)
+            {
+                var resData = JSON.parse(data);
+                updateTip(resData.content);
+            }
+        }
+    )
 }
 
 // socket   
