@@ -30,7 +30,7 @@ if (window.WebSocket)
 				    "code" : "connected"
                 }      
             )
-        );
+        );  
     };
 
     socket.onclose = function (event)
