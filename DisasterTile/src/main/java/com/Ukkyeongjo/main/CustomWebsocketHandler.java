@@ -46,6 +46,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 				System.out.println("closing : " + ws.textHandlerID());
 				wsSessions.remove(ws.textHandlerID());
 				gameSessions.remove(ws.textHandlerID());
+				
 			});
 	
 			ws.handler(new Handler<Buffer>() {
@@ -123,6 +124,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							for(int i = 0; i < 4; i++) {
 								JsonObject temp = new JsonObject();
 								temp.put("id", i);
+								game.player[i].id = i;
 								temp.put("x", game.player[i].x);
 								temp.put("y", game.player[i].y);
 								resArray.add(temp);
