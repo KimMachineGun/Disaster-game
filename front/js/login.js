@@ -35,7 +35,7 @@ document.getElementById("back").onclick = function()
     window.location.href = "/";
 }
 
-document.getElementById("create-acount").onclick = function()
+document.getElementById("create-account").onclick = function()
 {
     window.location.href = "/register";
 }
