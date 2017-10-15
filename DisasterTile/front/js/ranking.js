@@ -23,7 +23,7 @@ function request()
     (
         {
             url: '/ranking',
-            type: 'get',
+            type: 'post',
             data: jsonData,
             success: function(data)
             {
