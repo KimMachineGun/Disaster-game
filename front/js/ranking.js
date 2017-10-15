@@ -1,8 +1,8 @@
-var data = new Array(8)
+var res = new Array(8)
 
 for(var i = 0; i < 8; i++)
 {
-    data[i] =
+    res[i] =
     {
         ranking: 0,
         username: "unknown",
@@ -32,9 +32,9 @@ function request()
                 
                 for(var i = 0; i < resData.length; i++)
                 {
-                    data[i].ranking = resData[i].ranking;
-                    data[i].username = resData[i].username;
-                    data[i].exp = resData[i].exp;
+                    res[i].ranking = resData[i].ranking;
+                    res[i].username = resWData[i].username;
+                    res[i].exp = resData[i].exp;
                 }
             },
             error: function(data)
@@ -52,9 +52,9 @@ function printRanking()
     
     for(var i = 0; i < array.length; i++)
     {
-        array[i].parentElement.children[0].innerHTML = data[i].ranking;
-        array[i].parentElement.children[2].innerHTML = data[i].username;
-        array[i].parentElement.children[4].innerHTML = data[i].exp;
+        array[i].parentElement.children[0].innerHTML = res[i].ranking;
+        array[i].parentElement.children[2].innerHTML = res[i].username;
+        array[i].parentElement.children[4].innerHTML = res[i].exp;
     }
 }
 
