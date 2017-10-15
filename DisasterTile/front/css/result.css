@@ -24,7 +24,10 @@ a:link, a:visited, a:hover, a:active
     text-decoration: none;
 }
 
-
+.pointer
+{
+    cursor: pointer;
+}
 
 /* the table that shows user's and top 7's ranking */
 #ranking-table
