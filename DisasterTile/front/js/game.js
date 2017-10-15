@@ -294,7 +294,7 @@ function requestTip()
 onresize = function()
 {
     makeTilesToSquare();
-    setCircleSizfe();
+    setCircleSize();
 }
 
 function readerReceiveMove(resData)
@@ -556,14 +556,14 @@ function gainItem(itemNum)
     
     switch(itemNum)
     {
-        case 0: src = "itemHealKit"; break;
-        case 1: src = "itemFireExtinguisher"; break;
-        case 2: src = "itemWetTowel"; break;
-        case 3: src = "itemDesk"; break;
-        case 4: src = "itemSandbag"; break;
-        case 5: src = "itemLightningRod"; break;
-        case 6: src = "itemRadio"; break;
-        case 7: src = "itemCar"; break;
+        case 0: src = "ItemHealKit"; break;
+        case 1: src = "ItemFireExtinguisher"; break;
+        case 2: src = "ItemWetTowel"; break;
+        case 3: src = "ItemDesk"; break;
+        case 4: src = "ItemSandbag"; break;
+        case 5: src = "ItemLightningRod"; break;
+        case 6: src = "ItemRadio"; break;
+        case 7: src = "ItemCar"; break;
     }
     
     var slot = document.getElementById("slot");
