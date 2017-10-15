@@ -121,7 +121,7 @@ reader.onload = function(event)
 
 if (window.WebSocket)
 {
-    socket = new WebSocket("ws://52.79.133.54/game-ws");
+    socket = new WebSocket("ws://13.124.89.246/game-ws");
 
     socket.onmessage = function (event)
     {
