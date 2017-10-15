@@ -197,6 +197,11 @@ public class Server {
 			res.sendFile("../front/html/howToPlay.html");
 		});
 		
+		router.get("/matching").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			res.sendFile("../front/html/matching.html");
+		});
+		
 		// 포트 80
 		vertx.createHttpServer().requestHandler(router::accept).listen(80);
 

@@ -68,6 +68,13 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 								game.player[2] = new Player(6, 3);
 								game.player[3] = new Player(9, 6);
 								
+								try {
+									Thread.sleep(5000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
 								resData.put("status", "matched");
 								
 								multicast(gameSessions, resData);
