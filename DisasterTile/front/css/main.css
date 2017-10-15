@@ -71,3 +71,77 @@ header > #ranking {
 #ranking {
     color: #953434;
 }
+
+
+/* matching cover */
+
+#matchingCover
+{
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #FFBE74;
+}
+
+.loader
+{
+	position: relative;
+	width: 400px;
+	height: 200px;
+    
+	top: 50%;
+	top: -webkit-calc(50% - 100px);
+	top: calc(50% - 100px);
+	left: 50%;
+	left: -webkit-calc(50% - 200px);
+	left: calc(50% - 200px);
+	
+	background-image: url(../static/Loading.png);
+	
+	-webkit-transform-origin:  50% 50%;
+			transform-origin:  50% 50% ;
+	-webkit-animation: loader6 1s ease-in-out infinite;
+			animation: loader6 1s ease-in-out infinite;
+}
+
+#loading-image
+{
+    position: fixed;
+    left: 50%;
+    margin-left: -120px;
+    margin-top: 280px;
+    width: 240px;
+    height: 240px;
+}
+         
+#loading
+{
+    position: block;
+    left: 50%;
+    margin-left: -126.0545px;
+    margin-top: 524px;        
+    font-size: 60px;
+    color: #95989A;
+}
+
+@-webkit-keyframes loader6
+{
+    0%{-webkit-transform:rotate(0deg);}
+    50%{-webkit-transform:rotate(180deg);}
+    100%{-webkit-transform:rotate(180deg);}
+}
+
+@keyframes loader6
+{
+    0%{transform:rotate(0deg);}
+    50%{transform:rotate(180deg);}
+    100%{transform:rotate(180deg);}
+}
+
+#cancel
+{
+    text-align: center;
+    font-size: 2rem;
+    color: #953434;
+}
