@@ -98,11 +98,11 @@ function resultRequest()
         {
             url: '/result',
             type: 'get',
-            
+
             success: function(data)
             {
                 var resData = JSON.parse(data);
-                
+
                 for(var i = 0; i < resData.length; i++)
                 {
                     res[i].ranking = resData[i].ranking;
@@ -122,7 +122,7 @@ function resultRequest()
 function printResult()
 {
     var array = document.getElementsByClassName("ranking");
-    
+
     for(var i= 0; i < array.length; i++)
     {
         array[i].parentElement.children[0].innerHTML = res[i].ranking;
@@ -145,19 +145,19 @@ reader.onload = function(event)
 {
     let temp = JSON.parse(reader.result);
     var resData = temp;
-    
+
     if(resData.status == 'in-game')
     {
         if(resData.code == 'receiveMove')
         {
             readerReceiveMove(resData);
         }
-        
+
         else if(resData.code == 'init')
         {
             myID = resData.id;
         }
-        
+
         else if(resData.code == 'time')
         {
             if(resData.time == 10)
@@ -166,7 +166,7 @@ reader.onload = function(event)
                 updateTurn(resData.turn);
                 updateTip();
             }
-            
+
             if(resData.time == -1)
             {
                 sendTurnEnd();
@@ -174,18 +174,18 @@ reader.onload = function(event)
                 setTimeout("drawDisaster()", 500);
                 setTimeout("eraseAllBackground()", 700);
             }
-            
+
             if(resData.time != -1)
             {
                 updateTime(resData.time);
             }
         }
-        
+
         else if(resData.code == 'tip')
         {
             updateTip(resData.tip);
         }
-        
+
         else if(resData.code == 'disconnect')
         {
             disconnectPlayer(resData.id);
@@ -204,15 +204,15 @@ if (window.WebSocket)
 
     socket.onopen = function (event)
     {
-        alert("Server On");
-		send(JSON.stringify
+      alert("Server On");
+      send(JSON.stringify
         (
-            {
-				"status" : "in-game",
-				"code" : "connected"
-            }
+          {
+            "status" : "in-game",
+            "code" : "connected"
+          }
         )
-        );
+      );
     };
 
     socket.onclose = function (event)
@@ -232,7 +232,7 @@ function send(message)
     {
         socket.send(message);
     }
-    
+
     else
     {
         alert("WebSocket Closed");
@@ -281,7 +281,7 @@ function requestTip()
     )
 }
 
-// socket   
+// socket
 
 //setInterval
 //(
@@ -319,7 +319,7 @@ function makeTilesToSquare()
     var left = document.getElementsByTagName("left")[0];
     var main = document.getElementsByTagName("main")[0];
     var bottom = document.getElementsByTagName("bottom")[0];
-    
+
     main.style.height = ((main.offsetWidth - 64) / 2) + 64 + "px";
     bottom.style.height = left.clientHeight - main.offsetHeight + "px";
 }
@@ -330,9 +330,9 @@ function setCircleSize()
     var menu = document.getElementById("menu");
     var health = document.getElementById("health");
     var slot = document.getElementById("slot");
-    
+
     healthHeight = health.offsetHeight;
-    
+
     health.style.width = healthHeight + "px";
     slot.style.width = healthHeight + "px";
     slot.style.height = healthHeight + "px";
@@ -341,20 +341,20 @@ function setCircleSize()
 function drawPlayer(id, x, y)
 {
     var width = tiles[x + y * 20].clientWidth;
-    
+
     tiles[x + y * 20].children[0].innerHTML =
         '<img src="../static/Player' + (id+1) + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
-    
+
     tiles[x + y * 20].children[1].style.display = "none";
 }
 
 function drawPlayerLight(id, x, y, direction)
 {
     var width = tiles[x + y * 20].clientWidth;
-    
-    tiles[x + y * 20].children[0].innerHTML = 
+
+    tiles[x + y * 20].children[0].innerHTML =
         '<img src="../static/Player' + (id+1) + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
-    
+
     tiles[x + y * 20].children[1].style.display = "none";
 }
 
@@ -362,7 +362,7 @@ function erase(id)
 {
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
-    
+
 }
 
 function eraseAll()
@@ -389,22 +389,22 @@ function eraseAllBackground()
 }
 
 function eraseLight()
-{   
+{
     if(document.getElementById("player" + myID + "Left") != null)
     {
         erase("player" + myID + "Left");
     }
-    
+
     if(document.getElementById("player" + myID + "Right") != null)
     {
         erase("player" + myID + "Right");
     }
-    
+
     if(document.getElementById("player" + myID + "Top") != null)
     {
         erase("player" + myID + "Top");
     }
-    
+
     if(document.getElementById("player" + myID + "Bottom") != null)
     {
         erase("player" + myID + "Bottom");
@@ -414,7 +414,7 @@ function eraseLight()
 function drawItem(itemNum, x, y)
 {
     var src;
-    
+
     switch(itemNum)
     {
         case 0: src = "ItemHealKit"; break;
@@ -428,7 +428,7 @@ function drawItem(itemNum, x, y)
     }
 
     var width = tiles[x + y * 20].clientWidth;
-    
+
     tiles[x + y * 20].children[1].innerHTML =
         '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 }
@@ -439,52 +439,52 @@ function move()
     var id = users[myID].id;
     var x = users[myID].x;
     var y = users[myID].y;
-    
+
     if(x != 0)
     {
         if(tiles[(x - 1) + y * 20].children[0].innerHTML.indexOf("player") == -1)
         {
             drawPlayerLight(id, x - 1, y, "Left");
-            
+
             document.getElementById("player" + id + "Left").onclick = function()
             {
                 moveDecide("Left");
             }
         }
     }
-        
+
     if(x != 19)
     {
         if(tiles[(x + 1) + y * 20].children[0].innerHTML.indexOf("player") == -1)
         {
             drawPlayerLight(id, x + 1, y, "Right");
-            
+
             document.getElementById("player" + id + "Right").onclick = function()
             {
                 moveDecide("Right");
             }
         }
     }
-    
+
     if(y != 0)
     {
         if(tiles[x + (y - 1) * 20].children[0].innerHTML.indexOf("player") == -1)
         {
             drawPlayerLight(id, x, y - 1, "Top");
-            
+
             document.getElementById("player" + id + "Top").onclick = function()
             {
                 moveDecide("Top");
             }
         }
     }
-    
+
     if(y != 9)
     {
         if(tiles[x + (y + 1) * 20].children[0].innerHTML.indexOf("player") == -1)
         {
             drawPlayerLight(id, x, y + 1, "Bottom");
-            
+
             document.getElementById("player" + id + "Bottom").onclick = function()
             {
                 moveDecide("Bottom");
@@ -502,7 +502,7 @@ function moveDecide(direction)
     else if(direction == "Right") users[myID].x += 1;
     else if(direction == "Top") users[myID].y -= 1;
     else if(direction == "Bottom") users[myID].y += 1;
-    
+
     sendPlayerXY();
     drawPlayer(users[myID].id, users[myID].x, users[myID].y);
     isMoveClicked = false;
@@ -537,11 +537,11 @@ function setMapColor()
                 case 1: tiles[j + i * 20].style.backgroundColor = "#D9A379";
                         tiles[j + i * 20].style.borderColor = "#D87F3A";
                         break;
-                    
+
                 case 2: tiles[j + i * 20].style.backgroundColor = "#8FB1C9";
                         tiles[j + i * 20].style.borderColor = "#779DB8";
                         break;
-                
+
                 case 3: tiles[j + i * 20].style.backgroundColor = "#A4D6FA";
                         tiles[j + i * 20].style.borderColor = "#81CAFF";
                         break;
@@ -553,7 +553,7 @@ function setMapColor()
 function gainItem(itemNum)
 {
     var src;
-    
+
     switch(itemNum)
     {
         case 0: src = "ItemHealKit"; break;
@@ -565,7 +565,7 @@ function gainItem(itemNum)
         case 6: src = "ItemRadio"; break;
         case 7: src = "ItemCar"; break;
     }
-    
+
     var slot = document.getElementById("slot");
     slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
 }
@@ -579,10 +579,10 @@ function updateScore(score)
 {
     document.getElementById("score").children[1].innerHTML = score;
 }
-    
+
 function updateTurn(turn)
 {
-    document.getElementById("turn").children[3].innerHTML = turn + "/";  
+    document.getElementById("turn").children[3].innerHTML = turn + "/";
 }
 
 function updateTime(time)
@@ -602,7 +602,7 @@ function drawDisaster()
         for(var j = 0; j < 20; j++)
         {
             var src;
-    
+
             switch(disasters[i][j])
             {
                 case 1: src = "DisasterFire"; break;
@@ -614,7 +614,7 @@ function drawDisaster()
                 case 7: src = "DisasterEarthquake"; break;
                 case 8: src = "DisasterTyphoon"; break;
             }
-            
+
             if(disasters[i][j] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png)";
@@ -630,7 +630,7 @@ function drawDisasterAlarm()
         for(var j = 0; j < 20; j++)
         {
             var src;
-    
+
             switch(disasters[i][j])
             {
                 case 1: src = "DisasterFire"; break;
@@ -642,7 +642,7 @@ function drawDisasterAlarm()
                 case 7: src = "DisasterEarthquake"; break;
                 case 8: src = "DisasterTyphoon"; break;
             }
-            
+
             if(disasters[i][j] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png), url(../static/Disaster40.png)";
@@ -651,7 +651,7 @@ function drawDisasterAlarm()
     }
 }
 
-// onclick                                                      
+// onclick
 
 document.getElementById("move").onclick = function()
 {
@@ -660,7 +660,7 @@ document.getElementById("move").onclick = function()
         move();
         isMoveClicked = true;
     }
-    
+
     else
     {
         moveCancel();
@@ -675,12 +675,12 @@ document.getElementById("menu").onclick = function()
 
 document.getElementById("howToPlay").onclick = function()
 {
-    
+
 }
 
 document.getElementById("quit").onclick = function()
 {
-    
+
 }
 
 document.getElementById("back").onclick = function()
@@ -695,13 +695,13 @@ document.getElementById("slot").onclick = function()
         document.getElementById("slot").style.backgroundImage = "url(../static/BorderCircle.png)";
         isItemUsed = true;
     }
-    
+
     else
     {
         document.getElementById("slot").style.backgroundImage = "url(../static/WhiteCircle.png)";
         isItemUsed = false;
     }
-    
+
 }
 
 // onload
@@ -715,7 +715,7 @@ for(var i = 0; i < 4; i++)
     drawPlayer(users[i].id, users[i].x, users[i].y);
 }
 
-drawItem(2, 4, 7);  
+drawItem(2, 4, 7);
 drawItem(4, 5, 6);
 drawItem(5, 6, 5);
 drawItem(6, 7, 4);
