@@ -7,7 +7,7 @@ document.getElementById("login").onclick = function()
             "pw": $("#password").val()
         }
     );
-    
+
     $.ajax
     (
         {
@@ -30,10 +30,10 @@ document.getElementById("login").onclick = function()
     );
 }
 
-document.getElementById("back").onclick = function()
-{
-    window.location.href = "/";
-}
+// document.getElementById("back").onclick = function()
+// {
+//     window.location.href = "/";
+// }
 
 document.getElementById("create-account").onclick = function()
 {

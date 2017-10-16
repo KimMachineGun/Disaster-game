@@ -28,12 +28,12 @@ div {
     z-index: 20;
 }
 
-#back {
+/*#back {
     margin-top: 24px;
     margin-left: 32px;
     font-size: 50px;
     font-weight: lighter;
-}
+}*/
 
 #title {
     margin-left: 556px;
@@ -79,4 +79,4 @@ div {
 #create-account {
     margin-left: 564px;
     margin-top: 16px;
-}  
+}
