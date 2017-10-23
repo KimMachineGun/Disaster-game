@@ -1,5 +1,3 @@
-window.location.reload(true);
-
 var res = new Array(4);
 
 for(var i = 0; i < 4; i++)

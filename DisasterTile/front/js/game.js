@@ -1,5 +1,3 @@
-window.location.reload(true);
-
 var tiles = document.getElementsByClassName("tile");
 
 var body = document.getElementById("body");

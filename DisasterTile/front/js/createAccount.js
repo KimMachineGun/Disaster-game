@@ -1,5 +1,3 @@
-window.location.reload(true);
-
 document.getElementById("sign-up").onclick = function()
 {
     let jsonData = JSON.stringify

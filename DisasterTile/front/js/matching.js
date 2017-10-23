@@ -1,5 +1,3 @@
-window.location.reload(true);
-
 var socket;
 const reader = new FileReader();
 
