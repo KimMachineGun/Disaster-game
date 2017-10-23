@@ -1,5 +1,5 @@
 var socket;
-const reader = new FileReader();
+var reader;
 
 reader.onload = function(event)
 {
@@ -9,7 +9,7 @@ reader.onload = function(event)
         {
             window.location.href = '/game';
         }
-};	
+};
 
 if (window.WebSocket)
 {
@@ -17,20 +17,12 @@ if (window.WebSocket)
 
     socket.onmessage = function (event)
     {
-        reader.readAsText(event.data);
+			reader = new FileReader();
+      reader.readAsText(event.data);
     };
 
     socket.onopen = function (event)
     {
-        alert("Server On");
-		send(JSON.stringify
-            (
-                {
-                    "status" : "in-game",
-				    "code" : "connected"
-                }      
-            )
-        );
     };
 
     socket.onclose = function (event)
@@ -51,7 +43,7 @@ function send(message)
     {
         socket.send(message);
     }
-    
+
     else
     {
         alert("WebSocket Closed");
@@ -91,7 +83,7 @@ document.getElementById("cancel").onclick = function()
             "status": "matchingCancel"
         }
     );
-    
+
     send(jsonData);
     document.getElementById("matchingCover").style.display = "none";
 }
