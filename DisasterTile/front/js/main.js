@@ -1,5 +1,5 @@
 var socket;
-var reader;
+var reader = new FileReader();
 
 reader.onload = function(event)
 {
