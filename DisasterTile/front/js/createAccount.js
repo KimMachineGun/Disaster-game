@@ -1,3 +1,5 @@
+window.location.reload(true);
+
 document.getElementById("sign-up").onclick = function()
 {
     let jsonData = JSON.stringify
@@ -8,7 +10,7 @@ document.getElementById("sign-up").onclick = function()
             "re-pw": $("#re-password").val()
         }
     );
-    
+
     $.ajax
     (
         {

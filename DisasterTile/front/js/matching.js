@@ -1,3 +1,5 @@
+window.location.reload(true);
+
 var socket;
 const reader = new FileReader();
 
@@ -9,7 +11,7 @@ reader.onload = function(event)
         {
             window.location.href = '/game';
         }
-};	
+};
 
 if (window.WebSocket)
 {
@@ -28,9 +30,9 @@ if (window.WebSocket)
                 {
                     "status" : "in-game",
 				    "code" : "connected"
-                }      
+                }
             )
-        );  
+        );
     };
 
     socket.onclose = function (event)
@@ -51,7 +53,7 @@ function send(message)
     {
         socket.send(message);
     }
-    
+
     else
     {
         alert("WebSocket Closed");
@@ -66,7 +68,7 @@ document.getElementById("cancel").onclick = function()
             "status": "matchingCancel"
         }
     );
-    
+
     send(jsonData);
     window.location.href = '/';
 }

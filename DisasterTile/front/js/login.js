@@ -1,3 +1,5 @@
+window.location.reload(true);
+
 document.getElementById("login").onclick = function()
 {
     let jsonData = JSON.stringify

@@ -1,3 +1,5 @@
+window.location.reload(true);
+
 var res = new Array(8)
 
 for(var i = 0; i < 8; i++)
@@ -9,7 +11,7 @@ for(var i = 0; i < 8; i++)
         exp: 0
     }
 }
-    
+
 function request()
 {
     let jsonData = JSON.stringify
@@ -18,7 +20,7 @@ function request()
             "id": $("#username").val()
         }
     );
-    
+
     $.ajax
     (
         {
@@ -29,7 +31,7 @@ function request()
             {
                 console.log(data);
                 var resData = JSON.parse(data);
-                
+
                 for(var i = 0; i < resData.length; i++)
                 {
                     res[i].ranking = resData[i].ranking;
@@ -47,9 +49,9 @@ function request()
 }
 
 function printRanking()
-{ 
+{
     var array = document.getElementsByClassName("ranking");
-    
+
     for(var i = 0; i < array.length; i++)
     {
         array[i].parentElement.children[0].innerHTML = res[i].ranking;

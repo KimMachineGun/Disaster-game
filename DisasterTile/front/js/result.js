@@ -1,3 +1,5 @@
+window.location.reload(true);
+
 var res = new Array(4);
 
 for(var i = 0; i < 4; i++)
@@ -17,11 +19,11 @@ function request()
         {
             url: '/result',
             type: 'get',
-            
+
             success: function(data)
             {
                 var resData = JSON.parse(data);
-                
+
                 for(var i = 0; i < resData.length; i++)
                 {
                     res[i].ranking = resData[i].ranking;
@@ -41,7 +43,7 @@ function request()
 function printResult()
 {
     var array = document.getElementsByClassName("ranking");
-    
+
     for(var i= 0; i < array.length; i++)
     {
         array[i].parentElement.children[0].innerHTML = res[i].ranking;
