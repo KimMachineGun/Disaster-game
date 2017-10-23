@@ -22,15 +22,6 @@ if (window.WebSocket)
 
     socket.onopen = function (event)
     {
-        alert("Server On");
-		send(JSON.stringify
-            (
-                {
-                    "status" : "in-game",
-				    "code" : "connected"
-                }      
-            )
-        );
     };
 
     socket.onclose = function (event)
