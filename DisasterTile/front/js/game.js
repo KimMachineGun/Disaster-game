@@ -360,9 +360,9 @@ function drawPlayerLight(id, x, y, direction)
 
 function erase(id)
 {
+    console.log(id);
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
-
 }
 
 function eraseAll()
