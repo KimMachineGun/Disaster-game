@@ -27,7 +27,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 		Iterator<String> keySetIt = keySet.iterator();
 		while(keySetIt.hasNext()) {
 			String key = keySetIt.next();
-			sessions.get(key).write(data.toBuffer());
+			sessions.get(key).writeTextMessage(data.toString());
 		}
 	}
 	
@@ -82,15 +82,15 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 									gameSessions.clear();
 								} else {
 									resData.put("status", "loading");
-									ws.write(resData.toBuffer());
+									ws.writeTextMessage(resData.toString());
 								}
 							} else {
 								resData.put("status", "full");
-								ws.write(resData.toBuffer());
+								ws.writeTextMessage(resData.toString());
 							}
 						} else {
 							resData.put("status", "exist");
-							ws.write(resData.toBuffer());
+							ws.writeTextMessage(resData.toString());
 						}						
 					} else if(reqData.getString("status").equals("in-game")) {
 						resData.put("status", "in-game");
@@ -127,13 +127,13 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							cnt++;
 							
 							jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);
-							ws.write(resData.toBuffer());
+							ws.writeTextMessage(resData.toString());
 							if(cnt == game.player.length) cnt = 0;
 						}
 					} else {
 						// 잘못된 요청 차단
 						resData.put("status", "wrong");
-						ws.write(resData.toBuffer());
+						ws.writeTextMessage(resData.toString());
 					}
 				}
 			});

@@ -14,7 +14,10 @@ if (window.WebSocket) {
 
     socket.onmessage = function (event) {
         console.log(event);
-        reader = new FileReader();
+        let temp = JSON.parse(event.data);
+        if (temp.status == 'matched') {
+            window.location.href = '/game';
+        }
         reader.readAsText(event.data);
     };
 
