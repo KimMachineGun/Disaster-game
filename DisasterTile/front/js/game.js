@@ -429,6 +429,11 @@ function drawItem(itemNum, x, y)
         '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 }
 
+function setHealthImage(id)
+{
+    document.getElementById("health").style.backgroundImage = "url(../static/Player" + id + ".png)";
+}
+
 // MOVE 버튼 누르면 실행됨
 function move()
 {
@@ -705,6 +710,7 @@ document.getElementById("slot").onclick = function()
 makeTilesToSquare();
 setCircleSize();
 setMapColor();
+setHealthImage(myID);
 
 for(var i = 0; i < 4; i++)
 {
