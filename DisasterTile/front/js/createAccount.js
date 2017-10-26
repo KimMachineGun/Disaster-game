@@ -21,7 +21,6 @@ document.getElementById("sign-up").onclick = function()
             },
             error : function()
             {
-                alert("Register Failed");
             }
         }
     );

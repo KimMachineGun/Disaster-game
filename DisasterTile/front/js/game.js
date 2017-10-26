@@ -113,7 +113,6 @@ function resultRequest()
             error: function()
             {
                 console.log(data);
-                alert("Failed");
             }
         }
     )
@@ -204,7 +203,6 @@ if (window.WebSocket)
 
     socket.onopen = function (event)
     {
-      alert("Server On");
       send(JSON.stringify
         (
           {
@@ -217,13 +215,11 @@ if (window.WebSocket)
 
     socket.onclose = function (event)
     {
-        alert("Server Closed");
     };
 }
 
 else
 {
-    alert("Use Different Browser");
 }
 
 function send(message)

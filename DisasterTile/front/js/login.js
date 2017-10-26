@@ -24,7 +24,6 @@ document.getElementById("login").onclick = function()
                 console.log(a);
                 console.log(b);
                 console.log(c);
-                alert("Login Failed");
             }
         }
     );

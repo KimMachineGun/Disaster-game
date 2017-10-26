@@ -40,7 +40,6 @@ function request()
             error: function(data)
             {
                 console.log(data);
-                alert("Failed");
             }
         }
     )

@@ -27,13 +27,11 @@ if (window.WebSocket)
 
     socket.onclose = function (event)
     {
-        alert("Server Closed");
     };
 }
 
 else
 {
-    alert("Use Different Browser");
 }
 
 

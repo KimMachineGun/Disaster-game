@@ -32,7 +32,6 @@ function request()
             error: function()
             {
                 console.log(data);
-                alert("Failed");
             }
         }
     )
