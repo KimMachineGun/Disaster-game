@@ -138,59 +138,6 @@ document.getElementById("close").onclick = function()
 // socket
 
 var socket;
-var reader = new FileReader();
-
-reader.onload = function(event)
-{
-    let temp = JSON.parse(reader.result);
-    var resData = temp;
-
-    if(resData.status == 'in-game')
-    {
-        if(resData.code == 'receiveMove')
-        {
-            readerReceiveMove(resData);
-        }
-
-        else if(resData.code == 'init')
-        {
-            myID = resData.id;
-        }
-
-        else if(resData.code == 'time')
-        {
-            if(resData.time == 10)
-            {
-                turn++;
-                updateTurn(resData.turn);
-                updateTip();
-            }
-
-            if(resData.time == -1)
-            {
-                sendTurnEnd();
-                eraseAllBackground();
-                setTimeout("drawDisaster()", 500);
-                setTimeout("eraseAllBackground()", 700);
-            }
-
-            if(resData.time != -1)
-            {
-                updateTime(resData.time);
-            }
-        }
-
-        else if(resData.code == 'tip')
-        {
-            updateTip(resData.tip);
-        }
-
-        else if(resData.code == 'disconnect')
-        {
-            disconnectPlayer(resData.id);
-        }
-    }
-};
 
 if (window.WebSocket)
 {
@@ -198,7 +145,53 @@ if (window.WebSocket)
 
     socket.onmessage = function (event)
     {
-        reader.readAsText(event.data);
+        let resData = JSON.parse(event.data);
+    
+        if(resData.status == 'in-game')
+        {
+            if(resData.code == 'receiveMove')
+            {
+                readerReceiveMove(resData);
+            }
+    
+            else if(resData.code == 'init')
+            {
+                myID = resData.id;
+            }
+    
+            else if(resData.code == 'time')
+            {
+                if(resData.time == 10)
+                {
+                    turn++;
+                    updateTurn(resData.turn);
+                    updateTip();
+                }
+    
+                if(resData.time == -1)
+                {
+                    sendTurnEnd();
+                    eraseAllBackground();
+                    setTimeout("drawDisaster()", 500);
+                    setTimeout("eraseAllBackground()", 700);
+                }
+    
+                if(resData.time != -1)
+                {
+                    updateTime(resData.time);
+                }
+            }
+    
+            else if(resData.code == 'tip')
+            {
+                updateTip(resData.tip);
+            }
+    
+            else if(resData.code == 'disconnect')
+            {
+                disconnectPlayer(resData.id);
+            }
+        }    
     };
 
     socket.onopen = function (event)
