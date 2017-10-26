@@ -161,7 +161,7 @@ class Turn extends TimerTask {
 		Iterator<String> keySetIt = keySet.iterator();
 		while(keySetIt.hasNext()) {
 			String key = keySetIt.next();
-			gameSessions.get(key).write(data.toBuffer());
+			gameSessions.get(key).writeTextMessage(data.toString());
 		}
 	}
 }
