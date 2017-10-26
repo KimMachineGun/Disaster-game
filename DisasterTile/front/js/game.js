@@ -704,6 +704,7 @@ makeTilesToSquare();
 setCircleSize();
 setMapColor();
 setHealthImage(myID);
+console.log(myID);
 
 for(var i = 0; i < 4; i++)
 {
