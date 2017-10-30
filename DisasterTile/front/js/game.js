@@ -351,7 +351,11 @@ function drawPlayerLight(id, x, y, direction)
 
 function erase(id)
 {
-    console.log(id);
+    console.log("erase's id: " + id);
+    console.log("id.parentElement: " + document.getElementById(id).parentElement);
+    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement);
+    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1]);
+
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
 }
