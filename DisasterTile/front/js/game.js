@@ -146,19 +146,21 @@ if (window.WebSocket)
     socket.onmessage = function (event)
     {
         let resData = JSON.parse(event.data);
-    
+
         if(resData.status == 'in-game')
         {
             if(resData.code == 'receiveMove')
             {
                 readerReceiveMove(resData);
             }
-    
+
             else if(resData.code == 'init')
             {
                 myID = resData.id;
+                setHealthImage(myID);
+                console.log(myID);
             }
-    
+
             else if(resData.code == 'time')
             {
                 if(resData.time == 10)
@@ -167,7 +169,7 @@ if (window.WebSocket)
                     updateTurn(resData.turn);
                     updateTip();
                 }
-    
+
                 if(resData.time == -1)
                 {
                     sendTurnEnd();
@@ -175,23 +177,23 @@ if (window.WebSocket)
                     setTimeout("drawDisaster()", 500);
                     setTimeout("eraseAllBackground()", 700);
                 }
-    
+
                 if(resData.time != -1)
                 {
                     updateTime(resData.time);
                 }
             }
-    
+
             else if(resData.code == 'tip')
             {
                 updateTip(resData.tip);
             }
-    
+
             else if(resData.code == 'disconnect')
             {
                 disconnectPlayer(resData.id);
             }
-        }    
+        }
     };
 
     socket.onopen = function (event)
@@ -703,8 +705,7 @@ document.getElementById("slot").onclick = function()
 makeTilesToSquare();
 setCircleSize();
 setMapColor();
-setHealthImage(myID);
-console.log(myID);
+
 
 for(var i = 0; i < 4; i++)
 {
