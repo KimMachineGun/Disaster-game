@@ -158,6 +158,10 @@ if (window.WebSocket)
             {
                 myID = resData.id;
                 setHealthImage(myID);
+                for(var i = 0; i < 4; i++)
+                {
+                    drawPlayer(users[i].id, users[i].x, users[i].y);
+                }
                 console.log(myID);
             }
 
@@ -352,9 +356,9 @@ function drawPlayerLight(id, x, y, direction)
 function erase(id)
 {
     console.log("erase's id: " + id);
-    console.log("id.parentElement: " + document.getElementById(id).parentElement);
-    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement);
-    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1]);
+    console.log("id.parentElement: " + document.getElementById(id).parentElement.innerHTML);
+    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement.innerHTML);
+    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1].innerHTML);
 
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
@@ -709,25 +713,3 @@ document.getElementById("slot").onclick = function()
 makeTilesToSquare();
 setCircleSize();
 setMapColor();
-
-
-for(var i = 0; i < 4; i++)
-{
-    drawPlayer(users[i].id, users[i].x, users[i].y);
-}
-
-drawItem(2, 4, 7);
-drawItem(4, 5, 6);
-drawItem(5, 6, 5);
-drawItem(6, 7, 4);
-
-gainItem(6);
-updateHealth(40);
-
-updateScore(340);
-
-updateTurn(5);
-updateTime(10);
-updateTip("Hello");
-
-drawDisasterAlarm();
