@@ -158,10 +158,6 @@ if (window.WebSocket)
             {
                 myID = resData.id;
                 setHealthImage(myID);
-                for(var i = 0; i < 4; i++)
-                {
-                    drawPlayer(users[i].id, users[i].x, users[i].y);
-                }
                 console.log(myID);
             }
 
