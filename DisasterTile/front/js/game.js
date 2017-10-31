@@ -12,8 +12,8 @@ var users =
 [
     {
         id: 0,
-        x: 10,
-        y: 7,
+        x: 0,
+        y: 0,
         item: 0,
         health: 100,
         isDisconnected: false
@@ -146,19 +146,21 @@ if (window.WebSocket)
     socket.onmessage = function (event)
     {
         let resData = JSON.parse(event.data);
-    
+
         if(resData.status == 'in-game')
         {
             if(resData.code == 'receiveMove')
             {
                 readerReceiveMove(resData);
             }
-    
+
             else if(resData.code == 'init')
             {
                 myID = resData.id;
+                setHealthImage(myID);
+                console.log(myID);
             }
-    
+
             else if(resData.code == 'time')
             {
                 if(resData.time == 10)
@@ -167,7 +169,7 @@ if (window.WebSocket)
                     updateTurn(resData.turn);
                     updateTip();
                 }
-    
+
                 if(resData.time == -1)
                 {
                     sendTurnEnd();
@@ -175,23 +177,23 @@ if (window.WebSocket)
                     setTimeout("drawDisaster()", 500);
                     setTimeout("eraseAllBackground()", 700);
                 }
-    
+
                 if(resData.time != -1)
                 {
                     updateTime(resData.time);
                 }
             }
-    
+
             else if(resData.code == 'tip')
             {
                 updateTip(resData.tip);
             }
-    
+
             else if(resData.code == 'disconnect')
             {
                 disconnectPlayer(resData.id);
             }
-        }    
+        }
     };
 
     socket.onopen = function (event)
@@ -332,7 +334,7 @@ function drawPlayer(id, x, y)
     var width = tiles[x + y * 20].clientWidth;
 
     tiles[x + y * 20].children[0].innerHTML =
-        '<img src="../static/Player' + (id+1) + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+        '<img src="../static/Player' + id + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 
     tiles[x + y * 20].children[1].style.display = "none";
 }
@@ -342,14 +344,18 @@ function drawPlayerLight(id, x, y, direction)
     var width = tiles[x + y * 20].clientWidth;
 
     tiles[x + y * 20].children[0].innerHTML =
-        '<img src="../static/Player' + (id+1) + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+        '<img src="../static/Player' + id + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 
     tiles[x + y * 20].children[1].style.display = "none";
 }
 
 function erase(id)
 {
-    console.log(id);
+    console.log("erase's id: " + id);
+    console.log("id.parentElement: " + document.getElementById(id).parentElement.innerHTML);
+    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement.innerHTML);
+    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1].innerHTML);
+
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
 }
@@ -489,7 +495,7 @@ function move()
 
 function moveDecide(direction)
 {
-    erase("player" + myID);
+    else("player" + myID);
     eraseLight();
 
     if(direction == "Left") users[myID].x -= 1;
@@ -703,25 +709,3 @@ document.getElementById("slot").onclick = function()
 makeTilesToSquare();
 setCircleSize();
 setMapColor();
-setHealthImage(myID);
-
-for(var i = 0; i < 4; i++)
-{
-    drawPlayer(users[i].id, users[i].x, users[i].y);
-}
-
-drawItem(2, 4, 7);
-drawItem(4, 5, 6);
-drawItem(5, 6, 5);
-drawItem(6, 7, 4);
-
-gainItem(6);
-updateHealth(40);
-
-updateScore(340);
-
-updateTurn(5);
-updateTime(10);
-updateTip("Hello");
-
-drawDisasterAlarm();
