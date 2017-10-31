@@ -12,8 +12,8 @@ var users =
 [
     {
         id: 0,
-        x: 10,
-        y: 7,
+        x: 0,
+        y: 0,
         item: 0,
         health: 100,
         isDisconnected: false
@@ -334,7 +334,7 @@ function drawPlayer(id, x, y)
     var width = tiles[x + y * 20].clientWidth;
 
     tiles[x + y * 20].children[0].innerHTML =
-        '<img src="../static/Player' + (id+1) + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+        '<img src="../static/Player' + id + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 
     tiles[x + y * 20].children[1].style.display = "none";
 }
@@ -344,7 +344,7 @@ function drawPlayerLight(id, x, y, direction)
     var width = tiles[x + y * 20].clientWidth;
 
     tiles[x + y * 20].children[0].innerHTML =
-        '<img src="../static/Player' + (id+1) + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+        '<img src="../static/Player' + id + 'Light.png" id="player' + id + direction + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
 
     tiles[x + y * 20].children[1].style.display = "none";
 }
@@ -495,7 +495,7 @@ function move()
 
 function moveDecide(direction)
 {
-    erase("player" + myID);
+    else("player" + myID);
     eraseLight();
 
     if(direction == "Left") users[myID].x -= 1;
