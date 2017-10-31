@@ -159,6 +159,11 @@ if (window.WebSocket)
                 myID = resData.id;
                 setHealthImage(myID);
                 console.log(myID);
+
+                for(var i = 0; i < 4; i++)
+                {
+                    drawPlayer(users[i].id, users[i].x, users[i].y);
+                }
             }
 
             else if(resData.code == 'time')
