@@ -119,16 +119,18 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							Timer jobScheduler = new Timer();
 							gameSessions.put(String.valueOf(cnt), ws);
 
-							game.player[cnt] = new Player(0, 0);
+							game.player[cnt] = new Player(cnt, cnt);
 							
 							resData.put("code", "init");
 							resData.put("id", cnt);
 							game.player[cnt].id = cnt;
 							cnt++;
 							
-							jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);
 							ws.writeTextMessage(resData.toString());
-							if(cnt == game.player.length) cnt = 0;
+							if(cnt == game.player.length) {
+								jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);								
+								cnt = 0;								
+							}
 						}
 					} else {
 						// 잘못된 요청 차단
