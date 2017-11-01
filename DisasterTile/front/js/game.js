@@ -168,8 +168,6 @@ if (window.WebSocket)
 
             else if(resData.code == 'time')
             {
-                console.log("time: " + resData.time);
-
                 if(resData.time == 10)
                 {
                     turn++;
