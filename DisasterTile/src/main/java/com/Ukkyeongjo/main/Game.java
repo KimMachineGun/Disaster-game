@@ -104,10 +104,10 @@ public class Game {
 		player[playerNum].item = item;
 	}
 	
-	public void playerControl(int x, int y, int playerNum, boolean isItemUsed){
+	public void playerControl(int playerNum, boolean isItemUsed){
 		int disasterNum;
 		
-		disasterNum = disasters[y][x];
+		disasterNum = disasters[player[playerNum].y][player[playerNum].x];
 		
 		player[playerNum].disaster(disasterNum, isItemUsed);
 	}

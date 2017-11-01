@@ -97,7 +97,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 						// 인게임 통신
 						if(reqData.getString("code").equals("end")) {
 							// 턴 종료 로직
-							game.playerControl(game.player[reqData.getInteger("id").intValue()].x, game.player[reqData.getInteger("id").intValue()].y, reqData.getInteger("id").intValue(), reqData.getBoolean("isItemUsed").booleanValue());
+							game.playerControl(reqData.getInteger("id").intValue(), reqData.getBoolean("isItemUsed").booleanValue());
 							
 						} else if(reqData.getString("code").equals("sendMove")) {
 							// 실시간 움직임
