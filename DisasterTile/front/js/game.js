@@ -656,6 +656,14 @@ function drawDisasterAlarm()
     }
 }
 
+function enableEndCover()
+{
+    if(turn >= 16)
+    {
+        document.getElementById("endCover").style.display = "block";
+    }
+}
+
 // onclick
 
 document.getElementById("move").onclick = function()
