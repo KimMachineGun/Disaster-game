@@ -156,7 +156,7 @@ class Turn extends TimerTask {
 		
 		data.put("status", "in-game");
 		data.put("code", "time");
-		data.put("tiem", cnt--);
+		data.put("time", cnt--);
 		if(cnt == -2) cnt = 10;
 		
 		Set<String> keySet = gameSessions.keySet();
