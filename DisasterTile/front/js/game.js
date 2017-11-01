@@ -168,11 +168,23 @@ if (window.WebSocket)
 
             else if(resData.code == 'time')
             {
+                console.log("time: " + resData.time);
+
                 if(resData.time == 10)
                 {
                     turn++;
-                    updateTurn(resData.turn);
-                    updateTip();
+                    updateTurn(turn);
+                    $.ajax({
+                        url: '/tip',
+                        method: 'get',
+                        success: function(data) {
+                            let tip = JSON.parse(data);
+                            $("#content").text(tip.content);
+                        },
+                        error: function() {
+                            console.log('get tip error');
+                        }
+                    });
                 }
 
                 if(resData.time == -1)
@@ -187,11 +199,6 @@ if (window.WebSocket)
                 {
                     updateTime(resData.time);
                 }
-            }
-
-            else if(resData.code == 'tip')
-            {
-                updateTip(resData.tip);
             }
 
             else if(resData.code == 'disconnect')
@@ -255,6 +262,7 @@ function sendTurnEnd()
     {
 		"status" : "in-game",
 		"code" : "end",
+        "id": myID,
 		"isItemUsed" : isItemUsed
 	};
     send(JSON.stringify(temp));
@@ -355,11 +363,6 @@ function drawPlayerLight(id, x, y, direction)
 
 function erase(id)
 {
-    console.log("erase's id: " + id);
-    console.log("id.parentElement: " + document.getElementById(id).parentElement.innerHTML);
-    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement.innerHTML);
-    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1].innerHTML);
-
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
 }
@@ -380,9 +383,7 @@ function eraseAllBackground()
         for(var j = 0; j < 20; j++)
         {
             setTimeout("", 500);
-            console.log(tiles[j + i * 20].style.backgroundImage);
             tiles[j + i * 20].style.backgroundImage = "";
-            console.log(tiles[j + i * 20].style.backgroundImage);
         }
     }
 }
@@ -510,7 +511,7 @@ function moveDecide(direction)
     sendPlayerXY();
     drawPlayer(users[myID].id, users[myID].x, users[myID].y);
     isMoveClicked = false;
-    //isMoved = true;
+    isMoved = true;
 
     document.getElementById("move").style.color = "gray";
 }
