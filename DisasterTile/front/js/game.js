@@ -174,6 +174,7 @@ if (window.WebSocket)
                     updateTurn(turn);
                     isMoved = false;
                     isMoveClicked = false;
+                    document.getElementById("move").style.color = "#C77575";
                     if(turn >= 16)
                     {
                         enableEndCover();
