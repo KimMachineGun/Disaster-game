@@ -168,6 +168,8 @@ if (window.WebSocket)
 
             else if(resData.code == 'time')
             {
+                console.log("time: " + resData.time);
+
                 if(resData.time == 10)
                 {
                     turn++;
@@ -355,11 +357,6 @@ function drawPlayerLight(id, x, y, direction)
 
 function erase(id)
 {
-    console.log("erase's id: " + id);
-    console.log("id.parentElement: " + document.getElementById(id).parentElement.innerHTML);
-    console.log("id.parentElement.parentElement: " + document.getElementById(id).parentElement.parentElement.innerHTML);
-    console.log("id.parentElement.parentElement.children[1]: " + document.getElementById(id).parentElement.parentElement.children[1].innerHTML);
-
     document.getElementById(id).parentElement.parentElement.children[1].style.display = "block";
     document.getElementById(id).parentElement.innerHTML = "";
 }
@@ -380,9 +377,7 @@ function eraseAllBackground()
         for(var j = 0; j < 20; j++)
         {
             setTimeout("", 500);
-            console.log(tiles[j + i * 20].style.backgroundImage);
             tiles[j + i * 20].style.backgroundImage = "";
-            console.log(tiles[j + i * 20].style.backgroundImage);
         }
     }
 }
