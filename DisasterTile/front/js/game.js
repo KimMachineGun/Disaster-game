@@ -172,6 +172,13 @@ if (window.WebSocket)
                 {
                     turn++;
                     updateTurn(turn);
+                    isMoved = false;
+                    isMoveClicked = false;
+                    if(turn >= 16)
+                    {
+                        enableEndCover();
+                    }
+
                     $.ajax({
                         url: '/tip',
                         method: 'get',
@@ -656,10 +663,7 @@ function drawDisasterAlarm()
 
 function enableEndCover()
 {
-    if(turn >= 16)
-    {
-        document.getElementById("endCover").style.display = "block";
-    }
+    document.getElementById("endCover").style.display = "block";
 }
 
 // onclick
