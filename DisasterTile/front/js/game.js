@@ -262,6 +262,7 @@ function sendTurnEnd()
     {
 		"status" : "in-game",
 		"code" : "end",
+        "id": myID,
 		"isItemUsed" : isItemUsed
 	};
     send(JSON.stringify(temp));
@@ -510,7 +511,7 @@ function moveDecide(direction)
     sendPlayerXY();
     drawPlayer(users[myID].id, users[myID].x, users[myID].y);
     isMoveClicked = false;
-    //isMoved = true;
+    isMoved = true;
 
     document.getElementById("move").style.color = "gray";
 }
