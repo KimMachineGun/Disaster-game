@@ -297,8 +297,7 @@ function readerReceiveMove(resData)
 {
     for(var i = 0; i < 4; i++)
     {
-        if(i == myID || users[i].isDisconnected) i++;
-        else
+        if(i != myID && !users[i].isDisconnected)
         {
             erase("player" + i);
 
