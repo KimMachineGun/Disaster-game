@@ -51,7 +51,7 @@ body
     font-size: 14rem;
     font-weight: lighter;
     color: white;
-}    
+}
 
 #menuCover > #background > #howToPlay,
 #menuCover > #background > #quit,
@@ -233,7 +233,7 @@ main > #map
 }
 
 #map > table > tbody > tr
-{ 
+{
     display: inline-block;
     width: 100%;
     height: 10%;
@@ -246,7 +246,7 @@ main > #map
     width: 5%;
     height: 100%;
     background-size: cover;
-    
+
     background-color: gray;
     border: 1px solid white;
 }
@@ -273,7 +273,7 @@ bottom > #health
     text-align: center;
     font-size: 4rem;
     font-weight: lighter;
-    
+
     background-image: url(../static/Player1.png);
     background-size: cover;
 }
@@ -293,7 +293,7 @@ bottom > #move
     vertical-align: middle;
     text-align: center;
     font-size: 6rem;
-    font-weight: lighter;    
+    font-weight: lighter;
 }
 
 bottom > #item
@@ -374,7 +374,7 @@ bottom > #slot
 
 #tip > #content
 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: lighter;
     margin-left: 16%;
 }
