@@ -500,7 +500,7 @@ function move()
 
 function moveDecide(direction)
 {
-    else("player" + myID);
+    erase("player" + myID);
     eraseLight();
 
     if(direction == "Left") users[myID].x -= 1;
