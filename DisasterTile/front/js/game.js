@@ -173,8 +173,18 @@ if (window.WebSocket)
                 if(resData.time == 10)
                 {
                     turn++;
-                    updateTurn(resData.turn);
-                    updateTip();
+                    updateTurn(turn);
+                    $.ajax({
+                        url: '/tip',
+                        method: 'get',
+                        success: function(data) {
+                            let tip = JSON.parse(data);
+                            $("#content").text(tip.content);
+                        },
+                        error: function() {
+                            console.log('get tip error');
+                        }
+                    });
                 }
 
                 if(resData.time == -1)
@@ -189,11 +199,6 @@ if (window.WebSocket)
                 {
                     updateTime(resData.time);
                 }
-            }
-
-            else if(resData.code == 'tip')
-            {
-                updateTip(resData.tip);
             }
 
             else if(resData.code == 'disconnect')
