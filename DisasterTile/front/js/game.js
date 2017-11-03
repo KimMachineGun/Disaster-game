@@ -132,6 +132,7 @@ function printResult()
 
 document.getElementById("close").onclick = function()
 {
+    // 여기다가 서버로 결과값 (아마 score)을 보내주는 코드 추가
     window.location.href = "/";
 }
 
@@ -168,12 +169,18 @@ if (window.WebSocket)
 
             else if(resData.code == 'time')
             {
-                console.log("time: " + resData.time);
-
                 if(resData.time == 10)
                 {
                     turn++;
                     updateTurn(turn);
+                    isMoved = false;
+                    isMoveClicked = false;
+                    document.getElementById("move").style.color = "#C77575";
+                    if(turn >= 16)
+                    {
+                        enableEndCover();
+                    }
+
                     $.ajax({
                         url: '/tip',
                         method: 'get',
@@ -654,6 +661,11 @@ function drawDisasterAlarm()
             }
         }
     }
+}
+
+function enableEndCover()
+{
+    document.getElementById("endCover").style.display = "block";
 }
 
 // onclick
