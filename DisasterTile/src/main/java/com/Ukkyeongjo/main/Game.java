@@ -76,6 +76,7 @@ public class Game {
 	//매 턴마다 실행
 	public void generateItem() {
 		items = new int[10][20];
+		
 		int x, y;
 
 		for (int i = 0; i < 2; i++) {
