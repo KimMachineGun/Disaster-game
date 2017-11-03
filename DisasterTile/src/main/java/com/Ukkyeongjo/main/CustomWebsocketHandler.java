@@ -128,7 +128,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							
 							ws.writeTextMessage(resData.toString());
 							if(cnt == game.player.length) {
-								jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);								
+								jobScheduler.scheduleAtFixedRate(new Turn(gameSessions, game), 0, 1000);								
 								cnt = 0;								
 							}
 						}
