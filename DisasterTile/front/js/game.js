@@ -452,18 +452,18 @@ function drawItem()
     {
         for(var j = 0; j < 20; j++)
         {
-            drawItem(items[j + i * 20], j, i);
+            drawItemXY(items[j + i * 20], j, i);
         }
     }
 }
 
-function drawItem(itemNum, x, y)
+function drawItemXY(itemNum, x, y)
 {
     var src;
 
     switch(itemNum)
     {
-        case 0: return;
+        case 0: src = "none"; break;
         case 1: src = "ItemHealKit"; break;
         case 2: src = "ItemFireExtinguisher"; break;
         case 3: src = "ItemWetTowel"; break;
@@ -476,8 +476,14 @@ function drawItem(itemNum, x, y)
 
     var width = tiles[x + y * 20].clientWidth;
 
-    tiles[x + y * 20].children[1].innerHTML =
-        '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+    if(src == "none")
+    {
+        tiles[x + y * 20].children[1].innerHTML = "";
+    }
+    else
+    {
+        tiles[x + y * 20].children[1].innerHTML = '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
+    }
 }
 
 function setHealthImage(id)
