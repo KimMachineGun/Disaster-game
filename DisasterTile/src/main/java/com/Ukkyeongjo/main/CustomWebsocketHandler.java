@@ -159,7 +159,7 @@ class Turn extends TimerTask {
 		if(cnt == -2) {
 			cnt = 10;
 			
-			game.generateDisaster(1);
+			game.generateDisaster(3);
 			game.generateItem();
 			
 			JsonArray disasterArr = new JsonArray();
