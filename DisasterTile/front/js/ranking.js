@@ -6,7 +6,7 @@ for(var i = 0; i < 8; i++)
     {
         ranking: 0,
         username: "unknown",
-        exp: 0
+        high: 0
     }
 }
 
@@ -34,7 +34,7 @@ function request()
                 {
                     res[i].ranking = resData[i].ranking;
                     res[i].username = resWData[i].username;
-                    res[i].exp = resData[i].exp;
+                    res[i].high = resData[i].high;
                 }
             },
             error: function(data)
@@ -53,7 +53,7 @@ function printRanking()
     {
         array[i].parentElement.children[0].innerHTML = res[i].ranking;
         array[i].parentElement.children[2].innerHTML = res[i].username;
-        array[i].parentElement.children[4].innerHTML = res[i].exp;
+        array[i].parentElement.children[4].innerHTML = res[i].high;
     }
 }
 
