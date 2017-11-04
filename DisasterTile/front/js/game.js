@@ -211,7 +211,7 @@ if (window.WebSocket)
 
                         for(var i = 0; i < 4; i++)
                         {
-                            if(resData.score[i] <= 0) disconnectPlayer(i);
+                            if(resData.health[i] <= 0) disconnectPlayer(i);
                         }
 
                         drawDisasterAlarm();
