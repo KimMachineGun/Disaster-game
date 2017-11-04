@@ -65,7 +65,7 @@ div {
 
 .ranking { width: 200px; }
 .username { width: 400px; }
-.exp { width: 260px; }
+.high { width: 260px; }
 
 th {
     border-bottom: 4px solid white;
@@ -91,5 +91,5 @@ tr {
 
 .blank {
     height: 0px;
-    background-color: white;    
+    background-color: white;
 }

@@ -172,7 +172,6 @@ if (window.WebSocket)
                             method: 'post',
                             data: JSON.stringify({ "score": score }),
                             success: function(data) {
-                                let result = JSON.parse(data);
                                 for(var i = 0; i < 4; i++)
                                 {
                                     res[i].username = "PLAYER" + myID
@@ -189,15 +188,19 @@ if (window.WebSocket)
                                 console.log('get tip error');
                             }
                         });
+
+                        printResult();
                     }
 
                     else
                     {
                         health = resData.health[myID];
                         score = resData.score[myID];
+                        item = resData.pItem[myID];
                         updateTurn(turn);
                         updateHealth(health);
                         updateScore(score);
+                        gainItem(item);
 
                         isMoved = false;
                         isMoveClicked = false;
