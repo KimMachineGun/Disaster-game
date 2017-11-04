@@ -8,6 +8,9 @@ var isMoveClicked = false;
 var isMoved = false;
 var isItemUsed = false;
 
+var health;
+var score;
+
 var users =
 [
     {
@@ -105,33 +108,6 @@ for(var i = 0; i < 4; i++)
     }
 }
 
-function resultRequest()
-{
-    $.ajax
-    (
-        {
-            url: '/result',
-            type: 'get',
-
-            success: function(data)
-            {
-                var resData = JSON.parse(data);
-
-                for(var i = 0; i < resData.length; i++)
-                {
-                    res[i].ranking = resData[i].ranking;
-                    res[i].username = resData[i].username;
-                    res[i].score = resData[i].score;
-                }
-            },
-            error: function()
-            {
-                console.log(data);
-            }
-        }
-    )
-}
-
 function printResult()
 {
     var array = document.getElementsByClassName("ranking");
@@ -142,6 +118,11 @@ function printResult()
         array[i].parentElement.children[2].innerHTML = res[i].username;
         array[i].parentElement.children[4].innerHTML = res[i].score;
     }
+}
+
+function setRes()
+{
+
 }
 
 document.getElementById("close").onclick = function()
@@ -186,41 +167,70 @@ if (window.WebSocket)
                 if(resData.time == 10)
                 {
                     turn++;
-                    health = resData.health[myID];
-                    score = resData.score[myID];
-                    updateTurn(turn);
-                    updateHealth(health);
-                    updateScore(score);
-
-                    isMoved = false;
-                    isMoveClicked = false;
-                    document.getElementById("move").style.color = "#C77575";
-
-                    disasters = resData.disaster;
-                    items = resData.item;
-
-                    console.log("disasters : " + disasters);
-                    console.log("items : " + items);
-
-                    drawDisasterAlarm();
-                    drawItem();
 
                     if(turn >= 16)
                     {
                         enableEndCover();
+
+                        $.ajax({
+                            url: '/result',
+                            method: 'post',
+                            data: JSON.stringify({ "score": score }),
+                            success: function(data) {
+                                let result = JSON.parse(data);
+                                for(var i = 0; i < 4; i++)
+                                {
+                                    res[i].username = "PLAYER" + myID
+                                    res[i].score = resData.score;
+                                    res[i].ranking = 5;
+
+                                    for(var j = 0; j < 4; j++)
+                                    {
+                                        if(res[i].score >= res[j].score) res[i].ranking--;
+                                    }
+                                }
+                            },
+                            error: function() {
+                                console.log('get tip error');
+                            }
+                        });
                     }
 
-                    $.ajax({
-                        url: '/tip',
-                        method: 'get',
-                        success: function(data) {
-                            let tip = JSON.parse(data);
-                            $("#content").text(tip.content);
-                        },
-                        error: function() {
-                            console.log('get tip error');
+                    else
+                    {
+                        health = resData.health[myID];
+                        score = resData.score[myID];
+                        updateTurn(turn);
+                        updateHealth(health);
+                        updateScore(score);
+
+                        isMoved = false;
+                        isMoveClicked = false;
+                        document.getElementById("move").style.color = "#C77575";
+
+                        disasters = resData.disaster;
+                        items = resData.item;
+
+                        for(var i = 0; i < 4; i++)
+                        {
+                            if(resData.score[i] <= 0) disconnectPlayer(i);
                         }
-                    });
+
+                        drawDisasterAlarm();
+                        drawItem();
+
+                        $.ajax({
+                            url: '/tip',
+                            method: 'get',
+                            success: function(data) {
+                                let tip = JSON.parse(data);
+                                $("#content").text(tip.content);
+                            },
+                            error: function() {
+                                console.log('get tip error');
+                            }
+                        });
+                    }
                 }
 
                 if(resData.time == -1)
