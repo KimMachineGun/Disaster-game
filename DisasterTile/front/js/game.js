@@ -580,7 +580,7 @@ function setMapColor()
     {
         for(var j = 0; j < 20; j++)
         {
-            switch(topography[i + j * 20])
+            switch(topography[j + i * 20])
             {
                 case 0: tiles[j + i * 20].style.backgroundColor = "#B7E99F";
                         tiles[j + i * 20].style.borderColor = "#87D463";
