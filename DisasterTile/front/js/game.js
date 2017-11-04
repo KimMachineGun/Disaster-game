@@ -120,11 +120,6 @@ function printResult()
     }
 }
 
-function setRes()
-{
-
-}
-
 document.getElementById("close").onclick = function()
 {
     // 여기다가 서버로 결과값 (아마 score)을 보내주는 코드 추가
