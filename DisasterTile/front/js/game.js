@@ -188,15 +188,19 @@ if (window.WebSocket)
                                 console.log('get tip error');
                             }
                         });
+
+                        printResult();
                     }
 
                     else
                     {
                         health = resData.health[myID];
                         score = resData.score[myID];
+                        item = resData.pItem[myID];
                         updateTurn(turn);
                         updateHealth(health);
                         updateScore(score);
+                        gainItem(item);
 
                         isMoved = false;
                         isMoveClicked = false;
