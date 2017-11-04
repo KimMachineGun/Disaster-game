@@ -588,6 +588,7 @@ function moveCancel()
 
 function disconnectPlayer(id)
 {
+    console.log("disconnectPlayer" + id);
     erase("player" + id);
     users[id].isDisconnected == true;
 }
