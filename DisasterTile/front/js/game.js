@@ -626,18 +626,26 @@ function gainItem(itemNum)
 
     switch(itemNum)
     {
-        case 0: src = "ItemHealKit"; break;
-        case 1: src = "ItemFireExtinguisher"; break;
-        case 2: src = "ItemWetTowel"; break;
-        case 3: src = "ItemDesk"; break;
-        case 4: src = "ItemSandbag"; break;
-        case 5: src = "ItemLightningRod"; break;
-        case 6: src = "ItemRadio"; break;
-        case 7: src = "ItemCar"; break;
+        case 0: src = "none"; break;
+        case 1: src = "ItemHealKit"; break;
+        case 2: src = "ItemFireExtinguisher"; break;
+        case 3: src = "ItemWetTowel"; break;
+        case 4: src = "ItemDesk"; break;
+        case 5: src = "ItemSandbag"; break;
+        case 6: src = "ItemLightningRod"; break;
+        case 7: src = "ItemRadio"; break;
+        case 8: src = "ItemCar"; break;
     }
 
     var slot = document.getElementById("slot");
-    slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+    if(src == "none")
+    {
+        slot.innerHTML = "";
+    }
+    else
+    {
+        slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+    }
 }
 
 function updateHealth(health)
