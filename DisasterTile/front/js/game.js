@@ -459,7 +459,7 @@ function drawItem()
 
 function drawItemXY(itemNum, x, y)
 {
-    var src;
+    var src = "ItemHealKit";
 
     switch(itemNum)
     {
