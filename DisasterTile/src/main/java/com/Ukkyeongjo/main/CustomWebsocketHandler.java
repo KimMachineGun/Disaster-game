@@ -145,6 +145,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 
 class Turn extends TimerTask {
 	static int cnt = 10;
+	static int turn = 1;
 	Map<String, ServerWebSocket> gameSessions;
 	Game game;
 	
@@ -159,7 +160,7 @@ class Turn extends TimerTask {
 		if(cnt == -2) {
 			cnt = 10;
 			
-			game.generateDisaster(1);
+			game.generateDisaster(turn++);
 			game.generateItem();
 			
 			JsonArray disasterArr = new JsonArray();
