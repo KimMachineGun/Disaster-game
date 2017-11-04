@@ -482,10 +482,12 @@ function drawItemXY(itemNum, x, y)
 
     if(src == "none")
     {
+        console.log("drawItem : none, x = " + x + ", y = " + y);
         tiles[x + y * 20].children[1].innerHTML = "";
     }
     else
     {
+        console.log("drawItem : " + itemNum + ", x = " + x + ", y = " + y);
         tiles[x + y * 20].children[1].innerHTML = '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
     }
 }
