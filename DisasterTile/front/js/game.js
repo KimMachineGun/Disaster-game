@@ -198,7 +198,11 @@ if (window.WebSocket)
 
                     disasters = resData.disaster;
                     items = resData.item;
-                    drawDisaster();
+
+                    console.log("disasters : " + disasters);
+                    console.log("items : " + items);
+
+                    drawDisasterAlarm();
                     drawItem();
 
                     if(turn >= 16)
@@ -582,6 +586,8 @@ function disconnectPlayer(id)
 
 function setMapColor()
 {
+    console.log("setMapColor");
+
     for(var i = 0; i < 10; i++)
     {
         for(var j = 0; j < 20; j++)
@@ -659,7 +665,7 @@ function drawDisaster()
     {
         for(var j = 0; j < 20; j++)
         {
-            var src;
+            var src = "DisasterFire";
 
             switch(disasters[j + i * 20])
             {
@@ -687,7 +693,7 @@ function drawDisasterAlarm()
     {
         for(var j = 0; j < 20; j++)
         {
-            var src;
+            var src = "DisasterFire";
 
             switch(disasters[j + i * 20])
             {
