@@ -456,14 +456,14 @@ function drawItem()
     {
         for(var j = 0; j < 20; j++)
         {
-            drawItemXY(items[j + i * 20], j, i);
+            drawItemXY(items[i][j], j, i);
         }
     }
 }
 
 function drawItemXY(itemNum, x, y)
 {
-    var src = "ItemHealKit";
+    var src;
 
     switch(itemNum)
     {
@@ -482,12 +482,10 @@ function drawItemXY(itemNum, x, y)
 
     if(src == "none")
     {
-        console.log("drawItem : none, x = " + x + ", y = " + y);
         tiles[x + y * 20].children[1].innerHTML = "";
     }
     else
     {
-        console.log("drawItem : " + itemNum + ", x = " + x + ", y = " + y);
         tiles[x + y * 20].children[1].innerHTML = '<img src="../static/' + src + '.png" class="item" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
     }
 }
@@ -588,13 +586,11 @@ function disconnectPlayer(id)
 
 function setMapColor()
 {
-    console.log("setMapColor");
-
     for(var i = 0; i < 10; i++)
     {
         for(var j = 0; j < 20; j++)
         {
-            switch(topography[j + i * 20])
+            switch(topography[i][j])
             {
                 case 0: tiles[j + i * 20].style.backgroundColor = "#B7E99F";
                         tiles[j + i * 20].style.borderColor = "#87D463";
@@ -667,9 +663,9 @@ function drawDisaster()
     {
         for(var j = 0; j < 20; j++)
         {
-            var src = "DisasterFire";
+            var src;
 
-            switch(disasters[j + i * 20])
+            switch(disasters[i][j])
             {
                 case 1: src = "DisasterFire"; break;
                 case 2: src = "DisasterEarthquake"; break;
@@ -681,7 +677,7 @@ function drawDisaster()
                 case 8: src = "DisasterTyphoon"; break;
             }
 
-            if(disasters[j + i * 20] != 0)
+            if(disasters[i][j] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png)";
             }
@@ -695,9 +691,9 @@ function drawDisasterAlarm()
     {
         for(var j = 0; j < 20; j++)
         {
-            var src = "DisasterFire";
+            var src;
 
-            switch(disasters[j + i * 20])
+            switch(disasters[i][j])
             {
                 case 1: src = "DisasterFire"; break;
                 case 2: src = "DisasterEarthquake"; break;
@@ -709,7 +705,7 @@ function drawDisasterAlarm()
                 case 8: src = "DisasterTyphoon"; break;
             }
 
-            if(disasters[j + i * 20] != 0)
+            if(disasters[i][j] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png), url(../static/Disaster40.png)";
             }
