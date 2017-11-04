@@ -107,10 +107,10 @@ public class Game {
 	}
 	
 	public void playerControl(int playerNum, boolean isItemUsed){
-		int disasterNum;
+		player[playerNum].item = items[player[playerNum].y][player[playerNum].x];
+		items[player[playerNum].y][player[playerNum].x] = 0;
 		
-		disasterNum = disasters[player[playerNum].y][player[playerNum].x];
-		
+		int disasterNum = disasters[player[playerNum].y][player[playerNum].x];
 		player[playerNum].disaster(disasterNum, isItemUsed);
 	}
 }

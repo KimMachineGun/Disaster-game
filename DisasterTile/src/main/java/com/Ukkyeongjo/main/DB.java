@@ -9,8 +9,7 @@ public class DB {
 	static final String userTable = "CREATE TABLE USERS " +
             "(NO INT PRIMARY KEY, " +
             "ID CHAR(16) NOT NULL UNIQUE, " + 
-            "PW CHAR(16) NOT NULL, " + 
-            "EXP INT, " +
+            "PW CHAR(16) NOT NULL, " +
             "HIGHSCORE INT);";
 	
 	static final String tipTable = "CREATE TABLE TIPS " +
