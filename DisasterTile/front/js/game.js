@@ -186,7 +186,12 @@ if (window.WebSocket)
                 if(resData.time == 10)
                 {
                     turn++;
+                    health = resData.health;
+                    score = resData.score;
                     updateTurn(turn);
+                    updateHealth(health);
+                    updateScore(score);
+
                     isMoved = false;
                     isMoveClicked = false;
                     document.getElementById("move").style.color = "#C77575";
@@ -293,6 +298,9 @@ function sendTurnEnd()
 		"isItemUsed" : isItemUsed
 	};
     send(JSON.stringify(temp));
+
+    document.getElementById("slot").style.backgroundImage = "url(../static/WhiteCircle.png)";
+    isItemUsed = false;
 }
 
 function requestTip()
