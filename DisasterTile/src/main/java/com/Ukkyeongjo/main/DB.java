@@ -10,8 +10,6 @@ public class DB {
             "(NO INT PRIMARY KEY, " +
             "ID CHAR(16) NOT NULL UNIQUE, " + 
             "PW CHAR(16) NOT NULL, " + 
-            "WIN INT, " + 
-            "LOSE INT, " +
             "EXP INT, " +
             "HIGHSCORE INT);";
 	

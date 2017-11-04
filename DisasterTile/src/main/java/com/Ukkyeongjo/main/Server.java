@@ -207,6 +207,39 @@ public class Server {
 			res.sendFile("../front/html/matching.html");
 		});
 		
+		router.post("/result").handler(ctx -> {
+			HttpServerResponse res = ctx.response();
+			Session session = ctx.session();
+			JsonObject json = ctx.getBodyAsJson();
+			
+			int score = json.getInteger("score");
+			
+			String sql = "SELECT * FROM USERS WHERE ID = ?";
+			PreparedStatement pstmt;
+			try {
+				pstmt = DB.conn.prepareStatement(sql);
+				pstmt.setString(1, session.get("user").toString());
+
+				ResultSet rs = pstmt.executeQuery();
+
+				if(rs.getInt("HIGHSCORE") > score) {
+					score = rs.getInt("HIGHSCORE");
+				}
+				
+				String updateSql = "UPDATE USERS SET HIGHSCORE = ? WHERE ID = ?";
+				
+				pstmt = DB.conn.prepareStatement(updateSql);
+				pstmt.setInt(1, score);
+				pstmt.setString(2, session.get("user").toString());
+				
+				pstmt.execute();
+				
+				res.setStatusCode(200).setStatusMessage("Update Result Success").end();
+			} catch (SQLException e) {
+				res.setStatusCode(400).setStatusMessage("Update Result Failure").end();
+			}			
+		});
+		
 		// 포트 80
 		vertx.createHttpServer().requestHandler(router::accept).listen(80);
 
