@@ -186,8 +186,8 @@ if (window.WebSocket)
                 if(resData.time == 10)
                 {
                     turn++;
-                    health = resData.health;
-                    score = resData.score;
+                    health = resData.health[myID];
+                    score = resData.score[myID];
                     updateTurn(turn);
                     updateHealth(health);
                     updateScore(score);
@@ -452,7 +452,7 @@ function drawItem()
     {
         for(var j = 0; j < 20; j++)
         {
-            drawItem(items[i][j], j, i);
+            drawItem(items[j + i * 20], j, i);
         }
     }
 }
@@ -580,7 +580,7 @@ function setMapColor()
     {
         for(var j = 0; j < 20; j++)
         {
-            switch(topography[i][j])
+            switch(topography[i + j * 20)
             {
                 case 0: tiles[j + i * 20].style.backgroundColor = "#B7E99F";
                         tiles[j + i * 20].style.borderColor = "#87D463";
@@ -655,7 +655,7 @@ function drawDisaster()
         {
             var src;
 
-            switch(disasters[i][j])
+            switch(disasters[j + i * 20])
             {
                 case 1: src = "DisasterFire"; break;
                 case 2: src = "DisasterEarthquake"; break;
@@ -667,7 +667,7 @@ function drawDisaster()
                 case 8: src = "DisasterTyphoon"; break;
             }
 
-            if(disasters[i][j] != 0)
+            if(disasters[j + i * 20] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png)";
             }
@@ -683,7 +683,7 @@ function drawDisasterAlarm()
         {
             var src;
 
-            switch(disasters[i][j])
+            switch(disasters[j + i * 20])
             {
                 case 1: src = "DisasterFire"; break;
                 case 2: src = "DisasterEarthquake"; break;
@@ -695,7 +695,7 @@ function drawDisasterAlarm()
                 case 8: src = "DisasterTyphoon"; break;
             }
 
-            if(disasters[i][j] != 0)
+            if(disasters[j + i * 20] != 0)
             {
                 tiles[j + i * 20].style.backgroundImage = "url(../static/" + src + ".png), url(../static/Disaster40.png)";
             }
