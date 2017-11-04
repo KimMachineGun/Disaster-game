@@ -5,6 +5,7 @@ public class Player {
 	int x = 0, y = 0;
 	int item = 0; // 보유중인 아이템
 	int id;
+	int score;
 	
 	public Player(int x, int y) {
 		this.x = x;
@@ -27,8 +28,12 @@ public class Player {
 			item = 0;
 		}
 		
+		if(disasterNum == 0) {
+			score += 100;
+		}
+		
 		//화재
-		if(disasterNum == 1) {
+		else if(disasterNum == 1) {
 			//소화기, 젖은 수건
 			if(usedItem == 2 || usedItem == 3){
 				damage = 0;
