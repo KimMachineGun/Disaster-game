@@ -128,7 +128,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 							
 							ws.writeTextMessage(resData.toString());
 							if(cnt == game.player.length) {
-								jobScheduler.scheduleAtFixedRate(new Turn(gameSessions), 0, 1000);								
+								jobScheduler.scheduleAtFixedRate(new Turn(gameSessions, game), 0, 1000);								
 								cnt = 0;								
 							}
 						}
@@ -146,18 +146,49 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 class Turn extends TimerTask {
 	static int cnt = 10;
 	Map<String, ServerWebSocket> gameSessions;
+	Game game;
 	
-	public Turn(Map<String, ServerWebSocket> game) {
-		this.gameSessions = game;
+	public Turn(Map<String, ServerWebSocket> gamesess, Game game) {
+		this.gameSessions = gamesess;
+		this.game = game;
 	}
 	
 	public void run() {
 		JsonObject data = new JsonObject();
 		
+		if(cnt == -2) {
+			cnt = 10;
+			
+			game.generateDisaster(1);
+			game.generateItem();
+			
+			JsonArray disasterArr = new JsonArray();
+			
+			for(int i = 0; i < game.disasters.length; i ++) {
+				JsonArray temp = new JsonArray();
+				for(int j = 0; j < game.disasters[i].length; j++) {
+					temp.add(game.disasters[i][j]);
+				}
+				disasterArr.add(temp);
+			}
+			
+			JsonArray itemArr = new JsonArray();
+			
+			for(int i = 0; i < game.items.length; i++) {
+				JsonArray temp = new JsonArray();
+				for(int j = 0; j < game.items[i].length; j++) {
+					temp.add(game.items[i][j]);
+				}
+				itemArr.add(temp);
+			}
+			
+			data.put("disaster", disasterArr);
+			data.put("item", itemArr);
+		};
+		
 		data.put("status", "in-game");
 		data.put("code", "time");
 		data.put("time", cnt--);
-		if(cnt == -2) cnt = 10;
 		
 		Set<String> keySet = gameSessions.keySet();
 		Iterator<String> keySetIt = keySet.iterator();
