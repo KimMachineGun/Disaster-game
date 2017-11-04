@@ -185,16 +185,19 @@ class Turn extends TimerTask {
 			
 			JsonArray healthArr = new JsonArray();
 			JsonArray scoreArr = new JsonArray();
+			JsonArray pItemArr = new JsonArray();
 			
 			for(int i = 0; i < game.player.length; i++) {
 				healthArr.add(game.player[i].health);
 				scoreArr.add(game.player[i].score);
+				pItemArr.add(game.player[i].item);
 			}
 			
 			data.put("health", healthArr);
 			data.put("score", scoreArr);
 			data.put("disaster", disasterArr);
 			data.put("item", itemArr);
+			data.put("pItem", pItemArr);
 		};
 		
 		data.put("status", "in-game");
