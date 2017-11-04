@@ -172,7 +172,6 @@ if (window.WebSocket)
                             method: 'post',
                             data: JSON.stringify({ "score": score }),
                             success: function(data) {
-                                let result = JSON.parse(data);
                                 for(var i = 0; i < 4; i++)
                                 {
                                     res[i].username = "PLAYER" + myID
