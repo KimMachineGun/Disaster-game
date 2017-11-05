@@ -116,9 +116,9 @@ function printResult()
 
     for(var i= 0; i < array.length; i++)
     {
-        array[i].parentElement.children[0].innerHTML = res[i].ranking[i];
-        array[i].parentElement.children[2].innerHTML = res[i].username[i];
-        array[i].parentElement.children[4].innerHTML = res[i].score[i];
+        array[i].parentElement.children[0].innerHTML = res[i].rankin;
+        array[i].parentElement.children[2].innerHTML = res[i].usernam;
+        array[i].parentElement.children[4].innerHTML = res[i].score;
     }
 }
 
@@ -182,7 +182,7 @@ if (window.WebSocket)
                         for(var i = 0; i < 4; i++)
                         {
                             res[i].username = "PLAYER" + myID
-                            res[i].score = resData.score;
+                            res[i].score = resData.score[i];
                             res[i].ranking = 5;
 
                             for(var j = 0; j < 4; j++)
