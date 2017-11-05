@@ -110,6 +110,8 @@ for(var i = 0; i < 4; i++)
 
 function printResult()
 {
+    console.log("printResult 실행됨");
+
     var array = document.getElementsByClassName("ranking");
 
     for(var i= 0; i < array.length; i++)
@@ -149,7 +151,6 @@ if (window.WebSocket)
             {
                 myID = resData.id;
                 setHealthImage(myID);
-                console.log(myID);
 
                 for(var i = 0; i < 4; i++)
                 {
@@ -172,22 +173,23 @@ if (window.WebSocket)
                             method: 'post',
                             data: JSON.stringify({ "score": score }),
                             success: function(data) {
-                                for(var i = 0; i < 4; i++)
-                                {
-                                    res[i].username = "PLAYER" + myID
-                                    res[i].score = resData.score;
-                                    res[i].ranking = 5;
-
-                                    for(var j = 0; j < 4; j++)
-                                    {
-                                        if(res[i].score >= res[j].score) res[i].ranking--;
-                                    }
-                                }
                             },
                             error: function() {
                                 console.log('get tip error');
                             }
                         });
+
+                        for(var i = 0; i < 4; i++)
+                        {
+                            res[i].username = "PLAYER" + myID
+                            res[i].score = resData.score[i];
+                            res[i].ranking = 5;
+
+                            for(var j = 0; j < 4; j++)
+                            {
+                                if(res[i].score >= res[j].score) res[i].ranking--;
+                            }
+                        }
 
                         printResult();
                     }
@@ -204,14 +206,21 @@ if (window.WebSocket)
 
                         isMoved = false;
                         isMoveClicked = false;
-                        document.getElementById("move").style.color = "#C77575";
+                        if(users[myID].isDisconnected)
+                        {
+                            document.getElementById("move").style.color = "gray";
+                        }
+                        else
+                        {
+                            document.getElementById("move").style.color = "#C77575";
+                        }
 
                         disasters = resData.disaster;
                         items = resData.item;
 
                         for(var i = 0; i < 4; i++)
                         {
-                            if(resData.score[i] <= 0) disconnectPlayer(i);
+                            if(resData.health[i] <= 0 && !users[i].isDisconnected) disconnectPlayer(i);
                         }
 
                         drawDisasterAlarm();
@@ -354,12 +363,14 @@ function readerReceiveMove(resData)
     {
         if(i != myID && !users[i].isDisconnected)
         {
+            console.log("isDisconnected: " + users[i].isDisconnected);
+            console.log("readerReceiveMove ID = " + i);
             erase("player" + i);
 
             users[i].x = resData.positions[i].x;
             users[i].y = resData.positions[i].y;
 
-            drawPlayer(users[i].id, users[i].x, users[i].y)
+            drawPlayer(users[i].id, users[i].x, users[i].y);
         }
     }
 }
@@ -588,8 +599,9 @@ function moveCancel()
 
 function disconnectPlayer(id)
 {
+    console.log("disconnectPlayer" + id);
     erase("player" + id);
-    users[id].isDisconnected == true;
+    users[id].isDisconnected = true;
 }
 
 function setMapColor()
@@ -626,18 +638,26 @@ function gainItem(itemNum)
 
     switch(itemNum)
     {
-        case 0: src = "ItemHealKit"; break;
-        case 1: src = "ItemFireExtinguisher"; break;
-        case 2: src = "ItemWetTowel"; break;
-        case 3: src = "ItemDesk"; break;
-        case 4: src = "ItemSandbag"; break;
-        case 5: src = "ItemLightningRod"; break;
-        case 6: src = "ItemRadio"; break;
-        case 7: src = "ItemCar"; break;
+        case 0: src = "none"; break;
+        case 1: src = "ItemHealKit"; break;
+        case 2: src = "ItemFireExtinguisher"; break;
+        case 3: src = "ItemWetTowel"; break;
+        case 4: src = "ItemDesk"; break;
+        case 5: src = "ItemSandbag"; break;
+        case 6: src = "ItemLightningRod"; break;
+        case 7: src = "ItemRadio"; break;
+        case 8: src = "ItemCar"; break;
     }
 
     var slot = document.getElementById("slot");
-    slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+    if(src == "none")
+    {
+        slot.innerHTML = "";
+    }
+    else
+    {
+        slot.innerHTML = '<img src="../static/' + src + '.png" alt="" width="' + slot.clientWidth + 'px" height="' + slot.clientHeight + 'px">';
+    }
 }
 
 function updateHealth(health)
@@ -730,7 +750,7 @@ function enableEndCover()
 
 document.getElementById("move").onclick = function()
 {
-    if(!isMoveClicked && !isMoved)
+    if(!isMoveClicked && !isMoved && !users[myID].isDisconnected)
     {
         move();
         isMoveClicked = true;
