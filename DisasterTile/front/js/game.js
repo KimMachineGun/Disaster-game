@@ -116,8 +116,8 @@ function printResult()
 
     for(var i= 0; i < array.length; i++)
     {
-        array[i].parentElement.children[0].innerHTML = res[i].rankin;
-        array[i].parentElement.children[2].innerHTML = res[i].usernam;
+        array[i].parentElement.children[0].innerHTML = res[i].ranking;
+        array[i].parentElement.children[2].innerHTML = res[i].username;
         array[i].parentElement.children[4].innerHTML = res[i].score;
     }
 }
