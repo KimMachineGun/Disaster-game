@@ -181,7 +181,7 @@ if (window.WebSocket)
 
                         for(var i = 0; i < 4; i++)
                         {
-                            res[i].username = "PLAYER" + myID
+                            res[i].username = "PLAYER" + i;
                             res[i].score = resData.score[i];
                             res[i].ranking = 5;
 
