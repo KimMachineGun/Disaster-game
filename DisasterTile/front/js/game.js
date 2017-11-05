@@ -363,13 +363,14 @@ function readerReceiveMove(resData)
     {
         if(i != myID && !users[i].isDisconnected)
         {
+            console.log("isDisconnected: " + users[i].isDisconnected);
             console.log("readerReceiveMove ID = " + i);
             erase("player" + i);
 
             users[i].x = resData.positions[i].x;
             users[i].y = resData.positions[i].y;
 
-            drawPlayer(users[i].id, users[i].x, users[i].y)
+            drawPlayer(users[i].id, users[i].x, users[i].y);
         }
     }
 }
@@ -600,7 +601,7 @@ function disconnectPlayer(id)
 {
     console.log("disconnectPlayer" + id);
     erase("player" + id);
-    users[id].isDisconnected == true;
+    users[id].isDisconnected = true;
 }
 
 function setMapColor()
