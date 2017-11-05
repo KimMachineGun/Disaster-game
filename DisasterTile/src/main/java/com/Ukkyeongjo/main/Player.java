@@ -17,6 +17,15 @@ public class Player {
 		int usedItem;
 		int damage = 0;
 		
+		if(health > 0) {
+			score += 100;
+			if(disasterNum == 0) {
+				score += 100;
+			}
+		} else {
+			health = 0;
+		}
+		
 		if(isItemUsed == false) usedItem = 0;
 		else usedItem = item;
 		
@@ -28,9 +37,6 @@ public class Player {
 			item = 0;
 		}
 		
-		if(disasterNum == 0) {
-			score += 100;
-		}
 		
 		//화재
 		else if(disasterNum == 1) {
