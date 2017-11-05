@@ -110,6 +110,8 @@ for(var i = 0; i < 4; i++)
 
 function printResult()
 {
+    console.log("printResult 실행됨");
+
     var array = document.getElementsByClassName("ranking");
 
     for(var i= 0; i < array.length; i++)
@@ -172,22 +174,23 @@ if (window.WebSocket)
                             method: 'post',
                             data: JSON.stringify({ "score": score }),
                             success: function(data) {
-                                for(var i = 0; i < 4; i++)
-                                {
-                                    res[i].username = "PLAYER" + myID
-                                    res[i].score = resData.score;
-                                    res[i].ranking = 5;
-
-                                    for(var j = 0; j < 4; j++)
-                                    {
-                                        if(res[i].score >= res[j].score) res[i].ranking--;
-                                    }
-                                }
                             },
                             error: function() {
                                 console.log('get tip error');
                             }
                         });
+
+                        for(var i = 0; i < 4; i++)
+                        {
+                            res[i].username = "PLAYER" + myID
+                            res[i].score = resData.score;
+                            res[i].ranking = 5;
+
+                            for(var j = 0; j < 4; j++)
+                            {
+                                if(res[i].score >= res[j].score) res[i].ranking--;
+                            }
+                        }
 
                         printResult();
                     }
@@ -354,6 +357,7 @@ function readerReceiveMove(resData)
     {
         if(i != myID && !users[i].isDisconnected)
         {
+            console.log("readerReceiveMove ID = " + myID);
             erase("player" + i);
 
             users[i].x = resData.positions[i].x;
