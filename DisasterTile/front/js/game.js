@@ -151,7 +151,6 @@ if (window.WebSocket)
             {
                 myID = resData.id;
                 setHealthImage(myID);
-                console.log(myID);
 
                 for(var i = 0; i < 4; i++)
                 {
@@ -207,14 +206,21 @@ if (window.WebSocket)
 
                         isMoved = false;
                         isMoveClicked = false;
-                        document.getElementById("move").style.color = "#C77575";
+                        if(users[myID].isDisconnected)
+                        {
+                            document.getElementById("move").style.color = "gray";
+                        }
+                        else
+                        {
+                            document.getElementById("move").style.color = "#C77575";
+                        }
 
                         disasters = resData.disaster;
                         items = resData.item;
 
                         for(var i = 0; i < 4; i++)
                         {
-                            if(resData.health[i] <= 0) disconnectPlayer(i);
+                            if(resData.health[i] <= 0 && !users[i].isDisconnected) disconnectPlayer(i);
                         }
 
                         drawDisasterAlarm();
@@ -357,7 +363,7 @@ function readerReceiveMove(resData)
     {
         if(i != myID && !users[i].isDisconnected)
         {
-            console.log("readerReceiveMove ID = " + myID);
+            console.log("readerReceiveMove ID = " + i);
             erase("player" + i);
 
             users[i].x = resData.positions[i].x;
@@ -743,7 +749,7 @@ function enableEndCover()
 
 document.getElementById("move").onclick = function()
 {
-    if(!isMoveClicked && !isMoved)
+    if(!isMoveClicked && !isMoved && !isDisconnected)
     {
         move();
         isMoveClicked = true;
