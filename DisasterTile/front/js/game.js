@@ -749,7 +749,7 @@ function enableEndCover()
 
 document.getElementById("move").onclick = function()
 {
-    if(!isMoveClicked && !isMoved && !isDisconnected)
+    if(!isMoveClicked && !isMoved && !users[myID].isDisconnected)
     {
         move();
         isMoveClicked = true;
