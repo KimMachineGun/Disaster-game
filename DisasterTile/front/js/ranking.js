@@ -33,7 +33,7 @@ function request()
                 for(var i = 0; i < resData.length; i++)
                 {
                     res[i].ranking = resData[i].ranking;
-                    res[i].username = resWData[i].username;
+                    res[i].username = resData[i].username;
                     res[i].high = resData[i].high;
                 }
             },

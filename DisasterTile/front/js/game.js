@@ -103,7 +103,6 @@ for(var i = 0; i < 4; i++)
     res[i] =
     {
         ranking: 0,
-        username: "unknown",
         score: 0
     }
 }
@@ -117,7 +116,7 @@ function printResult()
     for(var i= 0; i < array.length; i++)
     {
         array[i].parentElement.children[0].innerHTML = res[i].ranking;
-        array[i].parentElement.children[2].innerHTML = res[i].username;
+        array[i].parentElement.children[2].innerHTML = '<img src="../static/Player' + i + '.png" id="player' + id + '" style="width: ' + width + 'px; height: ' + width + 'px; position: relative; left: 0; top: 0;">'
         array[i].parentElement.children[4].innerHTML = res[i].score;
     }
 }
@@ -242,7 +241,6 @@ if (window.WebSocket)
 
                 for(var i = 0; i < 4; i++)
                 {
-                    res[i].username = "PLAYER" + i;
                     res[i].score = resData.score[i];
                     res[i].ranking = 5;
 
