@@ -211,11 +211,17 @@ class Turn extends TimerTask {
 				String key = keySetIt.next();
 				gameSessions.get(key).writeTextMessage(data.toString());
 			}
-		} else {
+		} else if(turn == 16){
 			JsonObject data = new JsonObject();
+			JsonArray scoreArr = new JsonArray();
 			
+			for(int i = 0; i < game.player.length; i++) {
+				scoreArr.add(game.player[i].score);
+			}
+			
+			data.put("score", scoreArr);
 			data.put("status", "in-game");
-			data.put("code", "time");
+			data.put("code", "gameEnd");
 			
 			Set<String> keySet = gameSessions.keySet();
 			Iterator<String> keySetIt = keySet.iterator();
@@ -223,6 +229,8 @@ class Turn extends TimerTask {
 				String key = keySetIt.next();
 				gameSessions.get(key).writeTextMessage(data.toString());
 			}
+		} else {
+			
 		}
 	}	
 }
