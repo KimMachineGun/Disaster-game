@@ -164,80 +164,47 @@ if (window.WebSocket)
                 {
                     turn++;
 
-                    if(turn >= 16)
+                    health = resData.health[myID];
+                    score = resData.score[myID];
+                    item = resData.pItem[myID];
+                    updateTurn(turn);
+                    updateHealth(health);
+                    updateScore(score);
+                    gainItem(item);
+
+                    isMoved = false;
+                    isMoveClicked = false;
+                    if(users[myID].isDisconnected)
                     {
-                        enableEndCover();
-
-                        $.ajax({
-                            url: '/result',
-                            method: 'post',
-                            data: JSON.stringify({ "score": score }),
-                            success: function(data) {
-                            },
-                            error: function() {
-                                console.log('get tip error');
-                            }
-                        });
-
-                        for(var i = 0; i < 4; i++)
-                        {
-                            res[i].username = "PLAYER" + i;
-                            res[i].score = resData.score[i];
-                            res[i].ranking = 5;
-
-                            for(var j = 0; j < 4; j++)
-                            {
-                                if(res[i].score >= res[j].score) res[i].ranking--;
-                            }
-                        }
-
-                        printResult();
+                        document.getElementById("move").style.color = "gray";
                     }
-
                     else
                     {
-                        health = resData.health[myID];
-                        score = resData.score[myID];
-                        item = resData.pItem[myID];
-                        updateTurn(turn);
-                        updateHealth(health);
-                        updateScore(score);
-                        gainItem(item);
-
-                        isMoved = false;
-                        isMoveClicked = false;
-                        if(users[myID].isDisconnected)
-                        {
-                            document.getElementById("move").style.color = "gray";
-                        }
-                        else
-                        {
-                            document.getElementById("move").style.color = "#C77575";
-                        }
-
-                        disasters = resData.disaster;
-                        items = resData.item;
-
-                        for(var i = 0; i < 4; i++)
-                        {
-                            if(resData.health[i] <= 0 && !users[i].isDisconnected) disconnectPlayer(i);
-                        }
-
-                        drawDisasterAlarm();
-                        drawItem();
-
-                        $.ajax({
-                            url: '/tip',
-                            method: 'get',
-                            success: function(data) {
-                                let tip = JSON.parse(data);
-                                $("#content").text(tip.content);
-                            },
-                            error: function() {
-                                console.log('get tip error');
-                            }
-                        });
+                        document.getElementById("move").style.color = "#C77575";
                     }
+
+                    disasters = resData.disaster;
+                    items = resData.item;
+
+                    for(var i = 0; i < 4; i++)
+                    {
+                        if(resData.health[i] <= 0 && !users[i].isDisconnected) disconnectPlayer(i);
+                    }
+
+                    drawDisasterAlarm();
+                    drawItem();
+
+                    $.ajax({
+                        url: '/tip',
+                        method: 'get',
+                        success: function(data) {
+                            let tip = JSON.parse(data);
+                            $("#content").text(tip.content);
+                        },
+                        error: function() {
+                            console.log('get tip error');
+                        }
+                    });
                 }
 
                 if(resData.time == -1)
@@ -252,6 +219,37 @@ if (window.WebSocket)
                 {
                     updateTime(resData.time);
                 }
+            }
+
+            else if(resData.code == 'gameEnd')
+            {
+                score = resData.score;
+                enableEndCover();
+
+                $.ajax({
+                    url: '/result',
+                    method: 'post',
+                    data: JSON.stringify({ "score": score }),
+                    success: function(data) {
+                    },
+                    error: function() {
+                        console.log('get tip error');
+                    }
+                });
+
+                for(var i = 0; i < 4; i++)
+                {
+                    res[i].username = "PLAYER" + i;
+                    res[i].score = resData.score[i];
+                    res[i].ranking = 5;
+
+                    for(var j = 0; j < 4; j++)
+                    {
+                        if(res[i].score >= res[j].score) res[i].ranking--;
+                    }
+                }
+
+                printResult();
             }
 
             else if(resData.code == 'disconnect')
@@ -304,7 +302,6 @@ function sendPlayerXY()
 		"id" : myID,
 		"x" : users[myID].x,
 		"y" : users[myID].y,
-		"item": 0
 	};
     send(JSON.stringify(temp));
 }
