@@ -100,10 +100,9 @@ public class Game {
 		}
 	}
 	
-	public void setPlayerPosition(int x, int y, int playerNum, int item) {
+	public void setPlayerPosition(int x, int y, int playerNum) {
 		player[playerNum].x = x;
 		player[playerNum].y = y;
-		player[playerNum].item = item;
 	}
 	
 	public void playerControl(int playerNum, boolean isItemUsed){

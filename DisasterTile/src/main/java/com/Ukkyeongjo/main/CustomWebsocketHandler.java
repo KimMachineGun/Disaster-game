@@ -102,7 +102,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 						} else if(reqData.getString("code").equals("sendMove")) {
 							// 실시간 움직임
 							System.out.println(reqData.toString());
-							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue(), reqData.getInteger("item").intValue());
+							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue());
 							resData.put("code", "receiveMove");
 							JsonArray resArray = new JsonArray();
 							for(int i = 0; i < game.player.length; i++) {
