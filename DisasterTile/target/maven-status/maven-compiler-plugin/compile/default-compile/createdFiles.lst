@@ -1,4 +1,5 @@
 com\Ukkyeongjo\main\Runner$GroovyAuthRunner.class
+com\Ukkyeongjo\main\Turn.class
 com\Ukkyeongjo\main\Runner$GroovyChatRunner.class
 com\Ukkyeongjo\main\Runner$RubyAuthJDBC.class
 com\Ukkyeongjo\main\Game.class
