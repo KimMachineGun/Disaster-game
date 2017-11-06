@@ -217,6 +217,8 @@ class Turn extends TimerTask {
 			data.put("status", "in-game");
 			data.put("code", "time");
 			
+			Set<String> keySet = gameSessions.keySet();
+			Iterator<String> keySetIt = keySet.iterator();
 			while(keySetIt.hasNext()) {
 				String key = keySetIt.next();
 				gameSessions.get(key).writeTextMessage(data.toString());
