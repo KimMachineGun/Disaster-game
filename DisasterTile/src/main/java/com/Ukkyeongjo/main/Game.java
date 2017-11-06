@@ -100,16 +100,16 @@ public class Game {
 		}
 	}
 	
-	public void setPlayerPosition(int x, int y, int playerNum, int item) {
+	public void setPlayerPosition(int x, int y, int playerNum) {
 		player[playerNum].x = x;
 		player[playerNum].y = y;
-		player[playerNum].item = item;
 	}
 	
 	public void playerControl(int playerNum, boolean isItemUsed){
-		player[playerNum].item = items[player[playerNum].y][player[playerNum].x];
-		items[player[playerNum].y][player[playerNum].x] = 0;
-		
+		if(items[player[playerNum].y][player[playerNum].x] != 0) {
+			player[playerNum].item = items[player[playerNum].y][player[playerNum].x];
+			items[player[playerNum].y][player[playerNum].x] = 0;
+		}
 		int disasterNum = disasters[player[playerNum].y][player[playerNum].x];
 		player[playerNum].disaster(disasterNum, isItemUsed);
 	}

@@ -102,7 +102,7 @@ class CustomWebsocketHandler<E> implements Handler<E> {
 						} else if(reqData.getString("code").equals("sendMove")) {
 							// 실시간 움직임
 							System.out.println(reqData.toString());
-							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue(), reqData.getInteger("item").intValue());
+							game.setPlayerPosition(reqData.getInteger("x").intValue(), reqData.getInteger("y").intValue(), reqData.getInteger("id").intValue());
 							resData.put("code", "receiveMove");
 							JsonArray resArray = new JsonArray();
 							for(int i = 0; i < game.player.length; i++) {
@@ -155,60 +155,82 @@ class Turn extends TimerTask {
 	}
 	
 	public void run() {
-		JsonObject data = new JsonObject();
-		
-		if(cnt == -2) {
-			cnt = 10;
+		if(turn  < 16) {
+			JsonObject data = new JsonObject();
 			
-			game.generateDisaster(turn++);
-			game.generateItem();
-			
-			JsonArray disasterArr = new JsonArray();
-			
-			for(int i = 0; i < game.disasters.length; i ++) {
-				JsonArray temp = new JsonArray();
-				for(int j = 0; j < game.disasters[i].length; j++) {
-					temp.add(game.disasters[i][j]);
+			if(cnt == -2) {
+				cnt = 10;
+				
+				game.generateDisaster(turn++);
+				game.generateItem();
+				
+				JsonArray disasterArr = new JsonArray();
+				
+				for(int i = 0; i < game.disasters.length; i ++) {
+					JsonArray temp = new JsonArray();
+					for(int j = 0; j < game.disasters[i].length; j++) {
+						temp.add(game.disasters[i][j]);
+					}
+					disasterArr.add(temp);
 				}
-				disasterArr.add(temp);
-			}
-			
-			JsonArray itemArr = new JsonArray();
-			
-			for(int i = 0; i < game.items.length; i++) {
-				JsonArray temp = new JsonArray();
-				for(int j = 0; j < game.items[i].length; j++) {
-					temp.add(game.items[i][j]);
+				
+				JsonArray itemArr = new JsonArray();
+				
+				for(int i = 0; i < game.items.length; i++) {
+					JsonArray temp = new JsonArray();
+					for(int j = 0; j < game.items[i].length; j++) {
+						temp.add(game.items[i][j]);
+					}
+					itemArr.add(temp);
 				}
-				itemArr.add(temp);
-			}
+				
+				JsonArray healthArr = new JsonArray();
+				JsonArray scoreArr = new JsonArray();
+				JsonArray pItemArr = new JsonArray();
+				
+				for(int i = 0; i < game.player.length; i++) {
+					healthArr.add(game.player[i].health);
+					scoreArr.add(game.player[i].score);
+					pItemArr.add(game.player[i].item);
+				}
+				
+				data.put("health", healthArr);
+				data.put("score", scoreArr);
+				data.put("disaster", disasterArr);
+				data.put("item", itemArr);
+				data.put("pItem", pItemArr);
+			};
 			
-			JsonArray healthArr = new JsonArray();
+			data.put("status", "in-game");
+			data.put("code", "time");
+			data.put("time", cnt--);
+			
+			Set<String> keySet = gameSessions.keySet();
+			Iterator<String> keySetIt = keySet.iterator();
+			while(keySetIt.hasNext()) {
+				String key = keySetIt.next();
+				gameSessions.get(key).writeTextMessage(data.toString());
+			}
+		} else if(turn == 16){
+			JsonObject data = new JsonObject();
 			JsonArray scoreArr = new JsonArray();
-			JsonArray pItemArr = new JsonArray();
 			
 			for(int i = 0; i < game.player.length; i++) {
-				healthArr.add(game.player[i].health);
 				scoreArr.add(game.player[i].score);
-				pItemArr.add(game.player[i].item);
 			}
 			
-			data.put("health", healthArr);
 			data.put("score", scoreArr);
-			data.put("disaster", disasterArr);
-			data.put("item", itemArr);
-			data.put("pItem", pItemArr);
-		};
-		
-		data.put("status", "in-game");
-		data.put("code", "time");
-		data.put("time", cnt--);
-		
-		Set<String> keySet = gameSessions.keySet();
-		Iterator<String> keySetIt = keySet.iterator();
-		while(keySetIt.hasNext()) {
-			String key = keySetIt.next();
-			gameSessions.get(key).writeTextMessage(data.toString());
+			data.put("status", "in-game");
+			data.put("code", "gameEnd");
+			
+			Set<String> keySet = gameSessions.keySet();
+			Iterator<String> keySetIt = keySet.iterator();
+			while(keySetIt.hasNext()) {
+				String key = keySetIt.next();
+				gameSessions.get(key).writeTextMessage(data.toString());
+			}
+		} else {
+			
 		}
-	}
+	}	
 }
