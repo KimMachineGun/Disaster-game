@@ -167,7 +167,7 @@ public class Server {
 		
 		router.post("/ranking").handler(ctx -> {
 			HttpServerResponse res = ctx.response();
-			String sql = "SELECT ID, EXP FROM USERS ORDER BY EXP";
+			String sql = "SELECT ID, HIGHSCORE FROM USERS ORDER BY EXP";
 			
 			try {
 				ResultSet rs = DB.statement.executeQuery(sql);
@@ -178,7 +178,7 @@ public class Server {
 					JsonObject resData = new JsonObject();
 					resData.put("ranking", ranking++);
 					resData.put("username", rs.getString("ID"));
-					resData.put("exp", rs.getInt("EXP"));
+					resData.put("high", rs.getInt("HIGHSCORE"));
 					resArray.add(resData);
 				}
 				
