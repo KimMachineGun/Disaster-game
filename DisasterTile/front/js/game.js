@@ -165,6 +165,7 @@ if (window.WebSocket)
                     turn++;
 
                     health = resData.health[myID];
+                    if(health <= 0) health = 0;
                     score = resData.score[myID];
                     item = resData.pItem[myID];
                     updateTurn(turn);
@@ -176,10 +177,12 @@ if (window.WebSocket)
                     isMoveClicked = false;
                     if(users[myID].isDisconnected)
                     {
+                        console.log("users[" + myID +  + "].isDisconnected = " + users[myID].isDisconnected + ", gray");
                         document.getElementById("move").style.color = "gray";
                     }
                     else
                     {
+                        console.log("users[" + myID +  + "].isDisconnected = " + users[myID].isDisconnected + ", not gray");
                         document.getElementById("move").style.color = "#C77575";
                     }
 
